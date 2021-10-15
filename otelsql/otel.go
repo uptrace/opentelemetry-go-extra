@@ -22,7 +22,7 @@ var dbRowsAffected = attribute.Key("db.rows_affected")
 
 type config struct {
 	provider trace.TracerProvider
-	tracer   trace.Tracer
+	tracer   trace.Tracer //nolint:structcheck
 	meter    metric.Meter
 	attrs    []attribute.KeyValue
 }

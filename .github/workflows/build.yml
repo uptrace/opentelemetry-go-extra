@@ -24,5 +24,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: install golangci-lint
+        run:
+          wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh |
+          sh -s -- -b $(go env GOPATH)/bin v1.42.1
+
       - name: Test
-        run: make test
+        run: ./scripts/test.sh
