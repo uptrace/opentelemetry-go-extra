@@ -27,11 +27,15 @@ PACKAGE_DIRS=$(find . -mindepth 2 -type f -name 'go.mod' -exec dirname {} \; \
 
 for dir in $PACKAGE_DIRS
 do
-    if ! grep -Fq "\"${TAG#v}\"" ./version.go
+    pushd ${dir}
+
+    if [ -e version.go ] && ! grep -Fq "\"${TAG#v}\"" ./version.go
     then
-        printf "version.go does not contain ${TAG#v}\n"
+        printf "${dir}/version.go does not contain ${TAG#v}\n"
         exit 1
     fi
+
+    popd
 done
 
 git tag ${TAG}
