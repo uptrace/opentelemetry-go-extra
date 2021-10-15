@@ -5,7 +5,7 @@ go 1.17
 replace github.com/uptrace/opentelemetry-go-extra/otelzap => ./..
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelzap v1.0.5
+	github.com/uptrace/opentelemetry-go-extra/otelzap v0.1.0
 	go.opentelemetry.io/otel v1.0.1
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.0.1
 	go.opentelemetry.io/otel/sdk v1.0.1
