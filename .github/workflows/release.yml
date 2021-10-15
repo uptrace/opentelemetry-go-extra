@@ -14,5 +14,5 @@ jobs:
         with:
           body:
             Please refer to
-            [CHANGELOG.md](https://github.com/uptrace/opentelemetry-go-extra/blob/master/CHANGELOG.md)
+            [CHANGELOG.md](https://github.com/uptrace/opentelemetry-go-extra/blob/main/CHANGELOG.md)
             for details
