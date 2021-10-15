@@ -40,7 +40,6 @@ then
 fi
 
 git checkout main
-go mod tidy
 
 PACKAGE_DIRS=$(find . -mindepth 2 -type f -name 'go.mod' -exec dirname {} \; \
   | sed 's/^\.\///' \
@@ -49,21 +48,26 @@ PACKAGE_DIRS=$(find . -mindepth 2 -type f -name 'go.mod' -exec dirname {} \; \
 for dir in $PACKAGE_DIRS
 do
     sed --in-place \
-      "s/uptrace\/uptrace-go\([^ ]*\) v.*/uptrace\/uptrace-go\1 ${TAG}/" "${dir}/go.mod"
+      "s/uptrace\/opentelemetry-go-extra\([^ ]*\) v.*/uptrace\/opentelemetry-go-extra\1 ${TAG}/" "${dir}/go.mod"
 done
 
 for dir in $PACKAGE_DIRS
 do
-    printf "${dir}: go get -u && go mod tidy\n"
-    (
-        cd ./${dir} &&
-            go get -u &&
-            go mod tidy &&
-            sed --in-place "s/\(return \)\"[^\"]*\"/\1\"${TAG#v}\"/" ./version.go
-    )
+    printf "processing ${dir}...\n"
+    pushd ${dir}
+
+    go get -u ;
+    go mod tidy ;
+    if [ -e version.go ]
+    then
+        sed --in-place "s/\(return \)\"[^\"]*\"/\1\"${TAG#v}\"/" ./version.go
+    fi
+
+    popd
 done
 
-
+sed --in-place "s/\(\"version\": \)\"[^\"]*\"/\1\"${TAG#v}\"/" ./package.json
+conventional-changelog -p angular -i CHANGELOG.md -s
 
 git checkout -b release/${TAG} main
 git add -u
