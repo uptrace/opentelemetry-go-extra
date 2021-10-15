@@ -1,5 +1,7 @@
 # OpenTelemetry instrumentations for Go
 
+[![build workflow](https://github.com/uptrace/opentementry-go-contrib/actions/workflows/build.yml/badge.svg)](https://github.com/uptrace/opentelemetry-go-extra/actions/workflows/build.yml)
+
 | Instrumentation Package   | Metrics            | Traces             |
 | ------------------------- | ------------------ | ------------------ |
 | [database/sql](/otelsql/) | :heavy_check_mark: | :heavy_check_mark: |
