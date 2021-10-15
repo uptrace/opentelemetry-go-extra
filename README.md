@@ -1,6 +1,6 @@
 # OpenTelemetry instrumentations for Go
 
-[![build workflow](https://github.com/uptrace/opentementry-go-contrib/actions/workflows/build.yml/badge.svg)](https://github.com/uptrace/opentelemetry-go-extra/actions/workflows/build.yml)
+[![build workflow](https://github.com/uptrace/opentelemetry-go-extra/actions/workflows/build.yml/badge.svg)](https://github.com/uptrace/opentelemetry-go-extra/actions/workflows/build.yml)
 
 | Instrumentation Package   | Metrics            | Traces             |
 | ------------------------- | ------------------ | ------------------ |
@@ -20,7 +20,7 @@ example. Use Docker if you must but try to avoid it, for example, you can use SQ
 MySQL to test database/sql instrumentation. Use [instrum-template](/instrum-template/)
 instrumentation as a template.
 
-To run tests:
+To run all tests:
 
 ```shell
 ./scripts/test.sh
