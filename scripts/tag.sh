@@ -20,16 +20,19 @@ then
     help
 fi
 
-if ! grep -Fq "\"${TAG#v}\"" ./uptrace/version.go
-then
-    printf "version.go does not contain ${TAG#v}\n"
-    exit 1
-fi
-
 PACKAGE_DIRS=$(find . -mindepth 2 -type f -name 'go.mod' -exec dirname {} \; \
   | grep -E -v "example|internal" \
   | sed 's/^\.\///' \
   | sort)
+
+for dir in $PACKAGE_DIRS
+do
+    if ! grep -Fq "\"${TAG#v}\"" ./version.go
+    then
+        printf "version.go does not contain ${TAG#v}\n"
+        exit 1
+    fi
+done
 
 git tag ${TAG}
 git push origin ${TAG}
