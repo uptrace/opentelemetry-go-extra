@@ -39,11 +39,6 @@ type Logger struct {
 	stackTrace bool
 }
 
-// Deprecated. Use New instead.
-func Wrap(logger *zap.Logger, opts ...Option) *Logger {
-	return New(logger, opts...)
-}
-
 func New(logger *zap.Logger, opts ...Option) *Logger {
 	l := &Logger{
 		Logger: logger,

@@ -27,11 +27,6 @@ type Hook struct {
 
 var _ logrus.Hook = (*Hook)(nil)
 
-// Deprecated. Use NewHook instead.
-func NewLoggingHook(opts ...Option) *Hook {
-	return NewHook(opts...)
-}
-
 // NewHook returns a logrus hook.
 func NewHook(opts ...Option) *Hook {
 	hook := &Hook{
