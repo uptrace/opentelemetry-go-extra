@@ -6,6 +6,7 @@
 | ------------------------- | ------------------ | ------------------ |
 | [database/sql](/otelsql/) | :heavy_check_mark: | :heavy_check_mark: |
 | [GORM](/otelgorm/)        | :heavy_check_mark: | :heavy_check_mark: |
+| [sqlx](/sqlx/)            | :heavy_check_mark: | :heavy_check_mark: |
 | [logrus](/otellogrus/)    |                    | :heavy_check_mark: |
 | [Zap](/otelzap/)          |                    | :heavy_check_mark: |
 

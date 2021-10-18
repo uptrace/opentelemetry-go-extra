@@ -16,10 +16,10 @@ func Open(driverName, dsn string, opts ...Option) (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	return PatchDB(db, dsn, opts...)
+	return patchDB(db, dsn, opts...)
 }
 
-func PatchDB(db *sql.DB, dsn string, opts ...Option) (*sql.DB, error) {
+func patchDB(db *sql.DB, dsn string, opts ...Option) (*sql.DB, error) {
 	dbDriver := db.Driver()
 	d := newDriver(dbDriver, opts)
 
