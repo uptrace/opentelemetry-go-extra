@@ -52,11 +52,17 @@ See [example](/example/) for details.
 
 ## Options
 
-This package accepts all the options from
+otelsqlx accepts all the options from
 [otelsql](https://github.com/uptrace/opentelemetry-go-extra/tree/main/otelsql) package, for example:
 
 ```go
+import (
+    "github.com/uptrace/opentelemetry-go-extra/otelsqlx"
+    semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+    _ "modernc.org/sqlite"
+)
+
 db, err := otelsqlx.Open("sqlite", "file::memory:?cache=shared",
 	otelsql.WithAttributes(semconv.DBSystemSqlite),
-       otelsql.WithDBName("mydb"))
+	otelsql.WithDBName("mydb"))
 ```
