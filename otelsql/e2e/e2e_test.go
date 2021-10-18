@@ -11,6 +11,7 @@ import (
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/sdk/trace/tracetest"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+	"go.opentelemetry.io/otel/trace"
 	_ "modernc.org/sqlite"
 
 	"github.com/uptrace/opentelemetry-go-extra/otelsql"
@@ -172,6 +173,9 @@ func TestConn(t *testing.T) {
 			test.do(context.TODO(), db)
 
 			spans := sr.Ended()
+			for _, span := range spans {
+				require.Equal(t, trace.SpanKindClient, span.SpanKind())
+			}
 			test.require(t, spans)
 		})
 	}

@@ -88,7 +88,9 @@ func (t *dbInstrum) withSpan(
 		attrs = append(attrs, semconv.DBStatementKey.String(t.formatQuery(query)))
 	}
 
-	ctx, span := t.tracer.Start(ctx, spanName, trace.WithAttributes(attrs...))
+	ctx, span := t.tracer.Start(ctx, spanName,
+		trace.WithSpanKind(trace.SpanKindClient),
+		trace.WithAttributes(attrs...))
 	err := fn(ctx, span)
 	span.End()
 

@@ -1,6 +1,6 @@
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/uptrace/opentelemetry-go-extra/otelsql)](https://pkg.go.dev/github.com/uptrace/opentelemetry-go-extra/otelsql)
 
-# OpenTelemetry Go instrumentation for database/sql package
+# database/sql instrumentation for OpenTelemetry Go
 
 otelsql instrumentation records database queries (including `Tx` and `Stmt` queries) and reports
 `DBStats` metrics.
@@ -16,8 +16,10 @@ go get github.com/uptrace/opentelemetry-go-extra/otelsql
 To instrument database/sql, you need to connect to a database using the API provided by this
 package:
 
-- `sql.Open(driverName, dsn)` becomes `otelsql.Open(driverName, dsn)`.
-- `sql.OpenDB(connector)` becomes `otelsql.OpenDB(connector)`.
+| sql                         | otelsql                         |
+| --------------------------- | ------------------------------- |
+| `sql.Open(driverName, dsn)` | `otelsql.Open(driverName, dsn)` |
+| `sql.OpenDB(connector)`     | `otelsql.OpenDB(connector)`     |
 
 ```go
 import (
@@ -31,6 +33,8 @@ db, err := otelsql.Open("sqlite", "file::memory:?cache=shared",
 if err != nil {
 	panic(err)
 }
+
+// db is *sql.DB
 ```
 
 And then use context-aware API to propagate the active span via
