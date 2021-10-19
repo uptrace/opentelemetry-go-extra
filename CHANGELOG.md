@@ -1,3 +1,13 @@
+## [0.1.1](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.0...v0.1.1) (2021-10-18)
+
+
+### Features
+
+* add sqlx instrumentation ([bf92fbe](https://github.com/uptrace/opentelemetry-go-extra/commit/bf92fbe5873a96dd86ec5cc682758c1cc9303aba))
+* **otelzap:** add missing globals ([a511657](https://github.com/uptrace/opentelemetry-go-extra/commit/a5116579029afd7b7f9d42125ce0abc12b93264d))
+
+
+
 # 0.1.0 (2021-10-15)
 
 
