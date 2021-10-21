@@ -68,3 +68,52 @@ the same [options](https://pkg.go.dev/github.com/uptrace/opentelemetry-go-extra/
 
 - https://github.com/XSAM/otelsql - different driver registration and no metrics.
 - https://github.com/j2gg0s/otsql - like XSAM/otelsql but with Prometheus metrics.
+
+## sqlboiler
+
+You can use otelsql to instrument [sqlboiler](https://github.com/volatiletech/sqlboiler) ORM:
+
+```go
+import (
+    "github.com/uptrace/opentelemetry-go-extra/otelsql"
+    semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+)
+
+db, err := otelsql.Open("postgres", "dbname=fun user=abc",
+    otelsql.WithAttributes(semconv.DBSystemPostgreSQL))
+if err != nil {
+  return err
+}
+
+boil.SetDB(db)
+```
+
+## GORM 1
+
+You can use otelsql to instrument [GORM 1](https://v1.gorm.io/):
+
+```go
+import (
+    "github.com/jinzhu/gorm"
+    "github.com/uptrace/opentelemetry-go-extra/otelsql"
+    semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+)
+
+// gormOpen is like gorm.Open, but it uses otelsql to instrument the database.
+func gormOpen(driverName, dataSourceName string, opts ...otelsql.Option) (*gorm.DB, error) {
+	db, err := otelsql.Open(driverName, dataSourceName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return gorm.Open(driverName, db)
+}
+
+db, err := gormOpen("mysql", "user:password@/dbname",
+    otelsql.WithAttributes(semconv.DBSystemMySQL))
+if err != nil {
+    panic(err)
+}
+```
+
+To instrument GORM 2, use
+[otelgorm](https://github.com/uptrace/opentelemetry-go-extra/tree/main/otelgorm).
