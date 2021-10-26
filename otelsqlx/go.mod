@@ -1,4 +1,4 @@
-module github.com/uptrace/uptrace-go/extra/otelsqlx
+module github.com/uptrace/opentelemetry-go-extra/otelsqlx
 
 go 1.16
 
