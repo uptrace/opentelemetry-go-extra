@@ -64,11 +64,6 @@ the same [options](https://pkg.go.dev/github.com/uptrace/opentelemetry-go-extra/
   [semconv](https://pkg.go.dev/go.opentelemetry.io/otel/semconv/v1.4.0), for example,
   `otelsql.WithAttributes(semconv.DBSystemSqlite)`.
 
-## Alternatives
-
-- https://github.com/XSAM/otelsql - different driver registration and no metrics.
-- https://github.com/j2gg0s/otsql - like XSAM/otelsql but with Prometheus metrics.
-
 ## sqlboiler
 
 You can use otelsql to instrument [sqlboiler](https://github.com/volatiletech/sqlboiler) ORM:
@@ -117,3 +112,8 @@ if err != nil {
 
 To instrument GORM 2, use
 [otelgorm](https://github.com/uptrace/opentelemetry-go-extra/tree/main/otelgorm).
+
+## Alternatives
+
+- https://github.com/XSAM/otelsql - different driver registration and no metrics.
+- https://github.com/j2gg0s/otsql - like XSAM/otelsql but with Prometheus metrics.

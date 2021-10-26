@@ -10,6 +10,9 @@
 | [logrus](/otellogrus/)    |                    | :heavy_check_mark: |
 | [Zap](/otelzap/)          |                    | :heavy_check_mark: |
 
+You can search for instrumentations [here](https://opentelemetry.uptrace.dev/instrumentations/) and
+[here](https://opentelemetry.io/registry/).
+
 ## Contributing
 
 To simiplify maintenance, we use a single version and a shared [changelog](CHANGELOG.md) for all
