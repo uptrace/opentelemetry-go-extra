@@ -1,3 +1,12 @@
+## [0.1.2](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.1...v0.1.2) (2021-10-26)
+
+
+### Bug Fixes
+
+* update Go module import for otelsqlx package ([2d517f7](https://github.com/uptrace/opentelemetry-go-extra/commit/2d517f7c01dcd5a6166e2ef4049ec983ec512c75))
+
+
+
 ## [0.1.1](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.0...v0.1.1) (2021-10-18)
 
 
