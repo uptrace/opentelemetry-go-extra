@@ -1,8 +1,8 @@
-module github.com/uptrace/opentelemetry-go-extra/otelsql/e2e
+module github.com/uptrace/opentelemetry-go-extra/otelsql/internal
 
 go 1.16
 
-replace github.com/uptrace/opentelemetry-go-extra/otelsql => ./..
+replace github.com/uptrace/opentelemetry-go-extra/otelsql => ../
 
 require (
 	github.com/stretchr/testify v1.7.0
