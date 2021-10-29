@@ -51,7 +51,7 @@ import (
   "github.com/uptrace/opentelemetry-go-extra/otelgraphql-go"
 )
 
-tracer := otelgraphqlgo.NewOpenTelemetryTracer(otelgraphqlgo.WithTracerProvider(traceProvider))
+tracer := otelgraphql.NewTracer(otelgraphql.WithTracerProvider(traceProvider))
 
 opts := []graphql.SchemaOpt{
   graphql.Tracer(tracer),

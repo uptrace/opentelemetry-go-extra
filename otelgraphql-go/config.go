@@ -1,4 +1,4 @@
-package otelgraphqlgo
+package otelgraphql
 
 import (
 	oteltrace "go.opentelemetry.io/otel/trace"

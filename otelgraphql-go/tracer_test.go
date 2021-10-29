@@ -1,4 +1,4 @@
-package otelgraphqlgo
+package otelgraphql
 
 import (
 	"errors"
@@ -49,7 +49,7 @@ func newFixture() *fixture {
 	tp := tracesdk.NewTracerProvider()
 	tp.RegisterSpanProcessor(sr)
 
-	tracer := NewOpenTelemetryTracer(WithTracerProvider(tp))
+	tracer := NewTracer(WithTracerProvider(tp))
 
 	opts := []graphql.SchemaOpt{
 		graphql.Tracer(tracer),

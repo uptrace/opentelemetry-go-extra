@@ -10,11 +10,12 @@ import (
 	"github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
 
-	"github.com/uptrace/opentelemetry-go-extra/otelgraphql-go"
 	stdout "go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+
+	"github.com/uptrace/opentelemetry-go-extra/otelgraphql"
 )
 
 const schemaString = `
@@ -107,7 +108,7 @@ func main() {
 			semconv.ServiceNameKey.String("graphql-server"),
 		)),
 	)
-	tracer := otelgraphqlgo.NewOpenTelemetryTracer(otelgraphqlgo.WithTracerProvider(tp))
+	tracer := otelgraphql.NewTracer(otelgraphql.WithTracerProvider(tp))
 
 	defer func() {
 		if err = tp.Shutdown(context.Background()); err != nil {

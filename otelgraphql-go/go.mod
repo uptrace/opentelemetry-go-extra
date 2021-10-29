@@ -1,4 +1,4 @@
-module github.com/uptrace/opentelemetry-go-extra/otelgraphqlgo
+module github.com/uptrace/opentelemetry-go-extra/otelgraphql
 
 go 1.15
 

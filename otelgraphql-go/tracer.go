@@ -1,4 +1,4 @@
-package otelgraphqlgo
+package otelgraphql
 
 import (
 	"context"
@@ -17,13 +17,13 @@ import (
 	oteltrace "go.opentelemetry.io/otel/trace"
 )
 
-type OpenTelemetryTracer struct {
-	Tracer oteltrace.Tracer
+type Tracer struct {
+	tracer oteltrace.Tracer
 }
 
 const tracerName = "github.com/uptrace/opentelemetry-go-extra/otelgraphql-go"
 
-func NewOpenTelemetryTracer(opts ...Option) OpenTelemetryTracer {
+func NewTracer(opts ...Option) *Tracer {
 	cfg := config{}
 	for _, opt := range opts {
 		opt.apply(&cfg)
@@ -35,14 +35,14 @@ func NewOpenTelemetryTracer(opts ...Option) OpenTelemetryTracer {
 		tracerName,
 		oteltrace.WithInstrumentationVersion(otelcontrib.SemVersion()),
 	)
-	return OpenTelemetryTracer{Tracer: tracer}
+	return &Tracer{tracer: tracer}
 }
 
-func (t OpenTelemetryTracer) TraceQuery(ctx context.Context,
+func (t Tracer) TraceQuery(ctx context.Context,
 	queryString string, operationName string,
 	variables map[string]interface{},
 	varTypes map[string]*introspection.Type) (context.Context, trace.TraceQueryFinishFunc) {
-	spanCtx, span := t.Tracer.Start(ctx, "GraphQL request",
+	spanCtx, span := t.tracer.Start(ctx, "GraphQL request",
 		oteltrace.WithSpanKind(oteltrace.SpanKindServer),
 	)
 	span.SetAttributes(attribute.String("trace.operation", "request"))
@@ -71,7 +71,7 @@ func (t OpenTelemetryTracer) TraceQuery(ctx context.Context,
 	}
 }
 
-func (t OpenTelemetryTracer) TraceField(ctx context.Context,
+func (t Tracer) TraceField(ctx context.Context,
 	label,
 	typeName,
 	fieldName string,
@@ -81,7 +81,7 @@ func (t OpenTelemetryTracer) TraceField(ctx context.Context,
 		return ctx, func(*errors.QueryError) {}
 	}
 
-	spanCtx, span := t.Tracer.Start(ctx, label)
+	spanCtx, span := t.tracer.Start(ctx, label)
 	span.SetAttributes(attribute.String("trace.operation", "field"))
 	span.SetAttributes(attribute.String("graphql.type", typeName))
 	span.SetAttributes(attribute.String("graphql.field", fieldName))
@@ -98,9 +98,9 @@ func (t OpenTelemetryTracer) TraceField(ctx context.Context,
 	}
 }
 
-func (t OpenTelemetryTracer) TraceValidation(ctx context.Context) trace.TraceValidationFinishFunc {
+func (t Tracer) TraceValidation(ctx context.Context) trace.TraceValidationFinishFunc {
 
-	_, span := t.Tracer.Start(ctx, "Validate query")
+	_, span := t.tracer.Start(ctx, "Validate query")
 	span.SetAttributes(attribute.String("trace.operation", "validation"))
 
 	return func(errs []*errors.QueryError) {
