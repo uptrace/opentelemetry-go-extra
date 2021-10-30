@@ -10,7 +10,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.2
 	github.com/uptrace/opentelemetry-go-extra/otelsqlx v0.1.2
-	go.opentelemetry.io/otel v1.0.1
+	go.opentelemetry.io/otel v1.1.0
 	go.opentelemetry.io/otel/sdk v1.0.1
 	modernc.org/sqlite v1.13.3
 )
