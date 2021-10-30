@@ -21,7 +21,7 @@ type Tracer struct {
 	tracer oteltrace.Tracer
 }
 
-const tracerName = "github.com/uptrace/opentelemetry-go-extra/otelgraphql-go"
+const tracerName = "github.com/uptrace/opentelemetry-go-extra/otelgraphql"
 
 func NewTracer(opts ...Option) *Tracer {
 	cfg := config{}
@@ -99,7 +99,6 @@ func (t Tracer) TraceField(ctx context.Context,
 }
 
 func (t Tracer) TraceValidation(ctx context.Context) trace.TraceValidationFinishFunc {
-
 	_, span := t.tracer.Start(ctx, "Validate query")
 	span.SetAttributes(attribute.String("trace.operation", "validation"))
 

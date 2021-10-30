@@ -1,8 +1,8 @@
-module github.com/uptrace/opentelemetry-go-extra/otelgraphql-go/example
+module github.com/uptrace/opentelemetry-go-extra/otelgraphql/example
 
 go 1.15
 
-replace github.com/uptrace/opentelemetry-go-extra/otelgraphql => ./..
+replace github.com/uptrace/opentelemetry-go-extra/otelgraphql => ../
 
 require (
 	github.com/google/uuid v1.3.0
