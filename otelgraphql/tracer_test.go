@@ -9,7 +9,6 @@ import (
 
 	"github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
@@ -32,9 +31,11 @@ type RootResolver struct{}
 func (*RootResolver) Echo(args struct{ Message string }) string {
 	return args.Message
 }
+
 func (r *RootResolver) Echo2(args struct{ Message string }) string {
 	return r.Echo(args)
 }
+
 func (r *RootResolver) EchoError() (string, error) {
 	return "", errors.New("echo error")
 }
@@ -83,27 +84,9 @@ func TestForSingleFieldTrace(t *testing.T) {
 	spans := newFixture().getSpans(query, vars)
 
 	require.Len(t, spans, 3)
-	var hasValidationSpan, hasFieldSpan, hasRequestSpan bool
-	var spanQuery, spanField string
-	for _, span := range spans {
-		details := getSpanDetails(span)
-		if details.SpanType == ValidationSpan {
-			hasValidationSpan = true
-		}
-		if details.SpanType == FieldSpan {
-			hasFieldSpan = true
-			spanField = details.Field
-		}
-		if details.SpanType == RequestSpan {
-			hasRequestSpan = true
-			spanQuery = details.Query
-		}
-	}
-	assert.True(t, hasValidationSpan)
-	assert.True(t, hasFieldSpan)
-	assert.True(t, hasRequestSpan)
-	assert.Equal(t, query, spanQuery)
-	assert.Equal(t, "echo", spanField)
+	require.Equal(t, "graphql.Validate", spans[0].Name())
+	require.Equal(t, "GraphQL field: Query.echo", spans[1].Name())
+	require.Equal(t, "graphql.Echo", spans[2].Name())
 }
 
 func TestForTwoFieldTraces(t *testing.T) {
@@ -112,23 +95,10 @@ func TestForTwoFieldTraces(t *testing.T) {
 	spans := newFixture().getSpans(query, vars)
 
 	require.Len(t, spans, 4)
-	var hasValidationSpan, hasRequestSpan bool
-	var fieldSpans int
-	for _, span := range spans {
-		details := getSpanDetails(span)
-		if details.SpanType == ValidationSpan {
-			hasValidationSpan = true
-		}
-		if details.SpanType == FieldSpan {
-			fieldSpans++
-		}
-		if details.SpanType == RequestSpan {
-			hasRequestSpan = true
-		}
-	}
-	assert.True(t, hasValidationSpan)
-	assert.Equal(t, fieldSpans, 2)
-	assert.True(t, hasRequestSpan)
+	require.Equal(t, "graphql.Validate", spans[0].Name())
+	require.Equal(t, "GraphQL field: Query.echo2", spans[1].Name())
+	require.Equal(t, "GraphQL field: Query.echo", spans[2].Name())
+	require.Equal(t, "graphql.Echo", spans[3].Name())
 }
 
 func TestForValidationTraceWithError(t *testing.T) {
@@ -137,9 +107,13 @@ func TestForValidationTraceWithError(t *testing.T) {
 	spans := newFixture().getSpans(query, vars)
 
 	require.Len(t, spans, 1)
-	details := getSpanDetails(spans[0])
-	assert.Equal(t, details.SpanType, ValidationSpan)
-	assert.True(t, details.HasError)
+	span := spans[0]
+	require.Equal(t, "graphql.Validate", span.Name())
+
+	events := span.Events()
+	require.Equal(t, 1, len(events))
+	event := events[0]
+	require.Equal(t, "exception", event.Name)
 }
 
 func TestForRequestTraceWithError(t *testing.T) {
@@ -148,64 +122,12 @@ func TestForRequestTraceWithError(t *testing.T) {
 	spans := newFixture().getSpans(query, vars)
 
 	require.Len(t, spans, 3)
-	var hasFieldSpan, hasValidationSpan, hasRequestSpan, requestSpanHasError bool
-	for _, span := range spans {
-		details := getSpanDetails(span)
-		if details.SpanType == ValidationSpan {
-			hasValidationSpan = true
-		}
-		if details.SpanType == FieldSpan {
-			hasFieldSpan = true
-		}
-		if details.SpanType == RequestSpan {
-			hasRequestSpan = true
-			requestSpanHasError = details.HasError
-		}
-	}
-	assert.True(t, hasValidationSpan)
-	assert.True(t, hasFieldSpan)
-	assert.True(t, hasRequestSpan)
-	assert.True(t, requestSpanHasError)
-}
+	require.Equal(t, "graphql.Validate", spans[0].Name())
+	require.Equal(t, "GraphQL field: Query.echoError", spans[1].Name())
+	require.Equal(t, "graphql.Request", spans[2].Name())
 
-type spanType int
-
-const (
-	Unset          spanType = iota
-	RequestSpan    spanType = iota
-	ValidationSpan spanType = iota
-	FieldSpan      spanType = iota
-)
-
-type spanDetails struct {
-	SpanType spanType
-	HasError bool
-	Query    string
-	Field    string
-}
-
-func getSpanDetails(span tracesdk.ReadOnlySpan) spanDetails {
-	d := spanDetails{
-		HasError: span.Status().Code.String() == "Error",
-		SpanType: Unset,
-	}
-	for _, attr := range span.Attributes() {
-		if attr.Key == "trace.operation" {
-			switch attr.Value.AsString() {
-			case "request":
-				d.SpanType = RequestSpan
-			case "validation":
-				d.SpanType = ValidationSpan
-			case "field":
-				d.SpanType = FieldSpan
-			}
-		}
-		if attr.Key == "graphql.query" {
-			d.Query = attr.Value.AsString()
-		}
-		if attr.Key == "graphql.field" {
-			d.Field = attr.Value.AsString()
-		}
-	}
-	return d
+	events := spans[2].Events()
+	require.Len(t, events, 1)
+	event := events[0]
+	require.Equal(t, "exception", event.Name)
 }

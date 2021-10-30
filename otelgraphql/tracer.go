@@ -38,27 +38,28 @@ func NewTracer(opts ...Option) *Tracer {
 	return &Tracer{tracer: tracer}
 }
 
-func (t Tracer) TraceQuery(ctx context.Context,
+func (t Tracer) TraceQuery(
+	ctx context.Context,
 	queryString string, operationName string,
 	variables map[string]interface{},
-	varTypes map[string]*introspection.Type) (context.Context, trace.TraceQueryFinishFunc) {
-	spanCtx, span := t.tracer.Start(ctx, "GraphQL request",
-		oteltrace.WithSpanKind(oteltrace.SpanKindServer),
-	)
-	span.SetAttributes(attribute.String("trace.operation", "request"))
+	varTypes map[string]*introspection.Type,
+) (context.Context, trace.TraceQueryFinishFunc) {
+	var spanName string
+	if operationName != "" {
+		spanName = "graphql." + operationName
+	} else {
+		spanName = "graphql.Request"
+	}
+
+	ctx, span := t.tracer.Start(ctx, spanName,
+		oteltrace.WithSpanKind(oteltrace.SpanKindServer))
 	span.SetAttributes(attribute.String("graphql.query", queryString))
 
-	if operationName != "" {
-		span.SetAttributes(attribute.String("graphql.operationName", operationName))
+	for name, value := range variables {
+		span.SetAttributes(attrAny("graphql.variables."+name, value))
 	}
 
-	if len(variables) != 0 {
-		for name, value := range variables {
-			span.SetAttributes(attrAny("graphql.variables."+name, value))
-		}
-	}
-
-	return spanCtx, func(errs []*errors.QueryError) {
+	return ctx, func(errs []*errors.QueryError) {
 		if len(errs) > 0 {
 			msg := errs[0].Error()
 			if len(errs) > 1 {
@@ -71,25 +72,26 @@ func (t Tracer) TraceQuery(ctx context.Context,
 	}
 }
 
-func (t Tracer) TraceField(ctx context.Context,
+func (t Tracer) TraceField(
+	ctx context.Context,
 	label,
 	typeName,
 	fieldName string,
 	trivial bool,
-	args map[string]interface{}) (context.Context, trace.TraceFieldFinishFunc) {
+	args map[string]interface{},
+) (context.Context, trace.TraceFieldFinishFunc) {
 	if trivial {
 		return ctx, func(*errors.QueryError) {}
 	}
 
-	spanCtx, span := t.tracer.Start(ctx, label)
-	span.SetAttributes(attribute.String("trace.operation", "field"))
+	ctx, span := t.tracer.Start(ctx, label)
 	span.SetAttributes(attribute.String("graphql.type", typeName))
 	span.SetAttributes(attribute.String("graphql.field", fieldName))
 	for name, value := range args {
 		span.SetAttributes(attrAny("graphql.args."+name, value))
 	}
 
-	return spanCtx, func(err *errors.QueryError) {
+	return ctx, func(err *errors.QueryError) {
 		if err != nil {
 			span.RecordError(err)
 			span.SetStatus(codes.Error, err.Error())
@@ -99,8 +101,7 @@ func (t Tracer) TraceField(ctx context.Context,
 }
 
 func (t Tracer) TraceValidation(ctx context.Context) trace.TraceValidationFinishFunc {
-	_, span := t.tracer.Start(ctx, "Validate query")
-	span.SetAttributes(attribute.String("trace.operation", "validation"))
+	_, span := t.tracer.Start(ctx, "graphql.Validate")
 
 	return func(errs []*errors.QueryError) {
 		if len(errs) > 0 {
