@@ -2,14 +2,16 @@
 
 [![build workflow](https://github.com/uptrace/opentelemetry-go-extra/actions/workflows/build.yml/badge.svg)](https://github.com/uptrace/opentelemetry-go-extra/actions/workflows/build.yml)
 
-| Instrumentation Package     | Metrics            | Traces             |
-| --------------------------- | ------------------ | ------------------ |
-| [database/sql](/otelsql/)   | :heavy_check_mark: | :heavy_check_mark: |
-| [GORM](/otelgorm/)          | :heavy_check_mark: | :heavy_check_mark: |
-| [sqlx](/otelsqlx/)          | :heavy_check_mark: | :heavy_check_mark: |
-| [logrus](/otellogrus/)      |                    | :heavy_check_mark: |
-| [Zap](/otelzap/)            |                    | :heavy_check_mark: |
-| [graphql-go](/otelgraphql/) |                    | :heavy_check_mark: |
+| Instrumentation Package         | Metrics            | Traces             |
+| ------------------------------- | ------------------ | ------------------ |
+| [database/sql](/otelsql/)       | :heavy_check_mark: | :heavy_check_mark: |
+| [GORM 1](/otelsql/#gorm-1)      | :heavy_check_mark: | :heavy_check_mark: |
+| [GORM 2](/otelgorm/)            | :heavy_check_mark: | :heavy_check_mark: |
+| [sqlx](/otelsqlx/)              | :heavy_check_mark: | :heavy_check_mark: |
+| [sqlboler](/otelsql/#sqlboiler) | :heavy_check_mark: | :heavy_check_mark: |
+| [logrus](/otellogrus/)          |                    | :heavy_check_mark: |
+| [Zap](/otelzap/)                |                    | :heavy_check_mark: |
+| [graphql-go](/otelgraphql/)     |                    | :heavy_check_mark: |
 
 You can search for instrumentations [here](https://opentelemetry.uptrace.dev/instrumentations/) and
 [here](https://opentelemetry.io/registry/).
