@@ -31,7 +31,7 @@ func ConfigureOpentelemetry(ctx context.Context) func() {
 	case os.Getenv("UPTRACE_DSN") != "":
 		uptrace.ConfigureOpentelemetry()
 		return func() {
-			uptrace.Shutdown(ctx)
+			_ = uptrace.Shutdown(ctx)
 		}
 	case os.Getenv("OTEL_EXPORTER_JAEGER_ENDPOINT") != "":
 		return configureJaeger(ctx)
