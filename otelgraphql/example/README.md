@@ -1,7 +1,7 @@
 # Example for graphql-go OpenTelemetry instrumentation
 
 This example consists of a server that runs a GraphQL handler and a client that makes requests to
-the server.
+the server. First, you should run the server and then run the client.
 
 ## Server
 
