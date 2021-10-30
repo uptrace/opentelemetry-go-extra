@@ -4,19 +4,18 @@ import (
 	"context"
 
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
-	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
 	"github.com/uptrace/opentelemetry-go-extra/otelgorm"
+	"github.com/uptrace/opentelemetry-go-extra/otelplay"
 )
 
 func main() {
 	ctx := context.Background()
 
-	stop := configureOpentelemetry(ctx)
-	defer stop()
+	shutdown := otelplay.ConfigureOpentelemetry(ctx)
+	defer shutdown()
 
 	db, err := gorm.Open(sqlite.Open("file::memory:?cache=shared"), &gorm.Config{})
 	if err != nil {
@@ -27,27 +26,15 @@ func main() {
 		panic(err)
 	}
 
+	tracer := otel.Tracer("app_or_package_name")
+
+	ctx, span := tracer.Start(ctx, "root")
+	defer span.End()
+
 	var num int
 	if err := db.WithContext(ctx).Raw("SELECT 42").Scan(&num).Error; err != nil {
 		panic(err)
 	}
-}
 
-func configureOpentelemetry(ctx context.Context) func() {
-	provider := sdktrace.NewTracerProvider()
-	otel.SetTracerProvider(provider)
-
-	exp, err := stdouttrace.New(stdouttrace.WithPrettyPrint())
-	if err != nil {
-		panic(err)
-	}
-
-	bsp := sdktrace.NewBatchSpanProcessor(exp)
-	provider.RegisterSpanProcessor(bsp)
-
-	return func() {
-		if err := provider.Shutdown(ctx); err != nil {
-			panic(err)
-		}
-	}
+	otelplay.PrintTraceID(ctx)
 }

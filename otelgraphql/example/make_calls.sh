@@ -1,5 +1,5 @@
 #!/bin/bash
-ENDPOINT='http://graphql-go-server:8080/graphql'
+ENDPOINT='http://localhost:8080/graphql'
 
 wget --body-data '{"query":"query AllUserFullNames {users {fullName}}","variables":{}}' \
   --method GET \

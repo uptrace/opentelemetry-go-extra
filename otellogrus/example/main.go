@@ -6,21 +6,20 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
-	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 
 	"github.com/uptrace/opentelemetry-go-extra/otellogrus"
+	"github.com/uptrace/opentelemetry-go-extra/otelplay"
 )
 
 func main() {
 	ctx := context.Background()
 
-	stop := configureOpentelemetry(ctx)
-	defer stop()
+	shutdown := otelplay.ConfigureOpentelemetry(ctx)
+	defer shutdown()
 
 	tracer := otel.Tracer("app_or_package_name")
 
-	ctx, span := tracer.Start(ctx, "main")
+	ctx, span := tracer.Start(ctx, "root")
 	defer span.End()
 
 	// Instrument logrus.
@@ -36,23 +35,6 @@ func main() {
 		WithError(errors.New("hello world")).
 		WithField("foo", "bar").
 		Error("something failed")
-}
 
-func configureOpentelemetry(ctx context.Context) func() {
-	provider := sdktrace.NewTracerProvider()
-	otel.SetTracerProvider(provider)
-
-	exp, err := stdouttrace.New(stdouttrace.WithPrettyPrint())
-	if err != nil {
-		panic(err)
-	}
-
-	bsp := sdktrace.NewBatchSpanProcessor(exp)
-	provider.RegisterSpanProcessor(bsp)
-
-	return func() {
-		if err := provider.Shutdown(ctx); err != nil {
-			panic(err)
-		}
-	}
+	otelplay.PrintTraceID(ctx)
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -10,12 +11,8 @@ import (
 	"github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
 
-	stdout "go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
-	"go.opentelemetry.io/otel/sdk/resource"
-	sdktrace "go.opentelemetry.io/otel/sdk/trace"
-	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
-
 	"github.com/uptrace/opentelemetry-go-extra/otelgraphql"
+	"github.com/uptrace/opentelemetry-go-extra/otelplay"
 )
 
 const schemaString = `
@@ -96,26 +93,12 @@ func (*RootResolver) CreateUser(args struct{ UserInput UserInput }) (*User, erro
 var schema *graphql.Schema
 
 func main() {
-	exporter, err := stdout.New(stdout.WithPrettyPrint())
-	if err != nil {
-		log.Fatal(err)
-	}
-	tp := sdktrace.NewTracerProvider(
-		sdktrace.WithSampler(sdktrace.AlwaysSample()),
-		sdktrace.WithBatcher(exporter),
-		sdktrace.WithResource(resource.NewWithAttributes(
-			semconv.SchemaURL,
-			semconv.ServiceNameKey.String("graphql-server"),
-		)),
-	)
-	tracer := otelgraphql.NewTracer(otelgraphql.WithTracerProvider(tp))
+	ctx := context.Background()
 
-	defer func() {
-		if err = tp.Shutdown(context.Background()); err != nil {
-			log.Printf("Error shutting down tracer provider: %v", err)
-		}
-	}()
+	shutdown := otelplay.ConfigureOpentelemetry(ctx)
+	defer shutdown()
 
+	tracer := otelgraphql.NewTracer()
 	opts := []graphql.SchemaOpt{
 		graphql.Tracer(tracer),
 		graphql.UseFieldResolvers(),
@@ -124,5 +107,6 @@ func main() {
 
 	http.Handle("/graphql", &relay.Handler{Schema: schema})
 
+	fmt.Println("listening on http://localhost:8080/")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
