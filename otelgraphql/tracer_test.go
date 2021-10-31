@@ -96,8 +96,9 @@ func TestForTwoFieldTraces(t *testing.T) {
 
 	require.Len(t, spans, 4)
 	require.Equal(t, "graphql.Validate", spans[0].Name())
-	require.Equal(t, "GraphQL field: Query.echo2", spans[1].Name())
-	require.Equal(t, "GraphQL field: Query.echo", spans[2].Name())
+	require.ElementsMatch(t,
+		[]string{"GraphQL field: Query.echo", "GraphQL field: Query.echo2"},
+		[]string{spans[1].Name(), spans[2].Name()})
 	require.Equal(t, "graphql.Echo", spans[3].Name())
 }
 
