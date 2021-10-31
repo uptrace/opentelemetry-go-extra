@@ -1,3 +1,12 @@
+## [0.1.3](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.2...v0.1.3) (2021-10-31)
+
+
+### Features
+
+* otelgraphql-go instrumentation ([#9](https://github.com/uptrace/opentelemetry-go-extra/issues/9)) ([5cf626d](https://github.com/uptrace/opentelemetry-go-extra/commit/5cf626db67dd1e6f5c90b786259ea0a9091d08d3))
+
+
+
 ## [0.1.2](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.1...v0.1.2) (2021-10-26)
 
 
