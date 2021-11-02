@@ -1,4 +1,6 @@
-# Example for otelzap instrumentation
+# Gin example for OpenTelemetry
+
+[![PkgGoDev](https://pkg.go.dev/badge/go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin)](https://pkg.go.dev/go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin)
 
 You can run this example with different exporters by providing environment variables.
 
@@ -19,8 +21,6 @@ OTEL_EXPORTER_JAEGER_ENDPOINT=http://localhost:14268/api/traces go run .
 ```shell
 UPTRACE_DSN="https://<token>@api.uptrace.dev/<project_id>" go run .
 ```
-
-See [otelzap](../) for documentation.
 
 ## Links
 

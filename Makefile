@@ -9,7 +9,7 @@ test:
 
 fmt:
 	gofmt -w -s ./
-	goimports -w  -local github.com/uptrace/opentelemetry-go-extra ./
+	gofumports -w  -local github.com/uptrace/opentelemetry-go-extra ./
 
 go_mod_tidy:
 	set -e; for dir in $(PACKAGE_DIRS); do \
