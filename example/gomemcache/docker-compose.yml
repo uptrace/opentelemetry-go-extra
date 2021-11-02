@@ -1,0 +1,6 @@
+version: '3.7'
+services:
+  memcached-server:
+    image: memcached:1.6.7-alpine
+    ports:
+      - 11211:11211
