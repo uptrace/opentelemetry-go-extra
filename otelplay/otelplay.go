@@ -14,15 +14,17 @@ import (
 )
 
 func PrintTraceID(ctx context.Context) {
-	span := trace.SpanFromContext(ctx)
+	fmt.Println("trace:", TraceURL(trace.SpanFromContext(ctx)))
+}
 
+func TraceURL(span trace.Span) string {
 	switch {
 	case os.Getenv("UPTRACE_DSN") != "":
-		fmt.Println("trace:", uptrace.TraceURL(span))
+		return fmt.Sprintf("https://uptrace.dev/traces/%s", span.SpanContext().TraceID())
 	case os.Getenv("OTEL_EXPORTER_JAEGER_ENDPOINT") != "":
-		fmt.Printf("trace: http://localhost:16686/trace/%s\n", span.SpanContext().TraceID())
+		return fmt.Sprintf("http://localhost:16686/trace/%s", span.SpanContext().TraceID())
 	default:
-		// nothing
+		return fmt.Sprintf("http://localhost:16686/trace/%s", span.SpanContext().TraceID())
 	}
 }
 
