@@ -8,13 +8,10 @@ import (
 	"strings"
 
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
-	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/trace"
 
 	"github.com/uptrace/opentelemetry-go-extra/otelplay"
 )
-
-var tracer = otel.Tracer("app_or_package_name")
 
 func main() {
 	ctx := context.Background()
