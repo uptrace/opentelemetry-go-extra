@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo"
@@ -60,13 +61,13 @@ func run(ctx context.Context, db *mongo.Database) error {
 	_, err := coll.InsertOne(
 		ctx,
 		bson.D{
-			{"item", "canvas"},
-			{"qty", 100},
-			{"tags", bson.A{"cotton"}},
-			{"size", bson.D{
-				{"h", 28},
-				{"w", 35.5},
-				{"uom", "cm"},
+			primitive.E{Key: "item", Value: "canvas"},
+			primitive.E{Key: "qty", Value: 100},
+			primitive.E{Key: "tags", Value: bson.A{"cotton"}},
+			primitive.E{Key: "size", Value: bson.D{
+				primitive.E{Key: "h", Value: 28},
+				primitive.E{Key: "w", Value: 35.5},
+				primitive.E{Key: "uom", Value: "cm"},
 			}},
 		})
 	if err != nil {
@@ -75,7 +76,7 @@ func run(ctx context.Context, db *mongo.Database) error {
 
 	_, err = coll.Find(
 		ctx,
-		bson.D{{"item", "canvas"}},
+		bson.D{primitive.E{Key: "item", Value: "canvas"}},
 	)
 	if err != nil {
 		return err
@@ -85,33 +86,33 @@ func run(ctx context.Context, db *mongo.Database) error {
 		ctx,
 		[]interface{}{
 			bson.D{
-				{"item", "journal"},
-				{"qty", int32(25)},
-				{"tags", bson.A{"blank", "red"}},
-				{"size", bson.D{
-					{"h", 14},
-					{"w", 21},
-					{"uom", "cm"},
+				primitive.E{Key: "item", Value: "journal"},
+				primitive.E{Key: "qty", Value: int32(25)},
+				primitive.E{Key: "tags", Value: bson.A{"blank", "red"}},
+				primitive.E{Key: "size", Value: bson.D{
+					primitive.E{Key: "h", Value: 14},
+					primitive.E{Key: "w", Value: 21},
+					primitive.E{Key: "uom", Value: "cm"},
 				}},
 			},
 			bson.D{
-				{"item", "mat"},
-				{"qty", int32(25)},
-				{"tags", bson.A{"gray"}},
-				{"size", bson.D{
-					{"h", 27.9},
-					{"w", 35.5},
-					{"uom", "cm"},
+				primitive.E{Key: "item", Value: "mat"},
+				primitive.E{Key: "qty", Value: int32(25)},
+				primitive.E{Key: "tags", Value: bson.A{"gray"}},
+				primitive.E{Key: "size", Value: bson.D{
+					primitive.E{Key: "h", Value: 27.9},
+					primitive.E{Key: "w", Value: 35.5},
+					primitive.E{Key: "uom", Value: "cm"},
 				}},
 			},
 			bson.D{
-				{"item", "mousepad"},
-				{"qty", 25},
-				{"tags", bson.A{"gel", "blue"}},
-				{"size", bson.D{
-					{"h", 19},
-					{"w", 22.85},
-					{"uom", "cm"},
+				primitive.E{Key: "item", Value: "mousepad"},
+				primitive.E{Key: "qty", Value: 25},
+				primitive.E{Key: "tags", Value: bson.A{"gel", "blue"}},
+				primitive.E{Key: "size", Value: bson.D{
+					primitive.E{Key: "h", Value: 19},
+					primitive.E{Key: "w", Value: 22.85},
+					primitive.E{Key: "uom", Value: "cm"},
 				}},
 			},
 		})
