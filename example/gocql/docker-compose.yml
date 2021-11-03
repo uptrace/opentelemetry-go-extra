@@ -1,0 +1,7 @@
+version: '3.7'
+
+services:
+  cassandra-server:
+    image: cassandra:3
+    ports:
+      - 9042:9042
