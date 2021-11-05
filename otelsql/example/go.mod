@@ -17,5 +17,5 @@ require (
 	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.3
 	golang.org/x/mod v0.5.1 // indirect
 	golang.org/x/tools v0.1.7 // indirect
-	modernc.org/ccgo/v3 v3.12.49 // indirect
+	modernc.org/libc v1.11.52 // indirect
 )

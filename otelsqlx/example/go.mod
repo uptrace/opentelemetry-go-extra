@@ -16,6 +16,6 @@ require (
 	go.opentelemetry.io/otel v1.1.0
 	golang.org/x/mod v0.5.1 // indirect
 	golang.org/x/tools v0.1.7 // indirect
-	modernc.org/ccgo/v3 v3.12.49 // indirect
+	modernc.org/libc v1.11.52 // indirect
 	modernc.org/sqlite v1.13.3
 )
