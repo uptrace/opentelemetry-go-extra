@@ -22,7 +22,7 @@ OTEL_EXPORTER_JAEGER_ENDPOINT=http://localhost:14268/api/traces go run server.go
 **Uptrace** exporter:
 
 ```shell
-UPTRACE_DSN="https://<token>@api.uptrace.dev/<project_id>" go run server.go
+UPTRACE_DSN="https://<token>@uptrace.dev/<project_id>" go run server.go
 ```
 
 ## Client
