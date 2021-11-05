@@ -9,12 +9,12 @@ replace github.com/uptrace/opentelemetry-go-extra/otelgorm => ./..
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelgorm v0.1.3
+	github.com/uptrace/opentelemetry-go-extra/otelgorm v0.1.4
 	gorm.io/driver/sqlite v1.2.3
 	gorm.io/gorm v1.22.2
 )
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.3
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.4
 	go.opentelemetry.io/otel v1.1.0
 )
