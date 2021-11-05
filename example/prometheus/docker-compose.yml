@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  prometheus:
+    build: ./prometheus
+    ports:
+      - '9090:9090'
+  metrics:
+    build: ./metrics
+    ports:
+      - '8088:8088'
