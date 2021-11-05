@@ -42,5 +42,5 @@ UPTRACE_DSN="https://<token>@uptrace.dev/<project_id>" go run client/client.go
 
 ## Links
 
-- [Find instrumentations](https://opentelemetry.uptrace.dev/instrumentations/?lang=go)
+- [OpenTelemetry Go instrumentations](https://opentelemetry.uptrace.dev/instrumentations/?lang=go)
 - [OpenTelemetry Tracing API](https://opentelemetry.uptrace.dev/guide/go-tracing.html)
