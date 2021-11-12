@@ -2,8 +2,7 @@
 
 # OpenTelemetry Go instrumentation for the graphql-go GraphQL Server
 
-This instrumentation records logrus log messages as events on the existing span that is passed via a
-`context.Context`. It does not record anything if a context does not contain a span.
+This instrumentation records GraphQL operations using OpenTelemetry API.
 
 ## Installation
 

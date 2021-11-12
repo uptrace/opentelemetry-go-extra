@@ -2,8 +2,9 @@
 
 # OpenTelemetry Go instrumentation for Zap logging library
 
-This instrumentation records Zap log messages as events on the existing span that is passed via a
-`context.Context`. It does not record anything if a context does not contain a span.
+This instrumentation records Zap log messages as events on the existing span that must be passed in
+a `context.Context` as a first argument. It does not record anything if the context does not contain
+a span.
 
 ## Installation
 
@@ -13,7 +14,7 @@ go get github.com/uptrace/opentelemetry-go-extra/otelzap
 
 ## Usage
 
-You need to create a `otelzap.Logger` that wraps a `zap.Logger` and accepts
+You need to create an `otelzap.Logger` using this package and pass a
 [context](https://docs.uptrace.dev/guide/go.html#context) to propage the active span.
 
 ```go
@@ -22,7 +23,7 @@ import (
     "github.com/uptrace/opentelemetry-go-extra/otelzap"
 )
 
-// Wrap zap logger to extend Zap with the API that accepts a context.Context.
+// Wrap zap logger to extend Zap with API that accepts a context.Context.
 log := otelzap.New(zap.L())
 
 // And then pass ctx to propagate the span.
@@ -36,7 +37,7 @@ log.ErrorContext(ctx, "hello from zap",
 	zap.String("foo", "bar"))
 ```
 
-See [example](/example/) for details.
+Both variants are fast and don't allocate. See [example](/example/) for details.
 
 ### Sugared logger
 
