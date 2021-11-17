@@ -10,5 +10,5 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/uptrace/opentelemetry-go-extra/otellogrus v0.1.4
 	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.4
-	go.opentelemetry.io/otel v1.1.0
+	go.opentelemetry.io/otel v1.2.0
 )
