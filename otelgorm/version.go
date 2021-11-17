@@ -2,5 +2,5 @@ package otelgorm
 
 // Version is the current release version.
 func Version() string {
-	return "0.1.4"
+	return "0.1.5"
 }

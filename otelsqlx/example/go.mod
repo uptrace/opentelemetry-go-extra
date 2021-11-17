@@ -10,9 +10,9 @@ replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.4
-	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.4
-	github.com/uptrace/opentelemetry-go-extra/otelsqlx v0.1.4
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.5
+	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.5
+	github.com/uptrace/opentelemetry-go-extra/otelsqlx v0.1.5
 	go.opentelemetry.io/otel v1.2.0
 	golang.org/x/mod v0.5.1 // indirect
 	golang.org/x/tools v0.1.7 // indirect
