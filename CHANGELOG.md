@@ -1,10 +1,10 @@
 ## [0.1.5](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.4...v0.1.5) (2021-11-17)
 
-
+- Update to OpenTelemetry v1.2.0
 
 ## [0.1.4](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.3...v0.1.4) (2021-11-05)
 
-- Updated OpenTelemetry
+- Update OpenTelemetry
 
 ## [0.1.3](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.2...v0.1.3) (2021-10-31)
 
