@@ -39,7 +39,7 @@ if err != nil {
 ```
 
 And then use context-aware API to propagate the active span via
-[context](https://docs.uptrace.dev/guide/go.html#context):
+[context](https://opentelemetry.uptrace.dev/guide/go-tracing.html#context):
 
 ```go
 var num int

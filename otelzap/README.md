@@ -15,7 +15,8 @@ go get github.com/uptrace/opentelemetry-go-extra/otelzap
 ## Usage
 
 You need to create an `otelzap.Logger` using this package and pass a
-[context](https://docs.uptrace.dev/guide/go.html#context) to propage the active span.
+[context](https://opentelemetry.uptrace.dev/guide/go-tracing.html#context) to propage the active
+span.
 
 ```go
 import (
