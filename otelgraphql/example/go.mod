@@ -4,6 +4,8 @@ go 1.15
 
 replace github.com/uptrace/opentelemetry-go-extra/otelgraphql => ../
 
+replace github.com/uptrace/opentelemetry-go-extra/otelutil => ../../otelutil
+
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (

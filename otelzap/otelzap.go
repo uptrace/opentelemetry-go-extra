@@ -2,7 +2,6 @@ package otelzap
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"math"
 	"reflect"
@@ -16,6 +15,8 @@ import (
 	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+
+	"github.com/uptrace/opentelemetry-go-extra/otelutil"
 )
 
 const numAttr = 5
@@ -490,7 +491,7 @@ func (s *SugaredLogger) logKVs(
 
 	for i := 0; i < len(kvs); i += 2 {
 		if key, ok := kvs[i].(string); ok {
-			attrs = append(attrs, attrAny(key, kvs[i+1]))
+			attrs = append(attrs, otelutil.Attribute(key, kvs[i+1]))
 		}
 	}
 
@@ -665,7 +666,7 @@ func appendField(attrs []attribute.KeyValue, f zapcore.Field) []attribute.KeyVal
 		attrs = append(attrs, semconv.ExceptionMessageKey.String(err.Error()))
 		return attrs
 	case zapcore.ReflectType:
-		attr := attrAny(f.Key, f.Interface)
+		attr := otelutil.Attribute(f.Key, f.Interface)
 		return append(attrs, attr)
 	case zapcore.SkipType:
 		return attrs
@@ -684,61 +685,4 @@ func levelString(lvl zapcore.Level) string {
 		return "PANIC"
 	}
 	return lvl.CapitalString()
-}
-
-func attrAny(key string, value interface{}) attribute.KeyValue {
-	switch value := value.(type) {
-	case nil:
-		return attribute.String(key, "<nil>")
-	case string:
-		return attribute.String(key, value)
-	case int:
-		return attribute.Int(key, value)
-	case int64:
-		return attribute.Int64(key, value)
-	case uint64:
-		return attribute.Int64(key, int64(value))
-	case float64:
-		return attribute.Float64(key, value)
-	case bool:
-		return attribute.Bool(key, value)
-	case fmt.Stringer:
-		return attribute.String(key, value.String())
-	}
-
-	rv := reflect.ValueOf(value)
-
-	switch rv.Kind() {
-	case reflect.Bool:
-		return attribute.Bool(key, rv.Bool())
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		return attribute.Int64(key, rv.Int())
-	case reflect.Float64:
-		return attribute.Float64(key, rv.Float())
-	case reflect.String:
-		return attribute.String(key, rv.String())
-	case reflect.Array:
-		rv = rv.Slice(0, rv.Len())
-		fallthrough
-	case reflect.Slice:
-		switch reflect.TypeOf(value).Elem().Kind() {
-		case reflect.Bool:
-			return attribute.BoolSlice(key, rv.Interface().([]bool))
-		case reflect.Int:
-			return attribute.IntSlice(key, rv.Interface().([]int))
-		case reflect.Int64:
-			return attribute.Int64Slice(key, rv.Interface().([]int64))
-		case reflect.Float64:
-			return attribute.Float64Slice(key, rv.Interface().([]float64))
-		case reflect.String:
-			return attribute.StringSlice(key, rv.Interface().([]string))
-		default:
-			return attribute.KeyValue{Key: attribute.Key(key)}
-		}
-	}
-
-	if b, err := json.Marshal(value); b != nil && err == nil {
-		return attribute.String(key, string(b))
-	}
-	return attribute.String(key, fmt.Sprint(value))
 }
