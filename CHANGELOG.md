@@ -1,3 +1,12 @@
+## [0.1.6](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.5...v0.1.6) (2021-11-25)
+
+
+### Bug Fixes
+
+* ctx fields not propegating to logger ([1520b8c](https://github.com/uptrace/opentelemetry-go-extra/commit/1520b8c4ab1a79539c91b274b25394d7b4cebb0c))
+
+
+
 ## [0.1.5](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.4...v0.1.5) (2021-11-17)
 
 - Update to OpenTelemetry v1.2.0

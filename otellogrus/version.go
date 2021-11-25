@@ -2,5 +2,5 @@ package otellogrus
 
 // Version is the current release version.
 func Version() string {
-	return "0.1.5"
+	return "0.1.6"
 }
