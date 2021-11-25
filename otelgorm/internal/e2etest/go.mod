@@ -1,10 +1,10 @@
-module github.com/uptrace/opentelemetry-go-extra/otelgorm/e2e
+module github.com/uptrace/opentelemetry-go-extra/otelgorm/internal/e2e
 
 go 1.16
 
-replace github.com/uptrace/opentelemetry-go-extra/otelgorm => ./..
+replace github.com/uptrace/opentelemetry-go-extra/otelgorm => ./../..
 
-replace github.com/uptrace/opentelemetry-go-extra/otelsql => ./../../otelsql
+replace github.com/uptrace/opentelemetry-go-extra/otelsql => ./../../../otelsql
 
 require (
 	github.com/stretchr/testify v1.7.0
