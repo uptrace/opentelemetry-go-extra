@@ -239,28 +239,28 @@ func (l LoggerWithCtx) Clone(opts ...Option) LoggerWithCtx {
 // Debug logs a message at DebugLevel. The message includes any fields passed
 // at the log site, as well as any fields accumulated on the logger.
 func (l LoggerWithCtx) Debug(msg string, fields ...zapcore.Field) {
-	l.l.logFields(l.ctx, zap.DebugLevel, msg, fields)
+	fields = l.l.logFields(l.ctx, zap.DebugLevel, msg, fields)
 	l.l.Debug(msg, fields...)
 }
 
 // Info logs a message at InfoLevel. The message includes any fields passed
 // at the log site, as well as any fields accumulated on the logger.
 func (l LoggerWithCtx) Info(msg string, fields ...zapcore.Field) {
-	l.l.logFields(l.ctx, zap.InfoLevel, msg, fields)
+	fields = l.l.logFields(l.ctx, zap.InfoLevel, msg, fields)
 	l.l.Info(msg, fields...)
 }
 
 // Warn logs a message at WarnLevel. The message includes any fields passed
 // at the log site, as well as any fields accumulated on the logger.
 func (l LoggerWithCtx) Warn(msg string, fields ...zapcore.Field) {
-	l.l.logFields(l.ctx, zap.WarnLevel, msg, fields)
+	fields = l.l.logFields(l.ctx, zap.WarnLevel, msg, fields)
 	l.l.Warn(msg, fields...)
 }
 
 // Error logs a message at ErrorLevel. The message includes any fields passed
 // at the log site, as well as any fields accumulated on the logger.
 func (l LoggerWithCtx) Error(msg string, fields ...zapcore.Field) {
-	l.l.logFields(l.ctx, zap.ErrorLevel, msg, fields)
+	fields = l.l.logFields(l.ctx, zap.ErrorLevel, msg, fields)
 	l.l.Error(msg, fields...)
 }
 
@@ -271,7 +271,7 @@ func (l LoggerWithCtx) Error(msg string, fields ...zapcore.Field) {
 // "development panic"). This is useful for catching errors that are
 // recoverable, but shouldn't ever happen.
 func (l LoggerWithCtx) DPanic(msg string, fields ...zapcore.Field) {
-	l.l.logFields(l.ctx, zap.DPanicLevel, msg, fields)
+	fields = l.l.logFields(l.ctx, zap.DPanicLevel, msg, fields)
 	l.l.DPanic(msg, fields...)
 }
 
@@ -280,7 +280,7 @@ func (l LoggerWithCtx) DPanic(msg string, fields ...zapcore.Field) {
 //
 // The logger then panics, even if logging at PanicLevel is disabled.
 func (l LoggerWithCtx) Panic(msg string, fields ...zapcore.Field) {
-	l.l.logFields(l.ctx, zap.PanicLevel, msg, fields)
+	fields = l.l.logFields(l.ctx, zap.PanicLevel, msg, fields)
 	l.l.Panic(msg, fields...)
 }
 
@@ -290,7 +290,7 @@ func (l LoggerWithCtx) Panic(msg string, fields ...zapcore.Field) {
 // The logger then calls os.Exit(1), even if logging at FatalLevel is
 // disabled.
 func (l LoggerWithCtx) Fatal(msg string, fields ...zapcore.Field) {
-	l.l.logFields(l.ctx, zap.FatalLevel, msg, fields)
+	fields = l.l.logFields(l.ctx, zap.FatalLevel, msg, fields)
 	l.l.Fatal(msg, fields...)
 }
 
