@@ -153,11 +153,14 @@ func file_hello_service_proto_rawDescGZIP() []byte {
 	return file_hello_service_proto_rawDescData
 }
 
-var file_hello_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_hello_service_proto_goTypes = []interface{}{
-	(*HelloRequest)(nil),  // 0: api.HelloRequest
-	(*HelloResponse)(nil), // 1: api.HelloResponse
-}
+var (
+	file_hello_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+	file_hello_service_proto_goTypes  = []interface{}{
+		(*HelloRequest)(nil),  // 0: api.HelloRequest
+		(*HelloResponse)(nil), // 1: api.HelloResponse
+	}
+)
+
 var file_hello_service_proto_depIdxs = []int32{
 	0, // 0: api.HelloService.SayHello:input_type -> api.HelloRequest
 	1, // 1: api.HelloService.SayHello:output_type -> api.HelloResponse
@@ -220,8 +223,10 @@ func file_hello_service_proto_init() {
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ grpc.ClientConnInterface
+var (
+	_ context.Context
+	_ grpc.ClientConnInterface
+)
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
@@ -257,8 +262,7 @@ type HelloServiceServer interface {
 }
 
 // UnimplementedHelloServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedHelloServiceServer struct {
-}
+type UnimplementedHelloServiceServer struct{}
 
 func (*UnimplementedHelloServiceServer) SayHello(context.Context, *HelloRequest) (*HelloResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
