@@ -1,6 +1,7 @@
 package otelzap
 
 import (
+	"context"
 	"sync"
 
 	"go.uber.org/zap"
@@ -28,6 +29,11 @@ func S() *SugaredLogger {
 	s := _globalS
 	_globalMu.RUnlock()
 	return s
+}
+
+// Ctx is a shortcut for L().Ctx(ctx).
+func Ctx(ctx context.Context) LoggerWithCtx {
+	return L().Ctx(ctx)
 }
 
 // ReplaceGlobals replaces the global Logger and SugaredLogger, and returns a
