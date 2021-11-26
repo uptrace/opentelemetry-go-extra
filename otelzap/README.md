@@ -25,7 +25,7 @@ import (
 )
 
 // Wrap zap logger to extend Zap with API that accepts a context.Context.
-log := otelzap.New(zap.L())
+log := otelzap.New(zap.NewExample())
 
 // And then pass ctx to propagate the span.
 log.Ctx(ctx).Error("hello from zap",
@@ -40,25 +40,49 @@ log.ErrorContext(ctx, "hello from zap",
 
 Both variants are fast and don't allocate. See [example](/example/) for details.
 
+### Global logger
+
+Just like Zap, otelzap provides a global logger that can be set with `otelzap.ReplaceGlobals`:
+
+```go
+package main
+
+import (
+	"go.uber.org/zap"
+	"github.com/uptrace/opentelemetry-go-extra/otelzap"
+)
+
+func main() {
+	logger := otelzap.New(zap.NewExample())
+	defer logger.Sync()
+
+	undo := otelzap.ReplaceGlobals(logger)
+	defer undo()
+
+	otelzap.L().Info("replaced zap's global loggers")
+	otelzap.Ctx(context.TODO()).Info("... and with context")
+}
+```
+
 ### Sugared logger
 
 You can also use sugared logger API in a similar way:
 
 ```go
-log := otelzap.New(zap.L())
+log := otelzap.New(zap.NewExample())
 sugar := log.Sugar()
 
 sugar.Ctx(ctx).Infow("failed to fetch URL",
-  // Structured context as loosely typed key-value pairs.
-  "url", url,
-  "attempt", 3,
-  "backoff", time.Second,
+	// Structured context as loosely typed key-value pairs.
+	"url", url,
+	"attempt", 3,
+	"backoff", time.Second,
 )
 sugar.InfowContext(ctx, "failed to fetch URL",
-  // Structured context as loosely typed key-value pairs.
-  "url", url,
-  "attempt", 3,
-  "backoff", time.Second,
+	// Structured context as loosely typed key-value pairs.
+	"url", url,
+	"attempt", 3,
+	"backoff", time.Second,
 )
 
 sugar.Ctx(ctx).Infof("Failed to fetch URL: %s", url)
