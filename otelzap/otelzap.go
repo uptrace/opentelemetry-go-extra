@@ -30,6 +30,7 @@ var (
 // Logger is a thin wrapper for zap.Logger that adds Ctx method.
 type Logger struct {
 	*zap.Logger
+	skipCaller *zap.Logger
 
 	withTraceID bool
 
@@ -42,7 +43,8 @@ type Logger struct {
 
 func New(logger *zap.Logger, opts ...Option) *Logger {
 	l := &Logger{
-		Logger: logger,
+		Logger:     logger,
+		skipCaller: logger.WithOptions(zap.AddCallerSkip(1)),
 
 		minLevel:         zap.WarnLevel,
 		errorStatusLevel: zap.ErrorLevel,
@@ -69,6 +71,7 @@ func (l *Logger) WithOptions(opts ...zap.Option) *Logger {
 func (l *Logger) Sugar() *SugaredLogger {
 	return &SugaredLogger{
 		SugaredLogger: l.Logger.Sugar(),
+		skipCaller:    l.skipCaller.Sugar(),
 		l:             l,
 	}
 }
@@ -241,28 +244,28 @@ func (l LoggerWithCtx) Clone(opts ...Option) LoggerWithCtx {
 // at the log site, as well as any fields accumulated on the logger.
 func (l LoggerWithCtx) Debug(msg string, fields ...zapcore.Field) {
 	fields = l.l.logFields(l.ctx, zap.DebugLevel, msg, fields)
-	l.l.Debug(msg, fields...)
+	l.l.skipCaller.Debug(msg, fields...)
 }
 
 // Info logs a message at InfoLevel. The message includes any fields passed
 // at the log site, as well as any fields accumulated on the logger.
 func (l LoggerWithCtx) Info(msg string, fields ...zapcore.Field) {
 	fields = l.l.logFields(l.ctx, zap.InfoLevel, msg, fields)
-	l.l.Info(msg, fields...)
+	l.l.skipCaller.Info(msg, fields...)
 }
 
 // Warn logs a message at WarnLevel. The message includes any fields passed
 // at the log site, as well as any fields accumulated on the logger.
 func (l LoggerWithCtx) Warn(msg string, fields ...zapcore.Field) {
 	fields = l.l.logFields(l.ctx, zap.WarnLevel, msg, fields)
-	l.l.Warn(msg, fields...)
+	l.l.skipCaller.Warn(msg, fields...)
 }
 
 // Error logs a message at ErrorLevel. The message includes any fields passed
 // at the log site, as well as any fields accumulated on the logger.
 func (l LoggerWithCtx) Error(msg string, fields ...zapcore.Field) {
 	fields = l.l.logFields(l.ctx, zap.ErrorLevel, msg, fields)
-	l.l.Error(msg, fields...)
+	l.l.skipCaller.Error(msg, fields...)
 }
 
 // DPanic logs a message at DPanicLevel. The message includes any fields
@@ -273,7 +276,7 @@ func (l LoggerWithCtx) Error(msg string, fields ...zapcore.Field) {
 // recoverable, but shouldn't ever happen.
 func (l LoggerWithCtx) DPanic(msg string, fields ...zapcore.Field) {
 	fields = l.l.logFields(l.ctx, zap.DPanicLevel, msg, fields)
-	l.l.DPanic(msg, fields...)
+	l.l.skipCaller.DPanic(msg, fields...)
 }
 
 // Panic logs a message at PanicLevel. The message includes any fields passed
@@ -282,7 +285,7 @@ func (l LoggerWithCtx) DPanic(msg string, fields ...zapcore.Field) {
 // The logger then panics, even if logging at PanicLevel is disabled.
 func (l LoggerWithCtx) Panic(msg string, fields ...zapcore.Field) {
 	fields = l.l.logFields(l.ctx, zap.PanicLevel, msg, fields)
-	l.l.Panic(msg, fields...)
+	l.l.skipCaller.Panic(msg, fields...)
 }
 
 // Fatal logs a message at FatalLevel. The message includes any fields passed
@@ -292,7 +295,7 @@ func (l LoggerWithCtx) Panic(msg string, fields ...zapcore.Field) {
 // disabled.
 func (l LoggerWithCtx) Fatal(msg string, fields ...zapcore.Field) {
 	fields = l.l.logFields(l.ctx, zap.FatalLevel, msg, fields)
-	l.l.Fatal(msg, fields...)
+	l.l.skipCaller.Fatal(msg, fields...)
 }
 
 //------------------------------------------------------------------------------
@@ -308,6 +311,8 @@ func (l LoggerWithCtx) Fatal(msg string, fields ...zapcore.Field) {
 // output with Infow ("info with" structured context), Info, or Infof.
 type SugaredLogger struct {
 	*zap.SugaredLogger
+	skipCaller *zap.SugaredLogger
+
 	l *Logger
 }
 
@@ -523,44 +528,44 @@ func (s SugaredLoggerWithCtx) Desugar() *Logger {
 // Debugf uses fmt.Sprintf to log a templated message.
 func (s SugaredLoggerWithCtx) Debugf(template string, args ...interface{}) {
 	s.s.logArgs(s.ctx, zap.DebugLevel, template, args)
-	s.s.Debugf(template, args...)
+	s.s.skipCaller.Debugf(template, args...)
 }
 
 // Infof uses fmt.Sprintf to log a templated message.
 func (s SugaredLoggerWithCtx) Infof(template string, args ...interface{}) {
 	s.s.logArgs(s.ctx, zap.InfoLevel, template, args)
-	s.s.Infof(template, args...)
+	s.s.skipCaller.Infof(template, args...)
 }
 
 // Warnf uses fmt.Sprintf to log a templated message.
 func (s SugaredLoggerWithCtx) Warnf(template string, args ...interface{}) {
 	s.s.logArgs(s.ctx, zap.WarnLevel, template, args)
-	s.s.Warnf(template, args...)
+	s.s.skipCaller.Warnf(template, args...)
 }
 
 // Errorf uses fmt.Sprintf to log a templated message.
 func (s SugaredLoggerWithCtx) Errorf(template string, args ...interface{}) {
 	s.s.logArgs(s.ctx, zap.ErrorLevel, template, args)
-	s.s.Errorf(template, args...)
+	s.s.skipCaller.Errorf(template, args...)
 }
 
 // DPanicf uses fmt.Sprintf to log a templated message. In development, the
 // logger then panics. (See DPanicLevel for details.)
 func (s SugaredLoggerWithCtx) DPanicf(template string, args ...interface{}) {
 	s.s.logArgs(s.ctx, zap.DPanicLevel, template, args)
-	s.s.DPanicf(template, args...)
+	s.s.skipCaller.DPanicf(template, args...)
 }
 
 // Panicf uses fmt.Sprintf to log a templated message, then panics.
 func (s SugaredLoggerWithCtx) Panicf(template string, args ...interface{}) {
 	s.s.logArgs(s.ctx, zap.PanicLevel, template, args)
-	s.s.Panicf(template, args...)
+	s.s.skipCaller.Panicf(template, args...)
 }
 
 // Fatalf uses fmt.Sprintf to log a templated message, then calls os.Exit.
 func (s SugaredLoggerWithCtx) Fatalf(template string, args ...interface{}) {
 	s.s.logArgs(s.ctx, zap.FatalLevel, template, args)
-	s.s.Fatalf(template, args...)
+	s.s.skipCaller.Fatalf(template, args...)
 }
 
 // Debugw logs a message with some additional context. The variadic key-value
@@ -570,28 +575,28 @@ func (s SugaredLoggerWithCtx) Fatalf(template string, args ...interface{}) {
 //  s.With(keysAndValues).Debug(msg)
 func (s SugaredLoggerWithCtx) Debugw(msg string, keysAndValues ...interface{}) {
 	s.s.logKVs(s.ctx, zap.DebugLevel, msg, keysAndValues)
-	s.s.Debugw(msg, keysAndValues...)
+	s.s.skipCaller.Debugw(msg, keysAndValues...)
 }
 
 // Infow logs a message with some additional context. The variadic key-value
 // pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) Infow(msg string, keysAndValues ...interface{}) {
 	s.s.logKVs(s.ctx, zap.InfoLevel, msg, keysAndValues)
-	s.s.Infow(msg, keysAndValues...)
+	s.s.skipCaller.Infow(msg, keysAndValues...)
 }
 
 // Warnw logs a message with some additional context. The variadic key-value
 // pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) Warnw(msg string, keysAndValues ...interface{}) {
 	s.s.logKVs(s.ctx, zap.WarnLevel, msg, keysAndValues)
-	s.s.Warnw(msg, keysAndValues...)
+	s.s.skipCaller.Warnw(msg, keysAndValues...)
 }
 
 // Errorw logs a message with some additional context. The variadic key-value
 // pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) Errorw(msg string, keysAndValues ...interface{}) {
 	s.s.logKVs(s.ctx, zap.ErrorLevel, msg, keysAndValues)
-	s.s.Errorw(msg, keysAndValues...)
+	s.s.skipCaller.Errorw(msg, keysAndValues...)
 }
 
 // DPanicw logs a message with some additional context. In development, the
@@ -599,21 +604,21 @@ func (s SugaredLoggerWithCtx) Errorw(msg string, keysAndValues ...interface{}) {
 // pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) DPanicw(msg string, keysAndValues ...interface{}) {
 	s.s.logKVs(s.ctx, zap.DPanicLevel, msg, keysAndValues)
-	s.s.DPanicw(msg, keysAndValues...)
+	s.s.skipCaller.DPanicw(msg, keysAndValues...)
 }
 
 // Panicw logs a message with some additional context, then panics. The
 // variadic key-value pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) Panicw(msg string, keysAndValues ...interface{}) {
 	s.s.logKVs(s.ctx, zap.PanicLevel, msg, keysAndValues)
-	s.s.Panicw(msg, keysAndValues...)
+	s.s.skipCaller.Panicw(msg, keysAndValues...)
 }
 
 // Fatalw logs a message with some additional context, then calls os.Exit. The
 // variadic key-value pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) Fatalw(msg string, keysAndValues ...interface{}) {
 	s.s.logKVs(s.ctx, zap.FatalLevel, msg, keysAndValues)
-	s.s.Fatalw(msg, keysAndValues...)
+	s.s.skipCaller.Fatalw(msg, keysAndValues...)
 }
 
 //------------------------------------------------------------------------------
