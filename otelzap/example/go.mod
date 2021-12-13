@@ -9,9 +9,9 @@ replace github.com/uptrace/opentelemetry-go-extra/otelutil => ../../otelutil
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelzap v0.1.6
+	github.com/uptrace/opentelemetry-go-extra/otelzap v0.1.7
 	go.opentelemetry.io/otel v1.3.0
 	go.uber.org/zap v1.19.1
 )
 
-require github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.6
+require github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.7

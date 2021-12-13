@@ -11,7 +11,6 @@ replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 require (
 	github.com/google/uuid v1.3.0
 	github.com/graph-gophers/graphql-go v1.2.0
-	github.com/uptrace/opentelemetry-go-extra/otelgraphql v0.1.6
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.6
-	go.opentelemetry.io/otel/exporters/jaeger v1.3.0 // indirect
+	github.com/uptrace/opentelemetry-go-extra/otelgraphql v0.1.7
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.7
 )
