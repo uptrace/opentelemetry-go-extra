@@ -12,7 +12,6 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/uptrace/opentelemetry-go-extra/otellogrus v0.1.6
 	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.6
-	go.opentelemetry.io/otel v1.2.0
-	golang.org/x/net v0.0.0-20211123203042-d83791d6bcd9 // indirect
-	google.golang.org/genproto v0.0.0-20211118181313-81c1377c94b1 // indirect
+	go.opentelemetry.io/otel v1.3.0
+	go.opentelemetry.io/otel/exporters/jaeger v1.3.0 // indirect
 )

@@ -13,9 +13,8 @@ require (
 	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.6
 	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.6
 	github.com/uptrace/opentelemetry-go-extra/otelsqlx v0.1.6
-	go.opentelemetry.io/otel v1.2.0
-	golang.org/x/mod v0.5.1 // indirect
-	golang.org/x/tools v0.1.7 // indirect
-	modernc.org/ccgo/v3 v3.12.73 // indirect
-	modernc.org/sqlite v1.14.1
+	go.opentelemetry.io/otel v1.3.0
+	golang.org/x/tools v0.1.8 // indirect
+	modernc.org/ccgo/v3 v3.12.95 // indirect
+	modernc.org/sqlite v1.14.2
 )

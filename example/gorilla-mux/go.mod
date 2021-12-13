@@ -8,9 +8,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/stretchr/objx v0.1.1 // indirect
 	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.6
-	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.27.0
-	go.opentelemetry.io/otel/trace v1.2.0
-	golang.org/x/net v0.0.0-20211123203042-d83791d6bcd9 // indirect
-	golang.org/x/sys v0.0.0-20211124211545-fe61309f8881 // indirect
-	google.golang.org/genproto v0.0.0-20211118181313-81c1377c94b1 // indirect
+	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.28.0
+	go.opentelemetry.io/otel/exporters/jaeger v1.3.0 // indirect
+	go.opentelemetry.io/otel/trace v1.3.0
 )
