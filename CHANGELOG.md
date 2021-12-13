@@ -1,3 +1,17 @@
+## [0.1.7](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.6...v0.1.7) (2021-12-13)
+
+
+### Bug Fixes
+
+* **otelzap:** skip caller frame in ctx-aware API ([495c2e5](https://github.com/uptrace/opentelemetry-go-extra/commit/495c2e50d14e8a046b0e18624d9609b10885baf5))
+
+
+### Features
+
+* add otelzap.Ctx shortcut ([2d3c044](https://github.com/uptrace/opentelemetry-go-extra/commit/2d3c044adc7b624b596aaa4cdc3a566505fa4b91))
+
+
+
 ## [0.1.6](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.5...v0.1.6) (2021-11-25)
 
 
