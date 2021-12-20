@@ -223,6 +223,14 @@ func (l LoggerWithCtx) ZapLogger() *zap.Logger {
 	return l.l.Logger
 }
 
+// Sugar returns a sugared logger with the context.
+func (l LoggerWithCtx) Sugar() SugaredLoggerWithCtx {
+	return SugaredLoggerWithCtx{
+		ctx: l.ctx,
+		s:   l.l.Sugar(),
+	}
+}
+
 // WithOptions clones the current Logger, applies the supplied Options,
 // and returns the resulting Logger. It's safe to use concurrently.
 func (l LoggerWithCtx) WithOptions(opts ...zap.Option) LoggerWithCtx {
