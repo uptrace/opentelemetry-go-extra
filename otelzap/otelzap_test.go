@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 	"go.opentelemetry.io/otel/attribute"
@@ -75,6 +76,50 @@ func TestOtelZap(t *testing.T) {
 				foo, ok := m["foo"]
 				require.True(t, ok)
 				require.Equal(t, "bar", foo.AsString())
+
+				requireCodeAttrs(t, m)
+			},
+		},
+		{
+			log: func(ctx context.Context, log *Logger) {
+				log.Ctx(ctx).Warn("hello", zap.Strings("foo", []string{"bar1", "bar2", "bar3"}))
+			},
+			require: func(t *testing.T, event sdktrace.Event) {
+				m := attrMap(event.Attributes)
+
+				sev, ok := m[logSeverityKey]
+				require.True(t, ok)
+				require.Equal(t, "WARN", sev.AsString())
+
+				msg, ok := m[logMessageKey]
+				require.True(t, ok)
+				require.Equal(t, "hello", msg.AsString())
+
+				foo, ok := m["foo"]
+				require.True(t, ok)
+				require.Equal(t, []string{"bar1", "bar2", "bar3"}, foo.AsStringSlice())
+
+				requireCodeAttrs(t, m)
+			},
+		},
+		{
+			log: func(ctx context.Context, log *Logger) {
+				log.Ctx(ctx).Warn("hello", zap.Durations("foo", []time.Duration{time.Millisecond, time.Second, time.Hour}))
+			},
+			require: func(t *testing.T, event sdktrace.Event) {
+				m := attrMap(event.Attributes)
+
+				sev, ok := m[logSeverityKey]
+				require.True(t, ok)
+				require.Equal(t, "WARN", sev.AsString())
+
+				msg, ok := m[logMessageKey]
+				require.True(t, ok)
+				require.Equal(t, "hello", msg.AsString())
+
+				foo, ok := m["foo"]
+				require.True(t, ok)
+				require.Equal(t, []string{"1ms", "1s", "1h0m0s"}, foo.AsStringSlice())
 
 				requireCodeAttrs(t, m)
 			},
