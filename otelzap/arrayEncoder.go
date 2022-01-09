@@ -7,9 +7,14 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+// bufferArrayEncoder implements zapcore.bufferArrayEncoder.
+// It represents all added objects to their string values and
+// adds them to the stringsSlice buffer.
 type bufferArrayEncoder struct {
 	stringsSlice []string
 }
+
+var _ zapcore.ArrayEncoder = (*bufferArrayEncoder)(nil)
 
 func (t *bufferArrayEncoder) AppendComplex128(v complex128) {
 	t.stringsSlice = append(t.stringsSlice, fmt.Sprintf("%v", v))
@@ -79,7 +84,7 @@ func (t *bufferArrayEncoder) AppendInt8(v int8) {
 }
 
 func (t *bufferArrayEncoder) AppendString(v string) {
-	t.stringsSlice = append(t.stringsSlice, fmt.Sprintf("%v", v))
+	t.stringsSlice = append(t.stringsSlice, v)
 }
 
 func (t *bufferArrayEncoder) AppendTime(v time.Time) {
