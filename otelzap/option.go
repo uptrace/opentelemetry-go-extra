@@ -42,7 +42,7 @@ func WithStackTrace(on bool) Option {
 	}
 }
 
-// WithTraceID configures the logger to add `trace_id` field to structured log messages.
+// WithTraceIDField configures the logger to add `trace_id` field to structured log messages.
 //
 // This option is only useful with backends that don't support OTLP and instead parse log
 // messages to extract structured information.
