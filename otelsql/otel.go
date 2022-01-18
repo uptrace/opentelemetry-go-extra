@@ -105,9 +105,10 @@ func (t *dbInstrum) withSpan(
 	switch err {
 	case nil,
 		driver.ErrSkip,
-		io.EOF, // end of rows iterator
-		sql.ErrNoRows:
+		io.EOF: // end of rows iterator
 		// ignore
+	case sql.ErrNoRows, sql.ErrTxDone:
+		span.RecordError(err)
 	default:
 		span.RecordError(err)
 		span.SetStatus(codes.Error, err.Error())
