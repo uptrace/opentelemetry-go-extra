@@ -20,7 +20,7 @@ Start the gRPC server:
 OTEL_EXPORTER_JAEGER_ENDPOINT=http://localhost:14268/api/traces go run server/server.go
 ```
 
-**Uptrace** exporter:
+[Uptrace](https://github.com/uptrace/uptrace/) exporter:
 
 ```shell
 UPTRACE_DSN="https://<token>@uptrace.dev/<project_id>" go run server/server.go
@@ -34,7 +34,7 @@ Start the client:
 OTEL_EXPORTER_JAEGER_ENDPOINT=http://localhost:14268/api/traces go run client/client.go
 ```
 
-**Uptrace** exporter:
+[Uptrace](https://github.com/uptrace/uptrace/) exporter:
 
 ```shell
 UPTRACE_DSN="https://<token>@uptrace.dev/<project_id>" go run client/client.go

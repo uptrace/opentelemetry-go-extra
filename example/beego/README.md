@@ -16,7 +16,7 @@ go run .
 OTEL_EXPORTER_JAEGER_ENDPOINT=http://localhost:14268/api/traces go run .
 ```
 
-**Uptrace** exporter:
+[Uptrace](https://github.com/uptrace/uptrace/) exporter:
 
 ```shell
 UPTRACE_DSN="https://<token>@uptrace.dev/<project_id>" go run .
