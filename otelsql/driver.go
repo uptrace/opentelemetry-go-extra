@@ -149,14 +149,15 @@ type otelConn struct {
 
 	instrum *dbInstrum
 
-	ping         pingFunc
-	exec         execFunc
-	execCtx      execCtxFunc
-	query        queryFunc
-	queryCtx     queryCtxFunc
-	prepareCtx   prepareCtxFunc
-	beginTx      beginTxFunc
-	resetSession resetSessionFunc
+	ping            pingFunc
+	exec            execFunc
+	execCtx         execCtxFunc
+	query           queryFunc
+	queryCtx        queryCtxFunc
+	prepareCtx      prepareCtxFunc
+	beginTx         beginTxFunc
+	resetSession    resetSessionFunc
+	checkNamedValue checkNamedValueFunc
 }
 
 var _ driver.Conn = (*otelConn)(nil)
@@ -175,6 +176,7 @@ func newConn(conn driver.Conn, instrum *dbInstrum) *otelConn {
 	cn.prepareCtx = cn.createPrepareCtxFunc(conn)
 	cn.beginTx = cn.createBeginTxFunc(conn)
 	cn.resetSession = cn.createResetSessionFunc(conn)
+	cn.checkNamedValue = cn.createCheckNamedValueFunc(conn)
 
 	return cn
 }
@@ -425,11 +427,32 @@ func (c *otelConn) createResetSessionFunc(conn driver.Conn) resetSessionFunc {
 
 //------------------------------------------------------------------------------
 
+var _ driver.NamedValueChecker = (*otelConn)(nil)
+
+func (c *otelConn) CheckNamedValue(value *driver.NamedValue) error {
+	return c.checkNamedValue(value)
+}
+
+type checkNamedValueFunc func(*driver.NamedValue) error
+
+func (c *otelConn) createCheckNamedValueFunc(conn driver.Conn) checkNamedValueFunc {
+	if checker, ok := c.Conn.(driver.NamedValueChecker); ok {
+		return func(value *driver.NamedValue) error {
+			return checker.CheckNamedValue(value)
+		}
+	}
+	return func(value *driver.NamedValue) error {
+		return driver.ErrSkip
+	}
+}
+
+//------------------------------------------------------------------------------
+
 func namedValueToValue(named []driver.NamedValue) ([]driver.Value, error) {
 	args := make([]driver.Value, len(named))
 	for n, param := range named {
 		if len(param.Name) > 0 {
-			return nil, errors.New("otelsql: driver does not support the use of Named Parameters")
+			return nil, errors.New("otelsql: driver does not support named parameters")
 		}
 		args[n] = param.Value
 	}
