@@ -1,3 +1,18 @@
+## [0.1.8](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.7...v0.1.8) (2022-01-28)
+
+
+### Bug Fixes
+
+* **otelsql:** implement driver.NamedValueChecker to support pgx ([c47a5de](https://github.com/uptrace/opentelemetry-go-extra/commit/c47a5de9a98df03d1c5575f5fe9a60c1eedac25a))
+* **otelzap:** withoptions(zap.fields(...)) will keep fields with logger ([5e91392](https://github.com/uptrace/opentelemetry-go-extra/commit/5e91392104ad59e612bac1da80f5fe65debd5a3f))
+
+
+### Features
+
+* **otelzap:** add LoggerWithCtx.Sugar ([4792401](https://github.com/uptrace/opentelemetry-go-extra/commit/479240184b44f36f1623c6a3c5426e5ff0468c25))
+
+
+
 ## [0.1.7](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.6...v0.1.7) (2021-12-13)
 
 

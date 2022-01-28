@@ -9,12 +9,12 @@ replace github.com/uptrace/opentelemetry-go-extra/otelutil => ../../otelutil
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelzap v0.1.7
+	github.com/uptrace/opentelemetry-go-extra/otelzap v0.1.8
 	go.opentelemetry.io/otel v1.3.0
 	go.uber.org/zap v1.20.0
 )
 
-require github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.7
+require github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.8
 
 require (
 	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
@@ -22,7 +22,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelutil v0.1.7 // indirect
+	github.com/uptrace/opentelemetry-go-extra/otelutil v0.1.8 // indirect
 	github.com/uptrace/uptrace-go v1.3.1 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.27.0 // indirect
 	go.opentelemetry.io/otel/exporters/jaeger v1.3.0 // indirect
