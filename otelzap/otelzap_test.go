@@ -104,6 +104,39 @@ func TestOtelZap(t *testing.T) {
 		},
 		{
 			log: func(ctx context.Context, log *Logger) {
+				log.Ctx(ctx).
+					WithOptions(zap.Fields(zap.String("baz", "baz1"))).
+					WithOptions(zap.Fields(zap.String("faz", "faz1"))).
+					Warn("hello", zap.Strings("foo", []string{"bar1", "bar2", "bar3"}))
+			},
+			require: func(t *testing.T, event sdktrace.Event) {
+				m := attrMap(event.Attributes)
+
+				sev, ok := m[logSeverityKey]
+				require.True(t, ok)
+				require.Equal(t, "WARN", sev.AsString())
+
+				msg, ok := m[logMessageKey]
+				require.True(t, ok)
+				require.Equal(t, "hello", msg.AsString())
+
+				foo, ok := m["foo"]
+				require.True(t, ok)
+				require.Equal(t, []string{"bar1", "bar2", "bar3"}, foo.AsStringSlice())
+
+				baz, ok := m["baz"]
+				require.True(t, ok)
+				require.Equal(t, "baz1", baz.AsString())
+
+				faz, ok := m["faz"]
+				require.True(t, ok)
+				require.Equal(t, "faz1", faz.AsString())
+
+				requireCodeAttrs(t, m)
+			},
+		},
+		{
+			log: func(ctx context.Context, log *Logger) {
 				log.Ctx(ctx).Warn("hello", zap.Durations("foo", []time.Duration{time.Millisecond, time.Second, time.Hour}))
 			},
 			require: func(t *testing.T, event sdktrace.Event) {

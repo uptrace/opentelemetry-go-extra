@@ -39,6 +39,9 @@ type Logger struct {
 
 	caller     bool
 	stackTrace bool
+
+	// extraFields contains a number of zap.Fields that are  added to every log entry
+	extraFields []zap.Field
 }
 
 func New(logger *zap.Logger, opts ...Option) *Logger {
@@ -59,8 +62,13 @@ func New(logger *zap.Logger, opts ...Option) *Logger {
 // WithOptions clones the current Logger, applies the supplied Options,
 // and returns the resulting Logger. It's safe to use concurrently.
 func (l *Logger) WithOptions(opts ...zap.Option) *Logger {
+	extraFields := []zap.Field{}
+	// zap.New side effect is extracting fields from .WithOptions(zap.Fields(...))
+	zap.New(&fieldExtractorCore{extraFields: &extraFields}, opts...)
 	clone := *l
 	clone.Logger = l.Logger.WithOptions(opts...)
+	clone.skipCaller = l.skipCaller.WithOptions(opts...)
+	clone.extraFields = append(clone.extraFields, extraFields...)
 	return &clone
 }
 
@@ -142,6 +150,14 @@ func (l *Logger) logFields(
 	attrs := make([]attribute.KeyValue, 0, numAttr+len(fields))
 
 	for _, f := range fields {
+		if f.Type == zapcore.NamespaceType {
+			// should this be a prefix?
+			continue
+		}
+		attrs = appendField(attrs, f)
+	}
+
+	for _, f := range l.extraFields {
 		if f.Type == zapcore.NamespaceType {
 			// should this be a prefix?
 			continue
