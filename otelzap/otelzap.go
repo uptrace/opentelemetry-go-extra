@@ -40,7 +40,7 @@ type Logger struct {
 	caller     bool
 	stackTrace bool
 
-	// extraFields contains a number of zap.Fields that are  added to every log entry
+	// extraFields contains a number of zap.Fields that are added to every log entry
 	extraFields []zap.Field
 }
 
@@ -147,7 +147,7 @@ func (l *Logger) logFields(
 		return fields
 	}
 
-	attrs := make([]attribute.KeyValue, 0, numAttr+len(fields))
+	attrs := make([]attribute.KeyValue, 0, numAttr+len(fields)+len(l.extraFields))
 
 	for _, f := range fields {
 		if f.Type == zapcore.NamespaceType {
