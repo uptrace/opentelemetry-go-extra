@@ -17,9 +17,10 @@ import (
 var dbRowsAffected = attribute.Key("db.rows_affected")
 
 type otelPlugin struct {
-	provider trace.TracerProvider
-	tracer   trace.Tracer
-	attrs    []attribute.KeyValue
+	provider         trace.TracerProvider
+	tracer           trace.Tracer
+	attrs            []attribute.KeyValue
+	excludeQueryVars bool
 }
 
 func NewPlugin(opts ...Option) gorm.Plugin {
@@ -107,7 +108,19 @@ func (p *otelPlugin) after() gormHookFunc {
 		if sys := dbSystem(tx); sys.Valid() {
 			attrs = append(attrs, sys)
 		}
-		query := tx.Dialector.Explain(tx.Statement.SQL.String(), tx.Statement.Vars...)
+
+		vars := tx.Statement.Vars
+		if p.excludeQueryVars {
+			// Replace query variables with '?' to mask them
+			vars = make([]interface{}, len(tx.Statement.Vars))
+
+			for i := 0; i < len(vars); i++ {
+				vars[i] = "?"
+			}
+		}
+
+		query := tx.Dialector.Explain(tx.Statement.SQL.String(), vars...)
+
 		attrs = append(attrs, semconv.DBStatementKey.String(query))
 
 		if tx.Statement.Table != "" {
