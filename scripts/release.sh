@@ -47,23 +47,19 @@ PACKAGE_DIRS=$(find . -mindepth 2 -type f -name 'go.mod' -exec dirname {} \; \
 
 for dir in $PACKAGE_DIRS
 do
-    sed --in-place \
-      "s/uptrace\/opentelemetry-go-extra\([^ ]*\) v.*/uptrace\/opentelemetry-go-extra\1 ${TAG}/" "${dir}/go.mod"
+    printf "${dir}: go get -u && go mod tidy\n"
+    (cd ./${dir} && go get -u && go mod tidy)
 done
 
 for dir in $PACKAGE_DIRS
 do
-    printf "processing ${dir}...\n"
-    pushd ${dir}
+    sed --in-place \
+      "s/uptrace\/opentelemetry-go-extra\([^ ]*\) v.*/uptrace\/opentelemetry-go-extra\1 ${TAG}/" "${dir}/go.mod"
 
-    go get -u ;
-    go mod tidy ;
     if [ -e version.go ]
     then
         sed --in-place "s/\(return \)\"[^\"]*\"/\1\"${TAG#v}\"/" ./version.go
     fi
-
-    popd
 done
 
 sed --in-place "s/\(\"version\": \)\"[^\"]*\"/\1\"${TAG#v}\"/" ./package.json
