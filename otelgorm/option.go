@@ -28,3 +28,10 @@ func WithDBName(name string) Option {
 		p.attrs = append(p.attrs, semconv.DBNameKey.String(name))
 	}
 }
+
+// WithoutQueryVariables configures the db.statement attribute to exclude query variables
+func WithoutQueryVariables() Option {
+	return func(p *otelPlugin) {
+		p.excludeQueryVars = true
+	}
+}
