@@ -1,44 +1,39 @@
 ## [0.1.9](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.8...v0.1.9) (2022-02-27)
 
-
+- **otelgorm**: added an option to otelgorm to exclude query variables
 
 ## [0.1.8](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.7...v0.1.8) (2022-01-28)
 
-
 ### Bug Fixes
 
-* **otelsql:** implement driver.NamedValueChecker to support pgx ([c47a5de](https://github.com/uptrace/opentelemetry-go-extra/commit/c47a5de9a98df03d1c5575f5fe9a60c1eedac25a))
-* **otelzap:** withoptions(zap.fields(...)) will keep fields with logger ([5e91392](https://github.com/uptrace/opentelemetry-go-extra/commit/5e91392104ad59e612bac1da80f5fe65debd5a3f))
-
+- **otelsql:** implement driver.NamedValueChecker to support pgx
+  ([c47a5de](https://github.com/uptrace/opentelemetry-go-extra/commit/c47a5de9a98df03d1c5575f5fe9a60c1eedac25a))
+- **otelzap:** withoptions(zap.fields(...)) will keep fields with logger
+  ([5e91392](https://github.com/uptrace/opentelemetry-go-extra/commit/5e91392104ad59e612bac1da80f5fe65debd5a3f))
 
 ### Features
 
-* **otelzap:** add LoggerWithCtx.Sugar ([4792401](https://github.com/uptrace/opentelemetry-go-extra/commit/479240184b44f36f1623c6a3c5426e5ff0468c25))
-
-
+- **otelzap:** add LoggerWithCtx.Sugar
+  ([4792401](https://github.com/uptrace/opentelemetry-go-extra/commit/479240184b44f36f1623c6a3c5426e5ff0468c25))
 
 ## [0.1.7](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.6...v0.1.7) (2021-12-13)
 
-
 ### Bug Fixes
 
-* **otelzap:** skip caller frame in ctx-aware API ([495c2e5](https://github.com/uptrace/opentelemetry-go-extra/commit/495c2e50d14e8a046b0e18624d9609b10885baf5))
-
+- **otelzap:** skip caller frame in ctx-aware API
+  ([495c2e5](https://github.com/uptrace/opentelemetry-go-extra/commit/495c2e50d14e8a046b0e18624d9609b10885baf5))
 
 ### Features
 
-* add otelzap.Ctx shortcut ([2d3c044](https://github.com/uptrace/opentelemetry-go-extra/commit/2d3c044adc7b624b596aaa4cdc3a566505fa4b91))
-
-
+- add otelzap.Ctx shortcut
+  ([2d3c044](https://github.com/uptrace/opentelemetry-go-extra/commit/2d3c044adc7b624b596aaa4cdc3a566505fa4b91))
 
 ## [0.1.6](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.5...v0.1.6) (2021-11-25)
 
-
 ### Bug Fixes
 
-* ctx fields not propegating to logger ([1520b8c](https://github.com/uptrace/opentelemetry-go-extra/commit/1520b8c4ab1a79539c91b274b25394d7b4cebb0c))
-
-
+- ctx fields not propegating to logger
+  ([1520b8c](https://github.com/uptrace/opentelemetry-go-extra/commit/1520b8c4ab1a79539c91b274b25394d7b4cebb0c))
 
 ## [0.1.5](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.4...v0.1.5) (2021-11-17)
 
