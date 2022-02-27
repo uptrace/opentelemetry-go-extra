@@ -58,7 +58,7 @@ do
 
     if [ -e version.go ]
     then
-        sed --in-place "s/\(return \)\"[^\"]*\"/\1\"${TAG#v}\"/" ./version.go
+        sed --in-place "s/\(return \)\"[^\"]*\"/\1\"${TAG#v}\"/" ${dir}/version.go
     fi
 done
 
