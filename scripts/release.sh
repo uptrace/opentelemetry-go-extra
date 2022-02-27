@@ -56,7 +56,7 @@ do
     sed --in-place \
       "s/uptrace\/opentelemetry-go-extra\([^ ]*\) v.*/uptrace\/opentelemetry-go-extra\1 ${TAG}/" "${dir}/go.mod"
 
-    if [ -e version.go ]
+    if [ -e ${dir}/version.go ]
     then
         sed --in-place "s/\(return \)\"[^\"]*\"/\1\"${TAG#v}\"/" ${dir}/version.go
     fi
