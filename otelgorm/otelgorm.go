@@ -21,6 +21,7 @@ type otelPlugin struct {
 	tracer           trace.Tracer
 	attrs            []attribute.KeyValue
 	excludeQueryVars bool
+	excludeMetrics   bool
 }
 
 func NewPlugin(opts ...Option) gorm.Plugin {
@@ -48,8 +49,10 @@ type gormRegister interface {
 }
 
 func (p otelPlugin) Initialize(db *gorm.DB) (err error) {
-	if db, ok := db.ConnPool.(*sql.DB); ok {
-		otelsql.ReportDBStatsMetrics(db)
+	if !p.excludeMetrics {
+		if db, ok := db.ConnPool.(*sql.DB); ok {
+			otelsql.ReportDBStatsMetrics(db)
+		}
 	}
 
 	cb := db.Callback()
