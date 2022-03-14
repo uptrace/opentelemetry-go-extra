@@ -1,4 +1,4 @@
-# Gin example for OpenTelemetry
+# Gin and GORM example for OpenTelemetry
 
 [![PkgGoDev](https://pkg.go.dev/badge/go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin)](https://pkg.go.dev/go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin)
 

@@ -16,7 +16,7 @@ To instrument GORM, you need to install the plugin provided by otelgorm:
 
 ```go
 import (
-    "github.com/uptrace/opentelemetry-go-extra/otelgorm"
+	"github.com/uptrace/opentelemetry-go-extra/otelgorm"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )

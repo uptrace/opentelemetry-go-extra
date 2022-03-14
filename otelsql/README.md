@@ -13,8 +13,7 @@ go get github.com/uptrace/opentelemetry-go-extra/otelsql
 
 ## Usage
 
-To instrument database/sql, you need to connect to a database using the API provided by this
-package:
+To instrument database/sql, you need to connect to a database using the API provided by otelsql:
 
 | sql                         | otelsql                         |
 | --------------------------- | ------------------------------- |
