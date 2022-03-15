@@ -20,7 +20,7 @@ func PrintTraceID(ctx context.Context) {
 func TraceURL(span trace.Span) string {
 	switch {
 	case os.Getenv("UPTRACE_DSN") != "":
-		return fmt.Sprintf("https://app.uptrace.dev/traces/%s", span.SpanContext().TraceID())
+		return uptrace.TraceURL(span)
 	case os.Getenv("OTEL_EXPORTER_JAEGER_ENDPOINT") != "":
 		return fmt.Sprintf("http://localhost:16686/trace/%s", span.SpanContext().TraceID())
 	default:
