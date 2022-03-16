@@ -14,7 +14,5 @@ fmt:
 go_mod_tidy:
 	set -e; for dir in $(PACKAGE_DIRS); do \
 	  echo "go mod tidy in $${dir}"; \
-	  (cd "$${dir}" && \
-	    go get -u && \
-	    go mod tidy -go=1.17); \
+	  (cd "$${dir}" && go mod tidy -go=1.17); \
 	done

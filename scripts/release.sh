@@ -60,6 +60,8 @@ do
     then
         sed --in-place "s/\(return \)\"[^\"]*\"/\1\"${TAG#v}\"/" ${dir}/version.go
     fi
+
+    (cd ./${dir} && go mod tidy)
 done
 
 sed --in-place "s/\(\"version\": \)\"[^\"]*\"/\1\"${TAG#v}\"/" ./package.json
