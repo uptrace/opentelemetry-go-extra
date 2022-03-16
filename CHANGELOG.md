@@ -1,3 +1,17 @@
+## [0.1.10](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.9...v0.1.10) (2022-03-16)
+
+
+### Bug Fixes
+
+* **otelzap:** print correct caller in InfoContext ([bcc0fa9](https://github.com/uptrace/opentelemetry-go-extra/commit/bcc0fa9898947d973b1a8a82218cdce9c751eb01))
+
+
+### Features
+
+* **otelgorm:** added an option to not report DB stats metrics ([9e52a0f](https://github.com/uptrace/opentelemetry-go-extra/commit/9e52a0f9b54cad994b24f221494445685415be40))
+
+
+
 ## [0.1.9](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.8...v0.1.9) (2022-02-27)
 
 - **otelgorm**: added an option to otelgorm to exclude query variables

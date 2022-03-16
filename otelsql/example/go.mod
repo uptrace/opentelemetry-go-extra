@@ -7,9 +7,9 @@ replace github.com/uptrace/opentelemetry-go-extra/otelsql => ./..
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.9
+	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.10
 	go.opentelemetry.io/otel v1.4.1
-	modernc.org/sqlite v1.14.7
+	modernc.org/sqlite v1.15.1
 )
 
 require (
@@ -36,18 +36,18 @@ require (
 	go.opentelemetry.io/otel/sdk/metric v0.27.0 // indirect
 	go.opentelemetry.io/otel/trace v1.4.1 // indirect
 	go.opentelemetry.io/proto/otlp v0.12.0 // indirect
-	golang.org/x/mod v0.5.1 // indirect
+	golang.org/x/mod v0.6.0-dev.0.20220106191415-9b9b3d81d5e3 // indirect
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
-	golang.org/x/sys v0.0.0-20220224120231-95c6836cb0e7 // indirect
+	golang.org/x/sys v0.0.0-20220315194320-039c03cc5b86 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
-	google.golang.org/genproto v0.0.0-20220222213610-43724f9ea8cf // indirect
-	google.golang.org/grpc v1.44.0 // indirect
+	google.golang.org/genproto v0.0.0-20220314164441-57ef72a4c106 // indirect
+	google.golang.org/grpc v1.45.0 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
-	modernc.org/cc/v3 v3.35.22 // indirect
-	modernc.org/libc v1.14.5 // indirect
+	modernc.org/cc/v3 v3.35.24 // indirect
+	modernc.org/libc v1.14.11 // indirect
 	modernc.org/mathutil v1.4.1 // indirect
-	modernc.org/memory v1.0.5 // indirect
+	modernc.org/memory v1.0.6 // indirect
 	modernc.org/opt v0.1.1 // indirect
 	modernc.org/strutil v1.1.1 // indirect
 	modernc.org/token v1.0.0 // indirect
@@ -55,8 +55,8 @@ require (
 
 require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.9
-	golang.org/x/tools v0.1.9 // indirect
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.10
+	golang.org/x/tools v0.1.10 // indirect
 	lukechampine.com/uint128 v1.2.0 // indirect
-	modernc.org/ccgo/v3 v3.15.13 // indirect
+	modernc.org/ccgo/v3 v3.15.17 // indirect
 )

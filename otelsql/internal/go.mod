@@ -6,7 +6,7 @@ replace github.com/uptrace/opentelemetry-go-extra/otelsql => ../
 
 require (
 	github.com/stretchr/testify v1.7.0
-	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.9
+	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.10
 	go.opentelemetry.io/otel v1.4.1
 	go.opentelemetry.io/otel/sdk v1.0.1
 	go.opentelemetry.io/otel/trace v1.4.1
