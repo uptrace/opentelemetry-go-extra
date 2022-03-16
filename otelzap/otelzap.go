@@ -103,37 +103,37 @@ func (l *Logger) Ctx(ctx context.Context) LoggerWithCtx {
 
 func (l *Logger) DebugContext(ctx context.Context, msg string, fields ...zapcore.Field) {
 	fields = l.logFields(ctx, zap.DebugLevel, msg, fields)
-	l.Debug(msg, fields...)
+	l.skipCaller.Debug(msg, fields...)
 }
 
 func (l *Logger) InfoContext(ctx context.Context, msg string, fields ...zapcore.Field) {
 	fields = l.logFields(ctx, zap.InfoLevel, msg, fields)
-	l.Info(msg, fields...)
+	l.skipCaller.Info(msg, fields...)
 }
 
 func (l *Logger) WarnContext(ctx context.Context, msg string, fields ...zapcore.Field) {
 	fields = l.logFields(ctx, zap.WarnLevel, msg, fields)
-	l.Warn(msg, fields...)
+	l.skipCaller.Warn(msg, fields...)
 }
 
 func (l *Logger) ErrorContext(ctx context.Context, msg string, fields ...zapcore.Field) {
 	fields = l.logFields(ctx, zap.ErrorLevel, msg, fields)
-	l.Error(msg, fields...)
+	l.skipCaller.Error(msg, fields...)
 }
 
 func (l *Logger) DPanicContext(ctx context.Context, msg string, fields ...zapcore.Field) {
 	fields = l.logFields(ctx, zap.DPanicLevel, msg, fields)
-	l.DPanic(msg, fields...)
+	l.skipCaller.DPanic(msg, fields...)
 }
 
 func (l *Logger) PanicContext(ctx context.Context, msg string, fields ...zapcore.Field) {
 	fields = l.logFields(ctx, zap.PanicLevel, msg, fields)
-	l.Panic(msg, fields...)
+	l.skipCaller.Panic(msg, fields...)
 }
 
 func (l *Logger) FatalContext(ctx context.Context, msg string, fields ...zapcore.Field) {
 	fields = l.logFields(ctx, zap.FatalLevel, msg, fields)
-	l.Fatal(msg, fields...)
+	l.skipCaller.Fatal(msg, fields...)
 }
 
 func (l *Logger) logFields(
@@ -142,6 +142,7 @@ func (l *Logger) logFields(
 	if lvl < l.minLevel {
 		return fields
 	}
+
 	span := trace.SpanFromContext(ctx)
 	if !span.IsRecording() {
 		return fields

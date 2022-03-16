@@ -2,7 +2,7 @@ module github.com/uptrace/opentelemetry-go-extra/otelzap/example
 
 go 1.17
 
-replace github.com/uptrace/opentelemetry-go-extra/otelzap => ../
+replace github.com/uptrace/opentelemetry-go-extra/otelzap => ./..
 
 replace github.com/uptrace/opentelemetry-go-extra/otelutil => ../../otelutil
 
