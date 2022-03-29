@@ -11,9 +11,9 @@ replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 exclude go.opentelemetry.io/proto/otlp v0.15.0
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.10
-	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.10
-	github.com/uptrace/opentelemetry-go-extra/otelsqlx v0.1.10
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.11
+	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.11
+	github.com/uptrace/opentelemetry-go-extra/otelsqlx v0.1.11
 	go.opentelemetry.io/otel v1.6.1
 	modernc.org/sqlite v1.15.3
 )

@@ -9,7 +9,7 @@ exclude go.opentelemetry.io/proto/otlp v0.15.0
 require (
 	github.com/graph-gophers/graphql-go v1.3.0
 	github.com/stretchr/testify v1.7.1
-	github.com/uptrace/opentelemetry-go-extra/otelutil v0.1.10
+	github.com/uptrace/opentelemetry-go-extra/otelutil v0.1.11
 	go.opentelemetry.io/contrib v1.6.0
 	go.opentelemetry.io/otel v1.6.1
 	go.opentelemetry.io/otel/sdk v1.1.0

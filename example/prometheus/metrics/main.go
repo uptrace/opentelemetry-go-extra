@@ -9,8 +9,8 @@ import (
 
 	runtimemetrics "go.opentelemetry.io/contrib/instrumentation/runtime"
 	"go.opentelemetry.io/otel/exporters/prometheus"
-	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
+	"go.opentelemetry.io/otel/metric/instrument"
 	"go.opentelemetry.io/otel/sdk/metric/aggregator/histogram"
 	controller "go.opentelemetry.io/otel/sdk/metric/controller/basic"
 	"go.opentelemetry.io/otel/sdk/metric/export/aggregation"
@@ -18,15 +18,18 @@ import (
 	selector "go.opentelemetry.io/otel/sdk/metric/selector/simple"
 )
 
-var meter = metric.Must(global.Meter("promtest"))
-
 func main() {
 	ctx := context.Background()
 	configureOpentelemetry()
 
-	counter := meter.NewInt64Counter("test.my_counter",
-		metric.WithDescription("Just a test counter"),
+	meter := global.MeterProvider().Meter("example")
+	counter, err := meter.SyncInt64().Counter(
+		"test.my_counter",
+		instrument.WithDescription("Just a test counter"),
 	)
+	if err != nil {
+		panic(err)
+	}
 
 	for {
 		n := rand.Intn(1000)

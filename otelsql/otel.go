@@ -33,7 +33,10 @@ type config struct {
 }
 
 func newConfig(opts []Option) *config {
-	c := &config{}
+	c := &config{
+		tracerProvider: otel.GetTracerProvider(),
+		meterProvider:  global.MeterProvider(),
+	}
 	for _, opt := range opts {
 		opt(c)
 	}
@@ -55,15 +58,8 @@ func newDBInstrum(opts []Option) *dbInstrum {
 		config: newConfig(opts),
 	}
 
-	if t.tracerProvider == nil {
-		t.tracerProvider = otel.GetTracerProvider()
-	}
 	if t.tracer == nil {
 		t.tracer = t.tracerProvider.Tracer(instrumName)
-	}
-
-	if t.meterProvider == nil {
-		t.meterProvider = global.MeterProvider()
 	}
 	if t.meter == nil {
 		t.meter = t.meterProvider.Meter(instrumName)
