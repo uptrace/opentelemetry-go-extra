@@ -8,7 +8,7 @@ exclude go.opentelemetry.io/proto/otlp v0.15.0
 
 require (
 	github.com/gin-gonic/gin v1.7.7
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.10
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.11
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.31.0
 	go.opentelemetry.io/otel/trace v1.6.1
 )
