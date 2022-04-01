@@ -30,6 +30,8 @@ type config struct {
 	meter         metric.Meter
 
 	attrs []attribute.KeyValue
+
+	queryFormatter func(query string) string
 }
 
 func newConfig(opts []Option) *config {
@@ -44,6 +46,9 @@ func newConfig(opts []Option) *config {
 }
 
 func (c *config) formatQuery(query string) string {
+	if c.queryFormatter != nil {
+		return c.queryFormatter(query)
+	}
 	return query
 }
 
@@ -158,6 +163,13 @@ func WithDBName(name string) Option {
 func WithMeterProvider(meterProvider metric.MeterProvider) Option {
 	return func(c *config) {
 		c.meterProvider = meterProvider
+	}
+}
+
+// WithQueryFormatter configures a query formatter
+func WithQueryFormatter(queryFormatter func(query string) string) Option {
+	return func(c *config) {
+		c.queryFormatter = queryFormatter
 	}
 }
 
