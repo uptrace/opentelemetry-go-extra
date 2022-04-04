@@ -28,3 +28,4 @@ See [otelgorm](../) for documentation.
 
 - [OpenTelemetry Go instrumentations](https://opentelemetry.uptrace.dev/instrumentations/?lang=go)
 - [OpenTelemetry Tracing API](https://opentelemetry.uptrace.dev/guide/go-tracing.html)
+- [Open Source distributed tracing tools](https://get.uptrace.dev/compare/distributed-tracing-tools.html)

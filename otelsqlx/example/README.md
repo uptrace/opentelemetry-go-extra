@@ -26,3 +26,4 @@ See [otelsqlx](./..) for documentation.
 
 - [OpenTelemetry Go instrumentations](https://opentelemetry.uptrace.dev/instrumentations/?lang=go)
 - [OpenTelemetry Tracing API](https://opentelemetry.uptrace.dev/guide/go-tracing.html)
+- [Top distributed tracing tools](https://get.uptrace.dev/compare/distributed-tracing-tools.html)

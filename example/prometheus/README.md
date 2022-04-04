@@ -23,3 +23,4 @@ test_my_counter
 
 - [OpenTelemetry Metrics](https://opentelemetry.uptrace.dev/guide/metrics.html)
 - [OpenTelemetry Metrics API for Go](https://opentelemetry.uptrace.dev/guide/go-metrics.html)
+- [Best distributed tracing tools](https://get.uptrace.dev/compare/distributed-tracing-tools.html)
