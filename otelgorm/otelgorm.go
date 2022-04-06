@@ -2,7 +2,9 @@ package otelgorm
 
 import (
 	"database/sql"
+	"database/sql/driver"
 	"fmt"
+	"io"
 
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -134,7 +136,14 @@ func (p *otelPlugin) after() gormHookFunc {
 		}
 
 		span.SetAttributes(attrs...)
-		if tx.Error != nil {
+		switch tx.Error {
+		case nil,
+			gorm.ErrRecordNotFound,
+			driver.ErrSkip,
+			io.EOF, // end of rows iterator
+			sql.ErrNoRows:
+			// ignore
+		default:
 			span.RecordError(tx.Error)
 			span.SetStatus(codes.Error, tx.Error.Error())
 		}
