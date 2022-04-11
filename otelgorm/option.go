@@ -42,3 +42,11 @@ func WithoutMetrics() Option {
 		p.excludeMetrics = true
 	}
 }
+
+// WithQueryLimitation prevents DBStats metrics from uploading the full query if it exceeds max characters.
+func WithQueryLimitation(queryMaxChars int) Option {
+	return func(p *otelPlugin) {
+		p.queryLimitation = true
+		p.queryMaxChars = queryMaxChars
+	}
+}

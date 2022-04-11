@@ -24,6 +24,8 @@ type otelPlugin struct {
 	attrs            []attribute.KeyValue
 	excludeQueryVars bool
 	excludeMetrics   bool
+	queryLimitation  bool
+	queryMaxChars    int
 }
 
 func NewPlugin(opts ...Option) gorm.Plugin {
@@ -125,6 +127,10 @@ func (p *otelPlugin) after() gormHookFunc {
 		}
 
 		query := tx.Dialector.Explain(tx.Statement.SQL.String(), vars...)
+		if p.queryLimitation && len(query) > p.queryMaxChars {
+			halfMaxChars := p.queryMaxChars / 2
+			query = fmt.Sprintf("%s ... %s", query[:halfMaxChars], query[len(query)-halfMaxChars:])
+		}
 
 		attrs = append(attrs, semconv.DBStatementKey.String(query))
 
