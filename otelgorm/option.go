@@ -36,6 +36,13 @@ func WithoutQueryVariables() Option {
 	}
 }
 
+// WithQueryFormatter configures a query formatter
+func WithQueryFormatter(queryFormatter func(query string) string) Option {
+	return func(p *otelPlugin) {
+		p.queryFormatter = queryFormatter
+	}
+}
+
 // WithoutMetrics prevents DBStats metrics from being reported.
 func WithoutMetrics() Option {
 	return func(p *otelPlugin) {

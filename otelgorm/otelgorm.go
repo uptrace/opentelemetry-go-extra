@@ -24,6 +24,7 @@ type otelPlugin struct {
 	attrs            []attribute.KeyValue
 	excludeQueryVars bool
 	excludeMetrics   bool
+	queryFormatter   func(query string) string
 }
 
 func NewPlugin(opts ...Option) gorm.Plugin {
@@ -126,8 +127,7 @@ func (p *otelPlugin) after() gormHookFunc {
 
 		query := tx.Dialector.Explain(tx.Statement.SQL.String(), vars...)
 
-		attrs = append(attrs, semconv.DBStatementKey.String(query))
-
+		attrs = append(attrs, semconv.DBStatementKey.String(p.formatQuery(query)))
 		if tx.Statement.Table != "" {
 			attrs = append(attrs, semconv.DBSQLTableKey.String(tx.Statement.Table))
 		}
@@ -150,10 +150,19 @@ func (p *otelPlugin) after() gormHookFunc {
 	}
 }
 
+func (p *otelPlugin) formatQuery(query string) string {
+	if p.queryFormatter != nil {
+		return p.queryFormatter(query)
+	}
+	return query
+}
+
 func dbSystem(tx *gorm.DB) attribute.KeyValue {
 	switch tx.Dialector.Name() {
 	case "mysql":
 		return semconv.DBSystemMySQL
+	case "mssql":
+		return semconv.DBSystemMSSQL
 	case "postgres", "postgresql":
 		return semconv.DBSystemPostgreSQL
 	case "sqlite":
