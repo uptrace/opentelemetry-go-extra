@@ -4,8 +4,6 @@ go 1.17
 
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
-exclude go.opentelemetry.io/proto/otlp v0.15.0
-
 require (
 	github.com/golang/protobuf v1.5.2
 	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.11

@@ -2,13 +2,11 @@ module github.com/uptrace/opentelemetry-go-extra/example/prometheus/metrics
 
 go 1.17
 
-exclude go.opentelemetry.io/proto/otlp v0.15.0
-
 require (
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.31.0
-	go.opentelemetry.io/otel/exporters/prometheus v0.28.0
-	go.opentelemetry.io/otel/metric v0.28.0
-	go.opentelemetry.io/otel/sdk/metric v0.28.0
+	go.opentelemetry.io/otel/exporters/prometheus v0.29.0
+	go.opentelemetry.io/otel/metric v0.29.0
+	go.opentelemetry.io/otel/sdk/metric v0.29.0
 )
 
 require (
@@ -22,9 +20,9 @@ require (
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.33.0 // indirect
 	github.com/prometheus/procfs v0.7.3 // indirect
-	go.opentelemetry.io/otel v1.6.1 // indirect
-	go.opentelemetry.io/otel/sdk v1.6.1 // indirect
-	go.opentelemetry.io/otel/trace v1.6.1 // indirect
-	golang.org/x/sys v0.0.0-20220328115105-d36c6a25d886 // indirect
+	go.opentelemetry.io/otel v1.6.3 // indirect
+	go.opentelemetry.io/otel/sdk v1.6.3 // indirect
+	go.opentelemetry.io/otel/trace v1.6.3 // indirect
+	golang.org/x/sys v0.0.0-20220412071739-889880a91fd5 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 )
