@@ -1,3 +1,18 @@
+## [0.1.12](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.11...v0.1.12) (2022-04-12)
+
+
+### Bug Fixes
+
+* **otelgorm:** ignore gorm.ErrRecordNotFound and other errors from otelsql/otel.go ([#48](https://github.com/uptrace/opentelemetry-go-extra/issues/48)) ([1c5d1f7](https://github.com/uptrace/opentelemetry-go-extra/commit/1c5d1f712afede4daf0dbdecbc48b6c245fbda39))
+
+
+### Features
+
+* **otelgorm:** add query formatter option ([e2d9787](https://github.com/uptrace/opentelemetry-go-extra/commit/e2d97873222a38c867c9d1342a3e60df588c98aa))
+* **otelsql:** add an option: WithQueryFormatter ([b7a9f06](https://github.com/uptrace/opentelemetry-go-extra/commit/b7a9f0695fd18ec2e81eb0668bd694a5647a1dd9))
+
+
+
 ## [0.1.11](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.10...v0.1.11) (2022-03-29)
 
 

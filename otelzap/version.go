@@ -2,5 +2,5 @@ package otelzap
 
 // Version is the current release version.
 func Version() string {
-	return "0.1.11"
+	return "0.1.12"
 }
