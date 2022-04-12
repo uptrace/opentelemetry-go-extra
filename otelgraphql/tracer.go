@@ -6,7 +6,7 @@ import (
 
 	"github.com/graph-gophers/graphql-go/errors"
 	"github.com/graph-gophers/graphql-go/introspection"
-	"github.com/graph-gophers/graphql-go/trace"
+	"github.com/graph-gophers/graphql-go/trace/tracer"
 
 	otelcontrib "go.opentelemetry.io/contrib"
 	"go.opentelemetry.io/otel"
@@ -43,7 +43,7 @@ func (t Tracer) TraceQuery(
 	queryString string, operationName string,
 	variables map[string]interface{},
 	varTypes map[string]*introspection.Type,
-) (context.Context, trace.TraceQueryFinishFunc) {
+) (context.Context, tracer.QueryFinishFunc) {
 	var spanName string
 	if operationName != "" {
 		spanName = "graphql." + operationName
@@ -79,7 +79,7 @@ func (t Tracer) TraceField(
 	fieldName string,
 	trivial bool,
 	args map[string]interface{},
-) (context.Context, trace.TraceFieldFinishFunc) {
+) (context.Context, tracer.FieldFinishFunc) {
 	if trivial {
 		return ctx, func(*errors.QueryError) {}
 	}
@@ -100,7 +100,7 @@ func (t Tracer) TraceField(
 	}
 }
 
-func (t Tracer) TraceValidation(ctx context.Context) trace.TraceValidationFinishFunc {
+func (t Tracer) TraceValidation(ctx context.Context) tracer.ValidationFinishFunc {
 	_, span := t.tracer.Start(ctx, "graphql.Validate")
 
 	return func(errs []*errors.QueryError) {
