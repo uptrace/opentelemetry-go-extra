@@ -2,7 +2,8 @@
 
 # GORM OpenTelemetry instrumentation
 
-otelgorm instrumentation records database queries and reports `DBStats` metrics.
+[GORM OpenTelemetry instrumentation](https://opentelemetry.uptrace.dev/instrumentations/go-gorm.html)
+records database queries and reports `DBStats` metrics.
 
 ## Installation
 

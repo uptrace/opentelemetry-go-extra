@@ -1,10 +1,10 @@
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/uptrace/opentelemetry-go-extra/otelzap)](https://pkg.go.dev/github.com/uptrace/opentelemetry-go-extra/otelzap)
 
-# OpenTelemetry Go instrumentation for Zap logging library
+# Zap OpenTelemetry instrumentation
 
-This instrumentation records Zap log messages as events on the existing span that must be passed in
-a `context.Context` as a first argument. It does not record anything if the context does not contain
-a span.
+[Zap OpenTelemetry instrumentation](https://opentelemetry.uptrace.dev/instrumentations/go-zap.html)
+records Zap log messages as events on the existing span that must be passed in a `context.Context`
+as a first argument. It does not record anything if the context does not contain a span.
 
 ## Installation
 
@@ -15,7 +15,7 @@ go get github.com/uptrace/opentelemetry-go-extra/otelzap
 ## Usage
 
 You need to create an `otelzap.Logger` using this package and pass a
-[context](https://opentelemetry.uptrace.dev/guide/go-tracing.html#context) to propage the active
+[context](https://opentelemetry.uptrace.dev/guide/go-tracing.html#context) to propagate the active
 span.
 
 ```go
