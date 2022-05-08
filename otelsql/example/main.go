@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"go.opentelemetry.io/otel"
-	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 	_ "modernc.org/sqlite"
 
 	"github.com/uptrace/opentelemetry-go-extra/otelplay"

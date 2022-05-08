@@ -25,7 +25,7 @@ To instrument sqlx, you need to connect to a database using the API provided by 
 ```go
 import (
     "github.com/uptrace/opentelemetry-go-extra/otelsqlx"
-    semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+    semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
     _ "modernc.org/sqlite"
 )
 
@@ -58,7 +58,7 @@ otelsqlx accepts all the options from
 ```go
 import (
     "github.com/uptrace/opentelemetry-go-extra/otelsqlx"
-    semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+    semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
     _ "modernc.org/sqlite"
 )
 

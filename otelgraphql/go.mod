@@ -8,10 +8,10 @@ require (
 	github.com/graph-gophers/graphql-go v1.4.0
 	github.com/stretchr/testify v1.7.1
 	github.com/uptrace/opentelemetry-go-extra/otelutil v0.1.12
-	go.opentelemetry.io/contrib v1.6.0
-	go.opentelemetry.io/otel v1.6.3
+	go.opentelemetry.io/contrib v1.7.0
+	go.opentelemetry.io/otel v1.7.0
 	go.opentelemetry.io/otel/sdk v1.1.0
-	go.opentelemetry.io/otel/trace v1.6.3
+	go.opentelemetry.io/otel/trace v1.7.0
 )
 
 require (

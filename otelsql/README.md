@@ -23,7 +23,7 @@ To instrument database/sql, you need to connect to a database using the API prov
 ```go
 import (
 	"github.com/uptrace/opentelemetry-go-extra/otelsql"
-	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 )
 
 db, err := otelsql.Open("sqlite", "file::memory:?cache=shared",
@@ -60,7 +60,7 @@ the same [options](https://pkg.go.dev/github.com/uptrace/opentelemetry-go-extra/
   configures a `db.name` attribute.
 - [WithDBSystem](https://pkg.go.dev/github.com/uptrace/opentelemetry-go-extra/otelsql#WithDBSystem)
   configures a `db.system` attribute. When possible, you should prefer using WithAttributes and
-  [semconv](https://pkg.go.dev/go.opentelemetry.io/otel/semconv/v1.4.0), for example,
+  [semconv](https://pkg.go.dev/go.opentelemetry.io/otel/semconv/v1.10.0), for example,
   `otelsql.WithAttributes(semconv.DBSystemSqlite)`.
 
 ## sqlboiler
@@ -70,7 +70,7 @@ You can use otelsql to instrument [sqlboiler](https://github.com/volatiletech/sq
 ```go
 import (
     "github.com/uptrace/opentelemetry-go-extra/otelsql"
-    semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+    semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 )
 
 db, err := otelsql.Open("postgres", "dbname=fun user=abc",
@@ -90,7 +90,7 @@ You can use otelsql to instrument [GORM 1](https://v1.gorm.io/):
 import (
     "github.com/jinzhu/gorm"
     "github.com/uptrace/opentelemetry-go-extra/otelsql"
-    semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+    semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 )
 
 // gormOpen is like gorm.Open, but it uses otelsql to instrument the database.

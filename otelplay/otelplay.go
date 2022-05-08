@@ -31,7 +31,7 @@ func TraceURL(span trace.Span) string {
 func ConfigureOpentelemetry(ctx context.Context) func() {
 	switch {
 	case os.Getenv("UPTRACE_DSN") != "":
-		uptrace.ConfigureOpentelemetry()
+		uptrace.ConfigureOpentelemetry(uptrace.WithServiceName("myservicename"))
 		return func() {
 			_ = uptrace.Shutdown(ctx)
 		}
