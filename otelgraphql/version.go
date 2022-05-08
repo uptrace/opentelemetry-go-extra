@@ -2,5 +2,5 @@ package otelgraphql
 
 // Version is the current release version.
 func Version() string {
-	return "0.1.12"
+	return "0.1.13"
 }
