@@ -1,3 +1,12 @@
+## [0.1.13](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.12...v0.1.13) (2022-05-08)
+
+
+### Features
+
+* upgrade to opentelemetry-go v1.7.0 ([bfa8f4e](https://github.com/uptrace/opentelemetry-go-extra/commit/bfa8f4ea4d83ca45da4429d17069e2ca531140f5))
+
+
+
 ## [0.1.12](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.11...v0.1.12) (2022-04-12)
 
 
