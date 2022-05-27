@@ -33,6 +33,7 @@ func TestEndToEnd(t *testing.T) {
 			require: func(t *testing.T, spans []sdktrace.ReadOnlySpan) {
 				require.Equal(t, 1, len(spans))
 				require.Equal(t, "gorm.Row", spans[0].Name())
+				require.Equal(t, trace.SpanKindClient, spans[0].SpanKind())
 
 				m := attrMap(spans[0].Attributes())
 
