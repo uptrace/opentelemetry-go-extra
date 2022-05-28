@@ -10,8 +10,8 @@ replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
 	github.com/sirupsen/logrus v1.8.1
-	github.com/uptrace/opentelemetry-go-extra/otellogrus v0.1.13
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.13
+	github.com/uptrace/opentelemetry-go-extra/otellogrus v0.1.14
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.14
 	go.opentelemetry.io/otel v1.7.0
 )
 
@@ -21,7 +21,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.10.2 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelutil v0.1.13 // indirect
+	github.com/uptrace/opentelemetry-go-extra/otelutil v0.1.14 // indirect
 	github.com/uptrace/uptrace-go v1.7.1 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.32.0 // indirect
 	go.opentelemetry.io/otel/exporters/jaeger v1.7.0 // indirect
