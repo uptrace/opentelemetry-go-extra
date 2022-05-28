@@ -1,3 +1,13 @@
+## [0.1.14](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.13...v0.1.14) (2022-05-28)
+
+
+### Bug Fixes
+
+* import error ([8838b79](https://github.com/uptrace/opentelemetry-go-extra/commit/8838b79f5a8096bc7713925498531c26d6757fab))
+* set span kind to client for otelgorm ([0250bbd](https://github.com/uptrace/opentelemetry-go-extra/commit/0250bbd1c85b89b8b1ade546f05d1db2a693ab34))
+
+
+
 ## [0.1.13](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.12...v0.1.13) (2022-05-08)
 
 
