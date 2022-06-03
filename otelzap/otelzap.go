@@ -16,6 +16,7 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
+	"github.com/blendle/zapdriver"
 	"github.com/uptrace/opentelemetry-go-extra/otelutil"
 )
 
@@ -169,8 +170,11 @@ func (l *Logger) logFields(
 	l.log(span, lvl, msg, attrs)
 
 	if l.withTraceID {
-		traceID := span.SpanContext().TraceID().String()
+		spanCtx := span.SpanContext()
+		traceID := spanCtx.TraceID().String()
+		spanID := spanCtx.SpanID().String
 		fields = append(fields, zap.String("trace_id", traceID))
+		fields = append(fields, zapdriver.TraceContext(traceID, spanID, spanCtx.IsSampled(), "googleid"))
 	}
 
 	return fields
