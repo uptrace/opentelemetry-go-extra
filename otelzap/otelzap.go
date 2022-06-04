@@ -599,28 +599,28 @@ func (s SugaredLoggerWithCtx) Fatalf(template string, args ...interface{}) {
 // When debug-level logging is disabled, this is much faster than
 //  s.With(keysAndValues).Debug(msg)
 func (s SugaredLoggerWithCtx) Debugw(msg string, keysAndValues ...interface{}) {
-	s.s.logKVs(s.ctx, zap.DebugLevel, msg, keysAndValues)
+	keysAndValues = s.s.logKVs(s.ctx, zap.DebugLevel, msg, keysAndValues)
 	s.s.skipCaller.Debugw(msg, keysAndValues...)
 }
 
 // Infow logs a message with some additional context. The variadic key-value
 // pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) Infow(msg string, keysAndValues ...interface{}) {
-	s.s.logKVs(s.ctx, zap.InfoLevel, msg, keysAndValues)
+	keysAndValues = s.s.logKVs(s.ctx, zap.InfoLevel, msg, keysAndValues)
 	s.s.skipCaller.Infow(msg, keysAndValues...)
 }
 
 // Warnw logs a message with some additional context. The variadic key-value
 // pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) Warnw(msg string, keysAndValues ...interface{}) {
-	s.s.logKVs(s.ctx, zap.WarnLevel, msg, keysAndValues)
+	keysAndValues = s.s.logKVs(s.ctx, zap.WarnLevel, msg, keysAndValues)
 	s.s.skipCaller.Warnw(msg, keysAndValues...)
 }
 
 // Errorw logs a message with some additional context. The variadic key-value
 // pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) Errorw(msg string, keysAndValues ...interface{}) {
-	s.s.logKVs(s.ctx, zap.ErrorLevel, msg, keysAndValues)
+	keysAndValues = s.s.logKVs(s.ctx, zap.ErrorLevel, msg, keysAndValues)
 	s.s.skipCaller.Errorw(msg, keysAndValues...)
 }
 
@@ -628,21 +628,21 @@ func (s SugaredLoggerWithCtx) Errorw(msg string, keysAndValues ...interface{}) {
 // logger then panics. (See DPanicLevel for details.) The variadic key-value
 // pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) DPanicw(msg string, keysAndValues ...interface{}) {
-	s.s.logKVs(s.ctx, zap.DPanicLevel, msg, keysAndValues)
+	keysAndValues = s.s.logKVs(s.ctx, zap.DPanicLevel, msg, keysAndValues)
 	s.s.skipCaller.DPanicw(msg, keysAndValues...)
 }
 
 // Panicw logs a message with some additional context, then panics. The
 // variadic key-value pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) Panicw(msg string, keysAndValues ...interface{}) {
-	s.s.logKVs(s.ctx, zap.PanicLevel, msg, keysAndValues)
+	keysAndValues = s.s.logKVs(s.ctx, zap.PanicLevel, msg, keysAndValues)
 	s.s.skipCaller.Panicw(msg, keysAndValues...)
 }
 
 // Fatalw logs a message with some additional context, then calls os.Exit. The
 // variadic key-value pairs are treated as they are in With.
 func (s SugaredLoggerWithCtx) Fatalw(msg string, keysAndValues ...interface{}) {
-	s.s.logKVs(s.ctx, zap.FatalLevel, msg, keysAndValues)
+	keysAndValues = s.s.logKVs(s.ctx, zap.FatalLevel, msg, keysAndValues)
 	s.s.skipCaller.Fatalw(msg, keysAndValues...)
 }
 
