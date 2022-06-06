@@ -12,12 +12,15 @@ import (
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/sdk/trace/tracetest"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	"go.uber.org/zap/zaptest/observer"
 )
 
 type Test struct {
 	log     func(ctx context.Context, log *Logger)
-	require func(t *testing.T, event sdktrace.Event)
+	require func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs)
 }
 
 func TestOtelZap(t *testing.T) {
@@ -26,7 +29,7 @@ func TestOtelZap(t *testing.T) {
 			log: func(ctx context.Context, log *Logger) {
 				log.Ctx(ctx).Info("hello")
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				sev, ok := m[logSeverityKey]
@@ -44,7 +47,7 @@ func TestOtelZap(t *testing.T) {
 			log: func(ctx context.Context, log *Logger) {
 				log.InfoContext(ctx, "hello")
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				sev, ok := m[logSeverityKey]
@@ -62,7 +65,7 @@ func TestOtelZap(t *testing.T) {
 			log: func(ctx context.Context, log *Logger) {
 				log.Ctx(ctx).Warn("hello", zap.String("foo", "bar"))
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				sev, ok := m[logSeverityKey]
@@ -84,7 +87,7 @@ func TestOtelZap(t *testing.T) {
 			log: func(ctx context.Context, log *Logger) {
 				log.Ctx(ctx).Warn("hello", zap.Strings("foo", []string{"bar1", "bar2", "bar3"}))
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				sev, ok := m[logSeverityKey]
@@ -109,7 +112,7 @@ func TestOtelZap(t *testing.T) {
 					WithOptions(zap.Fields(zap.String("faz", "faz1"))).
 					Warn("hello", zap.Strings("foo", []string{"bar1", "bar2", "bar3"}))
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				sev, ok := m[logSeverityKey]
@@ -139,7 +142,7 @@ func TestOtelZap(t *testing.T) {
 			log: func(ctx context.Context, log *Logger) {
 				log.Ctx(ctx).Warn("hello", zap.Durations("foo", []time.Duration{time.Millisecond, time.Second, time.Hour}))
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				sev, ok := m[logSeverityKey]
@@ -162,7 +165,7 @@ func TestOtelZap(t *testing.T) {
 				err := errors.New("some error")
 				log.Ctx(ctx).Error("hello", zap.Error(err))
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				sev, ok := m[logSeverityKey]
@@ -189,7 +192,7 @@ func TestOtelZap(t *testing.T) {
 				log = log.Clone(WithStackTrace(true))
 				log.Ctx(ctx).Info("hello")
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				stack, ok := m[semconv.ExceptionStacktraceKey]
@@ -203,7 +206,7 @@ func TestOtelZap(t *testing.T) {
 			log: func(ctx context.Context, log *Logger) {
 				log.Sugar().ErrorwContext(ctx, "hello", "foo", "bar")
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				sev, ok := m[logSeverityKey]
@@ -225,7 +228,7 @@ func TestOtelZap(t *testing.T) {
 			log: func(ctx context.Context, log *Logger) {
 				log.Sugar().ErrorfContext(ctx, "hello %s", "world")
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				sev, ok := m[logSeverityKey]
@@ -247,7 +250,7 @@ func TestOtelZap(t *testing.T) {
 			log: func(ctx context.Context, log *Logger) {
 				log.Sugar().Ctx(ctx).Errorw("hello", "foo", "bar")
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				sev, ok := m[logSeverityKey]
@@ -269,7 +272,7 @@ func TestOtelZap(t *testing.T) {
 			log: func(ctx context.Context, log *Logger) {
 				log.Sugar().Ctx(ctx).Errorf("hello %s", "world")
 			},
-			require: func(t *testing.T, event sdktrace.Event) {
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
 				m := attrMap(event.Attributes)
 
 				sev, ok := m[logSeverityKey]
@@ -287,13 +290,37 @@ func TestOtelZap(t *testing.T) {
 				requireCodeAttrs(t, m)
 			},
 		},
-	}
+		{
+			log: func(ctx context.Context, log *Logger) {
+				log = log.Clone(WithSetTraceFieldsFunc(func(spanCtx trace.SpanContext) []zapcore.Field {
+					return []zapcore.Field{zap.String("MyTraceId", "123"), zap.String("MySpanID", "456")}
+				}))
+				log.Ctx(ctx).Info("hello")
+			},
+			require: func(t *testing.T, event sdktrace.Event, logs *observer.ObservedLogs) {
+				m := attrMap(event.Attributes)
 
-	logger := New(zap.L(), WithMinLevel(zap.InfoLevel))
+				sev, ok := m[logSeverityKey]
+				require.True(t, ok)
+				require.Equal(t, "INFO", sev.AsString())
+
+				msg, ok := m[logMessageKey]
+				require.True(t, ok)
+				require.Equal(t, "hello", msg.AsString())
+
+				require.ElementsMatch(t, []zapcore.Field{zap.String("MyTraceId", "123"), zap.String("MySpanID", "456")}, logs.All()[0].Context)
+
+				requireCodeAttrs(t, m)
+			},
+		},
+	}
 
 	for i, test := range tests {
 		test := test
 		t.Run(fmt.Sprint(i), func(t *testing.T) {
+			observedZapCore, observedLogs := observer.New(zap.InfoLevel)
+			observedLogger := zap.New(observedZapCore)
+			logger := New(observedLogger, WithMinLevel(zap.InfoLevel))
 			sr := tracetest.NewSpanRecorder()
 			provider := sdktrace.NewTracerProvider(sdktrace.WithSpanProcessor(sr))
 			tracer := provider.Tracer("test")
@@ -313,7 +340,7 @@ func TestOtelZap(t *testing.T) {
 
 			event := events[0]
 			require.Equal(t, "log", event.Name)
-			test.require(t, event)
+			test.require(t, event, observedLogs)
 		})
 	}
 }
