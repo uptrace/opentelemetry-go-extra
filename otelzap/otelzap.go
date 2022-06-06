@@ -16,7 +16,6 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
-	"github.com/blendle/zapdriver"
 	"github.com/uptrace/opentelemetry-go-extra/otelutil"
 )
 
@@ -28,12 +27,17 @@ var (
 	logTemplateKey = attribute.Key("log.template")
 )
 
+// SetTraceFieldsFunc is a callback function that can be used to add additional fields to the log
+// from the given span context
+type SetTraceFieldsFunc func(trace.SpanContext) []zapcore.Field
+
 // Logger is a thin wrapper for zap.Logger that adds Ctx method.
 type Logger struct {
 	*zap.Logger
 	skipCaller *zap.Logger
 
-	withTraceID bool
+	withTraceID        bool
+	setTraceFieldsFunc SetTraceFieldsFunc
 
 	minLevel         zapcore.Level
 	errorStatusLevel zapcore.Level
@@ -172,9 +176,11 @@ func (l *Logger) logFields(
 	if l.withTraceID {
 		spanCtx := span.SpanContext()
 		traceID := spanCtx.TraceID().String()
-		spanID := spanCtx.SpanID().String
 		fields = append(fields, zap.String("trace_id", traceID))
-		fields = append(fields, zapdriver.TraceContext(traceID, spanID, spanCtx.IsSampled(), "googleid"))
+	}
+
+	if l.setTraceFieldsFunc != nil {
+		fields = append(fields, l.setTraceFieldsFunc(span.SpanContext())...)
 	}
 
 	return fields
