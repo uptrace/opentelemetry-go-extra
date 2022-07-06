@@ -451,6 +451,15 @@ func (s *SugaredLogger) logArgs(
 	s.l.log(span, lvl, fmt.Sprintf(template, args...), attrs)
 }
 
+// Debugw logs a message with some additional context. The variadic key-value
+// pairs are treated as they are in With.
+func (s *SugaredLogger) DebugwContext(
+	ctx context.Context, msg string, keysAndValues ...interface{},
+) {
+	keysAndValues = s.logKVs(ctx, zap.DebugLevel, msg, keysAndValues)
+	s.Debugw(msg, keysAndValues...)
+}
+
 // Infow logs a message with some additional context. The variadic key-value
 // pairs are treated as they are in With.
 func (s *SugaredLogger) InfowContext(
