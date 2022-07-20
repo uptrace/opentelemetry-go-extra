@@ -24,6 +24,6 @@ See [otellogrus](../) for documentation.
 
 ## Links
 
-- [OpenTelemetry Go instrumentations](https://opentelemetry.uptrace.dev/instrumentations/?lang=go)
-- [OpenTelemetry Tracing API](https://opentelemetry.uptrace.dev/guide/go-tracing.html)
-- [Best distributed tracing tools](https://get.uptrace.dev/compare/distributed-tracing-tools.html)
+- [OpenTelemetry Go instrumentations](https://uptrace.dev/opentelemetry/instrumentations/?lang=go)
+- [OpenTelemetry Tracing API](https://uptrace.dev/opentelemetry/go-tracing.html)
+- [Best distributed tracing tools](https://uptrace.dev/get/compare/distributed-tracing-tools.html)

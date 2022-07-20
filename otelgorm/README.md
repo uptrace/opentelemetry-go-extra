@@ -2,7 +2,7 @@
 
 # GORM OpenTelemetry instrumentation
 
-[GORM OpenTelemetry instrumentation](https://opentelemetry.uptrace.dev/instrumentations/go-gorm.html)
+[GORM OpenTelemetry instrumentation](https://uptrace.dev/opentelemetry/instrumentations/go-gorm.html)
 records database queries and reports `DBStats` metrics.
 
 ## Installation
@@ -33,7 +33,7 @@ if err := db.Use(otelgorm.NewPlugin()); err != nil {
 ```
 
 And then use `db.WithContext(ctx)` to propagate the active span via
-[context](https://opentelemetry.uptrace.dev/guide/go-tracing.html#context):
+[context](https://uptrace.dev/opentelemetry/go-tracing.html#context):
 
 ```go
 var num int

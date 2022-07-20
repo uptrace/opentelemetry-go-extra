@@ -2,7 +2,7 @@
 
 # database/sql instrumentation for OpenTelemetry Go
 
-[database/sql OpenTelemetry instrumentation](https://opentelemetry.uptrace.dev/instrumentations/go-database-sql.html)
+[database/sql OpenTelemetry instrumentation](https://uptrace.dev/opentelemetry/instrumentations/go-database-sql.html)
 records database queries (including `Tx` and `Stmt` queries) and reports `DBStats` metrics.
 
 ## Installation
@@ -37,7 +37,7 @@ if err != nil {
 ```
 
 And then use context-aware API to propagate the active span via
-[context](https://opentelemetry.uptrace.dev/guide/go-tracing.html#context):
+[context](https://uptrace.dev/opentelemetry/go-tracing.html#context):
 
 ```go
 var num int
