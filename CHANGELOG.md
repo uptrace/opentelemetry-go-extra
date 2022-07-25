@@ -1,3 +1,13 @@
+## [0.1.15](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.14...v0.1.15) (2022-07-25)
+
+
+### Bug Fixes
+
+* **otelzap:** add missing DebugwContext function ([ea2b33a](https://github.com/uptrace/opentelemetry-go-extra/commit/ea2b33aa1e368a61b65fa31f4cf31ac794cd06ba))
+* **otelzap:** fix WithTraceIDField for Debugw-like API ([c937b65](https://github.com/uptrace/opentelemetry-go-extra/commit/c937b653c20110be254e2232a4fc22d3de700c94))
+
+
+
 ## [0.1.14](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.13...v0.1.14) (2022-05-28)
 
 
