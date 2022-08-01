@@ -1,6 +1,7 @@
 # OpenTelemetry instrumentations for Go
 
 [![build workflow](https://github.com/uptrace/opentelemetry-go-extra/actions/workflows/build.yml/badge.svg)](https://github.com/uptrace/opentelemetry-go-extra/actions/workflows/build.yml)
+[![Chat](https://discordapp.com/api/guilds/1000404569202884628/widget.png)](https://discord.gg/YF8tdP8Pmk)
 
 | Instrumentation Package         | Metrics            | Traces             |
 | ------------------------------- | ------------------ | ------------------ |
