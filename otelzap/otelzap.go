@@ -528,7 +528,7 @@ func (s *SugaredLogger) logKVs(
 
 	attrs := make([]attribute.KeyValue, 0, numAttr+len(kvs))
 
-	for i := 0; i < len(kvs); i += 2 {
+	for i := 0; i < len(kvs)-1; i += 2 {
 		if key, ok := kvs[i].(string); ok {
 			attrs = append(attrs, otelutil.Attribute(key, kvs[i+1]))
 		}
