@@ -267,6 +267,36 @@ func TestOtelZap(t *testing.T) {
 		},
 		{
 			log: func(ctx context.Context, log *Logger) {
+				log.Sugar().InfowContext(ctx, "hello", "foo", "bar")
+			},
+			require: func(t *testing.T, event sdktrace.Event) {
+				m := attrMap(event.Attributes)
+
+				sev, ok := m[logSeverityKey]
+				require.True(t, ok)
+				require.Equal(t, "INFO", sev.AsString())
+
+				msg, ok := m[logMessageKey]
+				require.True(t, ok)
+				require.Equal(t, "hello", msg.AsString())
+
+				foo, ok := m["foo"]
+				require.True(t, ok)
+				require.NotZero(t, foo.AsString())
+
+				requireCodeAttrs(t, m)
+			},
+		},
+		{
+			log: func(ctx context.Context, log *Logger) {
+				log.Sugar().InfowContext(ctx, "sugary logs require keyAndValues to come in pairs", "so this is invalid, but it shouldn't panic")
+			},
+			require: func(t *testing.T, event sdktrace.Event) {
+				// no panic? success!
+			},
+		},
+		{
+			log: func(ctx context.Context, log *Logger) {
 				log.Sugar().Ctx(ctx).Errorf("hello %s", "world")
 			},
 			require: func(t *testing.T, event sdktrace.Event) {
