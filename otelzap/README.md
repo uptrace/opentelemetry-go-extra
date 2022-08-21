@@ -101,6 +101,8 @@ couple of [options](https://pkg.go.dev/github.com/uptrace/opentelemetry-go-extra
   number, and function name of the caller. Enabled by default.
 - `otelzap.WithStackTrace(true)` configures the logger to capture logs with a stack trace. Disabled
   by default.
+- `otelzap.WithExtraFields(true)` configures the logger to add the given fields to structured log
+  messages and to span log events.
 - `otelzap.WithTraceIDField(true)` configures the logger to add `trace_id` field to structured log
   messages. This option is only useful with backends that don't support OTLP and instead parse log
   messages to extract structured information.
