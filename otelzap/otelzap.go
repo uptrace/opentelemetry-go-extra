@@ -42,6 +42,7 @@ type Logger struct {
 
 	// extraFields contains a number of zap.Fields that are added to every log entry
 	extraFields []zap.Field
+	callerDepth int
 }
 
 func New(logger *zap.Logger, opts ...Option) *Logger {
@@ -52,6 +53,7 @@ func New(logger *zap.Logger, opts ...Option) *Logger {
 		minLevel:         zap.WarnLevel,
 		errorStatusLevel: zap.ErrorLevel,
 		caller:           true,
+		callerDepth:      0,
 	}
 	for _, opt := range opts {
 		opt(l)
@@ -179,7 +181,7 @@ func (l *Logger) log(
 	attrs = append(attrs, logMessageKey.String(msg))
 
 	if l.caller {
-		if fn, file, line, ok := runtimeCaller(4); ok {
+		if fn, file, line, ok := runtimeCaller(4 + l.callerDepth); ok {
 			if fn != "" {
 				attrs = append(attrs, semconv.CodeFunctionKey.String(fn))
 			}

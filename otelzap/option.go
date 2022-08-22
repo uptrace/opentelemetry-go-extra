@@ -29,9 +29,18 @@ func WithErrorStatusLevel(lvl zapcore.Level) Option {
 // line number, and function name of the caller.
 //
 // It is enabled by default.
+
 func WithCaller(on bool) Option {
 	return func(l *Logger) {
 		l.caller = on
+	}
+}
+
+// WithCallerDepth allows you to you to adjust the depth of the caller by setting a number greater than 0. It can
+// be useful if you're wrapping this library with your own helper functions.
+func WithCallerDepth(depth int) Option {
+	return func(l *Logger) {
+		l.callerDepth = depth
 	}
 }
 
