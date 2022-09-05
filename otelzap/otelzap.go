@@ -380,6 +380,7 @@ func (s *SugaredLogger) Desugar() *Logger {
 func (s *SugaredLogger) With(args ...interface{}) *SugaredLogger {
 	return &SugaredLogger{
 		SugaredLogger: s.SugaredLogger.With(args...),
+		skipCaller:    s.skipCaller,
 		l:             s.l,
 	}
 }
