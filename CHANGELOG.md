@@ -1,3 +1,20 @@
+## [0.1.16](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.15...v0.1.16) (2022-09-05)
+
+
+### Bug Fixes
+
+* change SugaredLoggerWithCtx.Desuger to return LoggerWithCtx ([12f061e](https://github.com/uptrace/opentelemetry-go-extra/commit/12f061e380d1e2a383207614b139b03e51e946bf))
+* copy skipCaller in With. Fixes [#62](https://github.com/uptrace/opentelemetry-go-extra/issues/62) ([4b58eac](https://github.com/uptrace/opentelemetry-go-extra/commit/4b58eac802c1cd9f564db06a7f832f7e417455c7))
+* **otelzap:** do not panic on invalid input ([#69](https://github.com/uptrace/opentelemetry-go-extra/issues/69)) ([a41206e](https://github.com/uptrace/opentelemetry-go-extra/commit/a41206ed2c49fc7c817f470f61c5082b124cf267))
+
+
+### Features
+
+* **otelzap:** add extra fields option ([aa0e1a0](https://github.com/uptrace/opentelemetry-go-extra/commit/aa0e1a011e1dd8340143e95d1ab2e99300e7dc0b))
+* **otelzap:** make the caller depth configurable ([38a6a03](https://github.com/uptrace/opentelemetry-go-extra/commit/38a6a03114bcaf15e53c5965eaf03b9be8ff0631))
+
+
+
 ## [0.1.15](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.14...v0.1.15) (2022-07-25)
 
 
