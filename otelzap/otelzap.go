@@ -556,8 +556,11 @@ type SugaredLoggerWithCtx struct {
 // is quite inexpensive, so it's reasonable for a single application to use
 // both Loggers and SugaredLoggers, converting between them on the boundaries
 // of performance-sensitive code.
-func (s SugaredLoggerWithCtx) Desugar() *Logger {
-	return s.s.Desugar()
+func (s SugaredLoggerWithCtx) Desugar() LoggerWithCtx {
+	return LoggerWithCtx{
+		ctx: s.ctx,
+		l:   s.s.Desugar(),
+	}
 }
 
 // Debugf uses fmt.Sprintf to log a templated message.
