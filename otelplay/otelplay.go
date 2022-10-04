@@ -28,6 +28,11 @@ func TraceURL(span trace.Span) string {
 	}
 }
 
+// ConfigureOpentelemetry configures Opentelemetry to export spans to Uptrace, Jaeger,
+// or console depending on environment variables.
+//
+// You can use it to run examples, but don't use it in your applications. Instead, use
+// uptrace-go or opentelemetry-go directly. See https://uptrace.dev/get/uptrace-go.html
 func ConfigureOpentelemetry(ctx context.Context) func() {
 	switch {
 	case os.Getenv("UPTRACE_DSN") != "":
