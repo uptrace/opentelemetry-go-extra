@@ -6,7 +6,7 @@ replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
 	github.com/astaxie/beego v1.12.3
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.16
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.17
 	go.opentelemetry.io/contrib/instrumentation/github.com/astaxie/beego/otelbeego v0.36.1
 	go.opentelemetry.io/otel/trace v1.10.0
 )
