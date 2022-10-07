@@ -1,6 +1,6 @@
 module github.com/uptrace/opentelemetry-go-extra/otelgraphql
 
-go 1.17
+go 1.18
 
 replace github.com/uptrace/opentelemetry-go-extra/otelutil => ../otelutil
 
@@ -8,10 +8,10 @@ require (
 	github.com/graph-gophers/graphql-go v1.4.0
 	github.com/stretchr/testify v1.7.1
 	github.com/uptrace/opentelemetry-go-extra/otelutil v0.1.16
-	go.opentelemetry.io/contrib v1.9.0
-	go.opentelemetry.io/otel v1.9.0
+	go.opentelemetry.io/contrib v1.10.0
+	go.opentelemetry.io/otel v1.10.0
 	go.opentelemetry.io/otel/sdk v1.1.0
-	go.opentelemetry.io/otel/trace v1.9.0
+	go.opentelemetry.io/otel/trace v1.10.0
 )
 
 require (

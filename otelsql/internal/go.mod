@@ -1,15 +1,15 @@
 module github.com/uptrace/opentelemetry-go-extra/otelsql/internal
 
-go 1.17
+go 1.18
 
 replace github.com/uptrace/opentelemetry-go-extra/otelsql => ../
 
 require (
 	github.com/stretchr/testify v1.7.1
 	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.16
-	go.opentelemetry.io/otel v1.9.0
+	go.opentelemetry.io/otel v1.10.0
 	go.opentelemetry.io/otel/sdk v1.0.1
-	go.opentelemetry.io/otel/trace v1.9.0
+	go.opentelemetry.io/otel/trace v1.10.0
 	modernc.org/sqlite v1.13.1
 )
 
@@ -21,7 +21,7 @@ require (
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0 // indirect
-	go.opentelemetry.io/otel/metric v0.31.0 // indirect
+	go.opentelemetry.io/otel/metric v0.32.1 // indirect
 	golang.org/x/mod v0.3.0 // indirect
 	golang.org/x/sys v0.0.0-20210902050250-f475640dd07b // indirect
 	golang.org/x/tools v0.0.0-20201124115921-2c860bdd6e78 // indirect
