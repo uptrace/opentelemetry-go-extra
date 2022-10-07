@@ -1,15 +1,15 @@
 module github.com/uptrace/opentelemetry-go-extra/otelzap
 
-go 1.17
+go 1.18
 
 replace github.com/uptrace/opentelemetry-go-extra/otelutil => ../otelutil
 
 require (
 	github.com/stretchr/testify v1.8.0
-	github.com/uptrace/opentelemetry-go-extra/otelutil v0.1.16
-	go.opentelemetry.io/otel v1.9.0
+	github.com/uptrace/opentelemetry-go-extra/otelutil v0.1.17
+	go.opentelemetry.io/otel v1.10.0
 	go.opentelemetry.io/otel/sdk v1.0.1
-	go.opentelemetry.io/otel/trace v1.9.0
+	go.opentelemetry.io/otel/trace v1.10.0
 	go.uber.org/zap v1.23.0
 )
 

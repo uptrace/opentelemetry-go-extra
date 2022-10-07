@@ -3,19 +3,18 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 	"time"
 
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	runtimemetrics "go.opentelemetry.io/contrib/instrumentation/runtime"
-	"go.opentelemetry.io/otel/exporters/prometheus"
+	otelprom "go.opentelemetry.io/otel/exporters/prometheus"
 	"go.opentelemetry.io/otel/metric/global"
 	"go.opentelemetry.io/otel/metric/instrument"
-	"go.opentelemetry.io/otel/sdk/metric/aggregator/histogram"
-	controller "go.opentelemetry.io/otel/sdk/metric/controller/basic"
-	"go.opentelemetry.io/otel/sdk/metric/export/aggregation"
-	processor "go.opentelemetry.io/otel/sdk/metric/processor/basic"
-	selector "go.opentelemetry.io/otel/sdk/metric/selector/simple"
+	"go.opentelemetry.io/otel/sdk/metric"
 )
 
 func main() {
@@ -40,13 +39,20 @@ func main() {
 }
 
 func configureOpentelemetry() {
-	exporter := configureMetrics()
-
 	if err := runtimemetrics.Start(); err != nil {
 		panic(err)
 	}
 
-	http.HandleFunc("/metrics", exporter.ServeHTTP)
+	exporter := configureMetrics()
+
+	registry := prometheus.NewRegistry()
+
+	if err := registry.Register(exporter.Collector); err != nil {
+		log.Printf("error registering collector: %s", err)
+		return
+	}
+
+	http.Handle("/metrics", promhttp.HandlerFor(registry, promhttp.HandlerOpts{}))
 	fmt.Println("listenening on http://localhost:8088/metrics")
 
 	go func() {
@@ -54,25 +60,11 @@ func configureOpentelemetry() {
 	}()
 }
 
-func configureMetrics() *prometheus.Exporter {
-	config := prometheus.Config{}
+func configureMetrics() otelprom.Exporter {
+	exporter := otelprom.New()
+	provider := metric.NewMeterProvider(metric.WithReader(exporter))
 
-	ctrl := controller.New(
-		processor.NewFactory(
-			selector.NewWithHistogramDistribution(
-				histogram.WithExplicitBoundaries(config.DefaultHistogramBoundaries),
-			),
-			aggregation.CumulativeTemporalitySelector(),
-			processor.WithMemory(true),
-		),
-	)
-
-	exporter, err := prometheus.New(config, ctrl)
-	if err != nil {
-		panic(err)
-	}
-
-	global.SetMeterProvider(exporter.MeterProvider())
+	global.SetMeterProvider(provider)
 
 	return exporter
 }
