@@ -27,6 +27,8 @@ var (
 	logTemplateKey = attribute.Key("log.template")
 )
 
+type DynamicFields func(ctx context.Context) []zap.Field
+
 // Logger is a thin wrapper for zap.Logger that adds Ctx method.
 type Logger struct {
 	*zap.Logger
@@ -42,6 +44,9 @@ type Logger struct {
 
 	// extraFields contains a number of zap.Fields that are added to every log entry
 	extraFields []zap.Field
+	// dynamicFields contains a number of functions that are resolved dynamically to []zap.Field
+	dynamicFields []DynamicFields
+
 	callerDepth int
 }
 
@@ -143,6 +148,12 @@ func (l *Logger) logFields(
 ) []zapcore.Field {
 	if len(l.extraFields) > 0 {
 		fields = append(fields, l.extraFields...)
+	}
+
+	if len(l.dynamicFields) > 0 {
+		for _, d := range l.dynamicFields {
+			fields = append(fields, d(ctx)...)
+		}
 	}
 
 	if lvl < l.minLevel {
