@@ -19,12 +19,13 @@ import (
 var dbRowsAffected = attribute.Key("db.rows_affected")
 
 type otelPlugin struct {
-	provider         trace.TracerProvider
-	tracer           trace.Tracer
-	attrs            []attribute.KeyValue
-	excludeQueryVars bool
-	excludeMetrics   bool
-	queryFormatter   func(query string) string
+	provider           trace.TracerProvider
+	tracer             trace.Tracer
+	attrs              []attribute.KeyValue
+	excludeQueryVars   bool
+	excludeMetrics     bool
+	excludeDryRunSpans bool
+	queryFormatter     func(query string) string
 }
 
 func NewPlugin(opts ...Option) gorm.Plugin {
@@ -96,12 +97,18 @@ func (p otelPlugin) Initialize(db *gorm.DB) (err error) {
 
 func (p *otelPlugin) before(spanName string) gormHookFunc {
 	return func(tx *gorm.DB) {
+		if p.excludeDryRunSpans && tx.DryRun {
+			return
+		}
 		tx.Statement.Context, _ = p.tracer.Start(tx.Statement.Context, spanName, trace.WithSpanKind(trace.SpanKindClient))
 	}
 }
 
 func (p *otelPlugin) after() gormHookFunc {
 	return func(tx *gorm.DB) {
+		if p.excludeDryRunSpans && tx.DryRun {
+			return
+		}
 		span := trace.SpanFromContext(tx.Statement.Context)
 		if !span.IsRecording() {
 			return
