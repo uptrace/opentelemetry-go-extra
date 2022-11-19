@@ -24,7 +24,7 @@ type otelPlugin struct {
 	attrs              []attribute.KeyValue
 	excludeQueryVars   bool
 	excludeMetrics     bool
-	excludeDryRunSpans bool
+	includeDryRunSpans bool
 	queryFormatter     func(query string) string
 }
 
@@ -97,7 +97,7 @@ func (p otelPlugin) Initialize(db *gorm.DB) (err error) {
 
 func (p *otelPlugin) before(spanName string) gormHookFunc {
 	return func(tx *gorm.DB) {
-		if p.excludeDryRunSpans && tx.DryRun {
+		if tx.DryRun && !p.includeDryRunSpans {
 			return
 		}
 		tx.Statement.Context, _ = p.tracer.Start(tx.Statement.Context, spanName, trace.WithSpanKind(trace.SpanKindClient))
@@ -106,7 +106,7 @@ func (p *otelPlugin) before(spanName string) gormHookFunc {
 
 func (p *otelPlugin) after() gormHookFunc {
 	return func(tx *gorm.DB) {
-		if p.excludeDryRunSpans && tx.DryRun {
+		if tx.DryRun && !p.includeDryRunSpans {
 			return
 		}
 		span := trace.SpanFromContext(tx.Statement.Context)

@@ -81,16 +81,16 @@ func TestEndToEnd(t *testing.T) {
 				db.WithContext(ctx).Session(&gorm.Session{DryRun: true}).Exec("SELECT 1")
 			},
 			require: func(t *testing.T, spans []sdktrace.ReadOnlySpan) {
-				require.Equal(t, 1, len(spans))
+				require.Equal(t, 0, len(spans))
 			},
 		},
 		{
-			options: []otelgorm.Option{otelgorm.WithoutDryRunSpans()},
+			options: []otelgorm.Option{otelgorm.WithDryRunSpans()},
 			do: func(ctx context.Context, db *gorm.DB) {
 				db.WithContext(ctx).Session(&gorm.Session{DryRun: true}).Exec("SELECT 1")
 			},
 			require: func(t *testing.T, spans []sdktrace.ReadOnlySpan) {
-				require.Equal(t, 0, len(spans))
+				require.Equal(t, 1, len(spans))
 			},
 		},
 	}
