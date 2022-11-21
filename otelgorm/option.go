@@ -49,3 +49,12 @@ func WithoutMetrics() Option {
 		p.excludeMetrics = true
 	}
 }
+
+// WithDryRunSpans will add trace spans for "dry run" callback invocations from
+// Gorm. "Dry Run" invocations occur when Gorm is just rendering SQL, but not
+// actually executing it against a database.
+func WithDryRunSpans() Option {
+	return func(p *otelPlugin) {
+		p.includeDryRunSpans = true
+	}
+}
