@@ -93,6 +93,22 @@ func TestEndToEnd(t *testing.T) {
 				require.Equal(t, 1, len(spans))
 			},
 		},
+		{
+			do: func(ctx context.Context, db *gorm.DB) {
+				var count int64
+				query := db.WithContext(ctx).Table("generate_series(1, 10)")
+				_, _ = query.Select("*").Rows()
+				_ = query.Count(&count)
+			},
+			require: func(t *testing.T, spans []sdktrace.ReadOnlySpan) {
+				require.Equal(t, 2, len(spans))
+				require.Equal(
+					t,
+					spans[0].Parent().SpanID().String(),
+					spans[1].Parent().SpanID().String(),
+				)
+			},
+		},
 	}
 
 	for i, test := range tests {

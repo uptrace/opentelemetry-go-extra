@@ -1,6 +1,7 @@
 package otelgorm
 
 import (
+	"context"
 	"database/sql"
 	"database/sql/driver"
 	"fmt"
@@ -95,12 +96,18 @@ func (p otelPlugin) Initialize(db *gorm.DB) (err error) {
 	return firstErr
 }
 
+type originalCtxType int
+
+const originalCtxValue originalCtxType = iota
+
 func (p *otelPlugin) before(spanName string) gormHookFunc {
 	return func(tx *gorm.DB) {
 		if tx.DryRun && !p.includeDryRunSpans {
 			return
 		}
-		tx.Statement.Context, _ = p.tracer.Start(tx.Statement.Context, spanName, trace.WithSpanKind(trace.SpanKindClient))
+		originalCtx := tx.Statement.Context
+		newCtx := context.WithValue(originalCtx, originalCtxValue, originalCtx)
+		tx.Statement.Context, _ = p.tracer.Start(newCtx, spanName, trace.WithSpanKind(trace.SpanKindClient))
 	}
 }
 
@@ -153,6 +160,11 @@ func (p *otelPlugin) after() gormHookFunc {
 		default:
 			span.RecordError(tx.Error)
 			span.SetStatus(codes.Error, tx.Error.Error())
+		}
+
+		switch originalCtx := tx.Statement.Context.Value(originalCtxValue).(type) {
+		case context.Context:
+			tx.Statement.Context = originalCtx
 		}
 	}
 }
