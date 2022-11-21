@@ -85,7 +85,7 @@ func TestEndToEnd(t *testing.T) {
 			},
 		},
 		{
-			options: []otelgorm.Option{otelgorm.WithDryRunSpans()},
+			options: []otelgorm.Option{otelgorm.WithDryRunTx()},
 			do: func(ctx context.Context, db *gorm.DB) {
 				db.WithContext(ctx).Session(&gorm.Session{DryRun: true}).Exec("SELECT 1")
 			},

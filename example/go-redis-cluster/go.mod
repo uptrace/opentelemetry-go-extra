@@ -4,9 +4,12 @@ go 1.18
 
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
+replace github.com/go-redis/redis/v9 => /home/vmihailenco/workspace/redis
+replace github.com/go-redis/redis/extra/redisotel/v9 => /home/vmihailenco/workspace/redis/extra/redisotel
+
 require (
-	github.com/go-redis/redis/extra/redisotel/v8 v8.11.5
-	github.com/go-redis/redis/v8 v8.11.5
+	github.com/go-redis/redis/extra/redisotel/v9 v9.0.0-beta.2
+	github.com/go-redis/redis/v9 v9.0.0-beta.3
 	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.17
 	go.opentelemetry.io/otel v1.10.0
 )
@@ -17,7 +20,7 @@ require (
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-redis/redis/extra/rediscmd/v8 v8.11.5 // indirect
+	github.com/go-redis/redis/extra/rediscmd/v9 v9.0.0-beta.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.3 // indirect
 	github.com/uptrace/uptrace-go v1.10.0 // indirect

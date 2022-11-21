@@ -16,16 +16,16 @@ You can run this example with different exporters by providing environment varia
 go run .
 ```
 
-**Jaeger** exporter:
-
-```shell
-OTEL_EXPORTER_JAEGER_ENDPOINT=http://localhost:14268/api/traces go run .
-```
-
 [Uptrace](https://github.com/uptrace/uptrace/) exporter:
 
 ```shell
 UPTRACE_DSN="https://<token>@uptrace.dev/<project_id>" go run .
+```
+
+**Jaeger** exporter:
+
+```shell
+OTEL_EXPORTER_JAEGER_ENDPOINT=http://localhost:14268/api/traces go run .
 ```
 
 ## Links

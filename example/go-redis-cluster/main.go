@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/go-redis/redis/extra/redisotel/v8"
-	"github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis/extra/redisotel/v9"
+	"github.com/go-redis/redis/v9"
 	"go.opentelemetry.io/otel"
 
 	"github.com/uptrace/opentelemetry-go-extra/otelplay"
@@ -22,16 +22,10 @@ func main() {
 
 	rdb := redis.NewClusterClient(&redis.ClusterOptions{
 		Addrs: []string{":9123", ":9124", ":9125"},
-
-		NewClient: func(opt *redis.Options) *redis.Client {
-			node := redis.NewClient(opt)
-			node.AddHook(redisotel.NewTracingHook())
-			return node
-		},
 	})
 	defer rdb.Close()
 
-	rdb.AddHook(redisotel.NewTracingHook())
+	redisotel.InstrumentTracing(rdb)
 
 	ctx, span := tracer.Start(ctx, "redis-main-span")
 	defer span.End()
