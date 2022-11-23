@@ -96,18 +96,17 @@ func (p otelPlugin) Initialize(db *gorm.DB) (err error) {
 	return firstErr
 }
 
-type originalCtxType int
-
-const originalCtxValue originalCtxType = iota
+type parentCtxKey struct{}
 
 func (p *otelPlugin) before(spanName string) gormHookFunc {
 	return func(tx *gorm.DB) {
 		if tx.DryRun && !p.includeDryRunSpans {
 			return
 		}
-		originalCtx := tx.Statement.Context
-		newCtx := context.WithValue(originalCtx, originalCtxValue, originalCtx)
-		tx.Statement.Context, _ = p.tracer.Start(newCtx, spanName, trace.WithSpanKind(trace.SpanKindClient))
+		ctx := tx.Statement.Context
+		ctx = context.WithValue(ctx, parentCtxKey{}, ctx)
+		ctx, _ = p.tracer.Start(ctx, spanName, trace.WithSpanKind(trace.SpanKindClient))
+		tx.Statement.Context = ctx
 	}
 }
 
@@ -162,9 +161,9 @@ func (p *otelPlugin) after() gormHookFunc {
 			span.SetStatus(codes.Error, tx.Error.Error())
 		}
 
-		switch originalCtx := tx.Statement.Context.Value(originalCtxValue).(type) {
+		switch parentCtx := tx.Statement.Context.Value(parentCtxKey{}).(type) {
 		case context.Context:
-			tx.Statement.Context = originalCtx
+			tx.Statement.Context = parentCtx
 		}
 	}
 }
