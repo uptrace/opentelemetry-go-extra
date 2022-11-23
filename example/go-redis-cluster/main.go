@@ -25,7 +25,9 @@ func main() {
 	})
 	defer rdb.Close()
 
-	redisotel.InstrumentTracing(rdb)
+	if err := redisotel.InstrumentTracing(rdb); err != nil {
+		panic(err)
+	}
 
 	ctx, span := tracer.Start(ctx, "redis-main-span")
 	defer span.End()
