@@ -32,7 +32,7 @@ func TraceURL(span trace.Span) string {
 // or console depending on environment variables.
 //
 // You can use it to run examples, but don't use it in your applications. Instead, use
-// uptrace-go or opentelemetry-go directly. See https://uptrace.dev/get/uptrace-go.html
+// uptrace-go or opentelemetry-go directly. See https://uptrace.dev/get/opentelemetry-go.html
 func ConfigureOpentelemetry(ctx context.Context) func() {
 	switch {
 	case os.Getenv("UPTRACE_DSN") != "":
