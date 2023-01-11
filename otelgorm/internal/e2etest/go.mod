@@ -12,7 +12,7 @@ require (
 	go.opentelemetry.io/otel v1.11.2
 	go.opentelemetry.io/otel/sdk v1.0.1
 	go.opentelemetry.io/otel/trace v1.11.2
-	gorm.io/driver/sqlite v1.1.6
+	gorm.io/driver/sqlite v1.4.4
 	gorm.io/gorm v1.24.3
 )
 
@@ -22,7 +22,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
-	github.com/mattn/go-sqlite3 v1.14.8 // indirect
+	github.com/mattn/go-sqlite3 v1.14.15 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.18 // indirect
 	go.opentelemetry.io/otel/metric v0.34.0 // indirect
