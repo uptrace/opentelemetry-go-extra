@@ -47,7 +47,7 @@ func OpenDB(connector driver.Connector, opts ...Option) *sql.DB {
 
 func sqlOpenDB(connector driver.Connector, instrum *dbInstrum) *sql.DB {
 	db := sql.OpenDB(connector)
-	ReportDBStatsMetrics(db, WithMeterProvider(instrum.meterProvider))
+	ReportDBStatsMetrics(db, WithMeterProvider(instrum.meterProvider), WithAttributes(instrum.attrs...))
 	return db
 }
 
