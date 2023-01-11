@@ -1,3 +1,19 @@
+## [0.1.18](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.17...v0.1.18) (2023-01-11)
+
+
+### Bug Fixes
+
+* **otelgorm:** restore original context after "after" callback ([7cd8508](https://github.com/uptrace/opentelemetry-go-extra/commit/7cd850876ad1dfaf4ee7efd5b3d226d75060d7c9))
+* otelsql attr passthrough when reporting db stats ([6172588](https://github.com/uptrace/opentelemetry-go-extra/commit/617258842465e7f6bf085f5f8c53bd0cd864f474))
+
+
+### Features
+
+* **otelgorm:** ignore dry run spans by default ([323b5a9](https://github.com/uptrace/opentelemetry-go-extra/commit/323b5a99e338125fc77216a274bfd09cb932fb3a))
+* **otelgorm:** optionally ignore dryrun callbacks ([5239b0d](https://github.com/uptrace/opentelemetry-go-extra/commit/5239b0d90875322fa57a07338a8ac47e74be50e2))
+
+
+
 ## [0.1.17](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.16...v0.1.17) (2022-10-07)
 
 
