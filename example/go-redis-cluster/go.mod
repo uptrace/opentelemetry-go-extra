@@ -7,7 +7,7 @@ replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 require (
 	github.com/go-redis/redis/extra/redisotel/v9 v9.0.0-rc.2
 	github.com/go-redis/redis/v9 v9.0.0-rc.2
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.18
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.19
 	go.opentelemetry.io/otel v1.12.0
 )
 
