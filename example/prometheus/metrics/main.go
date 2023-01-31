@@ -21,7 +21,7 @@ func main() {
 	configureOpentelemetry()
 
 	meter := global.MeterProvider().Meter("example")
-	counter, err := meter.SyncInt64().Counter(
+	counter, err := meter.Int64Counter(
 		"test.my_counter",
 		instrument.WithDescription("Just a test counter"),
 	)

@@ -71,7 +71,7 @@ func newDBInstrum(opts []Option) *dbInstrum {
 	}
 
 	var err error
-	t.queryHistogram, err = t.meter.SyncInt64().Histogram(
+	t.queryHistogram, err = t.meter.Int64Histogram(
 		"go.sql.query_timing",
 		instrument.WithDescription("Timing of processed queries"),
 		instrument.WithUnit("milliseconds"),
@@ -184,72 +184,61 @@ func ReportDBStatsMetrics(db *sql.DB, opts ...Option) {
 	meter := cfg.meter
 	labels := cfg.attrs
 
-	maxOpenConns, _ := meter.AsyncInt64().Gauge(
+	maxOpenConns, _ := meter.Int64ObservableGauge(
 		"go.sql.connections_max_open",
 		instrument.WithDescription("Maximum number of open connections to the database"),
 	)
-	openConns, _ := meter.AsyncInt64().Gauge(
+	openConns, _ := meter.Int64ObservableGauge(
 		"go.sql.connections_open",
 		instrument.WithDescription("The number of established connections both in use and idle"),
 	)
-	inUseConns, _ := meter.AsyncInt64().Gauge(
+	inUseConns, _ := meter.Int64ObservableGauge(
 		"go.sql.connections_in_use",
 		instrument.WithDescription("The number of connections currently in use"),
 	)
-	idleConns, _ := meter.AsyncInt64().Gauge(
+	idleConns, _ := meter.Int64ObservableGauge(
 		"go.sql.connections_idle",
 		instrument.WithDescription("The number of idle connections"),
 	)
-	connsWaitCount, _ := meter.AsyncInt64().Counter(
+	connsWaitCount, _ := meter.Int64ObservableCounter(
 		"go.sql.connections_wait_count",
 		instrument.WithDescription("The total number of connections waited for"),
 	)
-	connsWaitDuration, _ := meter.AsyncInt64().Counter(
+	connsWaitDuration, _ := meter.Int64ObservableCounter(
 		"go.sql.connections_wait_duration",
 		instrument.WithDescription("The total time blocked waiting for a new connection"),
 		instrument.WithUnit("nanoseconds"),
 	)
-	connsClosedMaxIdle, _ := meter.AsyncInt64().Counter(
+	connsClosedMaxIdle, _ := meter.Int64ObservableCounter(
 		"go.sql.connections_closed_max_idle",
 		instrument.WithDescription("The total number of connections closed due to SetMaxIdleConns"),
 	)
-	connsClosedMaxIdleTime, _ := meter.AsyncInt64().Counter(
+	connsClosedMaxIdleTime, _ := meter.Int64ObservableCounter(
 		"go.sql.connections_closed_max_idle_time",
 		instrument.WithDescription("The total number of connections closed due to SetConnMaxIdleTime"),
 	)
-	connsClosedMaxLifetime, _ := meter.AsyncInt64().Counter(
+	connsClosedMaxLifetime, _ := meter.Int64ObservableCounter(
 		"go.sql.connections_closed_max_lifetime",
 		instrument.WithDescription("The total number of connections closed due to SetConnMaxLifetime"),
 	)
 
-	if err := meter.RegisterCallback(
-		[]instrument.Asynchronous{
-			maxOpenConns,
-
-			openConns,
-			inUseConns,
-			idleConns,
-
-			connsWaitCount,
-			connsWaitDuration,
-			connsClosedMaxIdle,
-			connsClosedMaxIdleTime,
-			connsClosedMaxLifetime,
-		},
-		func(ctx context.Context) {
+	if _, err := meter.RegisterCallback(
+		func(ctx context.Context, o metric.Observer) error {
 			stats := db.Stats()
 
-			maxOpenConns.Observe(ctx, int64(stats.MaxOpenConnections), labels...)
+			o.ObserveInt64(maxOpenConns, int64(stats.MaxOpenConnections), labels...)
 
-			openConns.Observe(ctx, int64(stats.OpenConnections), labels...)
-			inUseConns.Observe(ctx, int64(stats.InUse), labels...)
-			idleConns.Observe(ctx, int64(stats.Idle), labels...)
+			o.ObserveInt64(openConns, int64(stats.OpenConnections), labels...)
+			o.ObserveInt64(inUseConns, int64(stats.InUse), labels...)
+			o.ObserveInt64(idleConns, int64(stats.Idle), labels...)
 
-			connsWaitCount.Observe(ctx, stats.WaitCount, labels...)
-			connsWaitDuration.Observe(ctx, int64(stats.WaitDuration), labels...)
-			connsClosedMaxIdle.Observe(ctx, stats.MaxIdleClosed, labels...)
-			connsClosedMaxIdleTime.Observe(ctx, stats.MaxIdleTimeClosed, labels...)
-			connsClosedMaxLifetime.Observe(ctx, stats.MaxLifetimeClosed, labels...)
+			o.ObserveInt64(connsWaitCount, stats.WaitCount, labels...)
+			o.ObserveInt64(connsWaitDuration, int64(stats.WaitDuration), labels...)
+			o.ObserveInt64(connsClosedMaxIdle, stats.MaxIdleClosed, labels...)
+			o.ObserveInt64(connsClosedMaxIdleTime, stats.MaxIdleTimeClosed, labels...)
+			o.ObserveInt64(connsClosedMaxLifetime, stats.MaxLifetimeClosed, labels...)
+
+			return nil
 		},
 	); err != nil {
 		panic(err)
