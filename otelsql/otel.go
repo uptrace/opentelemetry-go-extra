@@ -240,6 +240,15 @@ func ReportDBStatsMetrics(db *sql.DB, opts ...Option) {
 
 			return nil
 		},
+		maxOpenConns,
+		openConns,
+		inUseConns,
+		idleConns,
+		connsWaitCount,
+		connsWaitDuration,
+		connsClosedMaxIdle,
+		connsClosedMaxIdleTime,
+		connsClosedMaxLifetime,
 	); err != nil {
 		panic(err)
 	}
