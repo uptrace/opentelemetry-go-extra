@@ -6,7 +6,7 @@ replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
 	github.com/gin-gonic/gin v1.8.2
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.19
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.20
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.38.0
 	go.opentelemetry.io/otel/trace v1.12.0
 )

@@ -1,3 +1,7 @@
+## [0.1.20](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.19...v0.1.20) (2023-02-01)
+
+
+
 ## [0.1.19](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.18...v0.1.19) (2023-01-31)
 
 

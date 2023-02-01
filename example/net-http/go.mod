@@ -5,7 +5,7 @@ go 1.18
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.19
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.20
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.38.0
 	go.opentelemetry.io/otel/trace v1.12.0
 )
