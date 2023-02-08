@@ -13,7 +13,6 @@ import (
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
 	"go.opentelemetry.io/otel/metric/instrument"
-	"go.opentelemetry.io/otel/metric/instrument/syncint64"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -55,7 +54,7 @@ func (c *config) formatQuery(query string) string {
 type dbInstrum struct {
 	*config
 
-	queryHistogram syncint64.Histogram
+	queryHistogram instrument.Int64Histogram
 }
 
 func newDBInstrum(opts []Option) *dbInstrum {
