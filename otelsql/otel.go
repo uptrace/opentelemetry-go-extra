@@ -13,7 +13,6 @@ import (
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
 	"go.opentelemetry.io/otel/metric/instrument"
-	"go.opentelemetry.io/otel/metric/instrument/syncint64"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -55,7 +54,7 @@ func (c *config) formatQuery(query string) string {
 type dbInstrum struct {
 	*config
 
-	queryHistogram syncint64.Histogram
+	queryHistogram instrument.Int64Histogram
 }
 
 func newDBInstrum(opts []Option) *dbInstrum {
@@ -234,6 +233,7 @@ func ReportDBStatsMetrics(db *sql.DB, opts ...Option) {
 
 			o.ObserveInt64(connsWaitCount, stats.WaitCount, labels...)
 			o.ObserveInt64(connsWaitDuration, int64(stats.WaitDuration), labels...)
+
 			o.ObserveInt64(connsClosedMaxIdle, stats.MaxIdleClosed, labels...)
 			o.ObserveInt64(connsClosedMaxIdleTime, stats.MaxIdleTimeClosed, labels...)
 			o.ObserveInt64(connsClosedMaxLifetime, stats.MaxLifetimeClosed, labels...)
@@ -241,11 +241,14 @@ func ReportDBStatsMetrics(db *sql.DB, opts ...Option) {
 			return nil
 		},
 		maxOpenConns,
+
 		openConns,
 		inUseConns,
 		idleConns,
+
 		connsWaitCount,
 		connsWaitDuration,
+
 		connsClosedMaxIdle,
 		connsClosedMaxIdleTime,
 		connsClosedMaxLifetime,
