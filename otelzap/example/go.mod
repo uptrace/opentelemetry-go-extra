@@ -10,7 +10,7 @@ replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
 	github.com/uptrace/opentelemetry-go-extra/otelzap v0.1.20
-	go.opentelemetry.io/otel v1.12.0
+	go.opentelemetry.io/otel v1.13.0
 	go.uber.org/zap v1.24.0
 )
 
@@ -25,17 +25,17 @@ require (
 	github.com/uptrace/opentelemetry-go-extra/otelutil v0.1.20 // indirect
 	github.com/uptrace/uptrace-go v1.12.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.38.0 // indirect
-	go.opentelemetry.io/otel/exporters/jaeger v1.12.0 // indirect
+	go.opentelemetry.io/otel/exporters/jaeger v1.13.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/internal/retry v1.12.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric v0.35.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc v0.35.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.12.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.12.0 // indirect
-	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.12.0 // indirect
+	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.13.0 // indirect
 	go.opentelemetry.io/otel/metric v0.35.0 // indirect
-	go.opentelemetry.io/otel/sdk v1.12.0 // indirect
+	go.opentelemetry.io/otel/sdk v1.13.0 // indirect
 	go.opentelemetry.io/otel/sdk/metric v0.35.0 // indirect
-	go.opentelemetry.io/otel/trace v1.12.0 // indirect
+	go.opentelemetry.io/otel/trace v1.13.0 // indirect
 	go.opentelemetry.io/proto/otlp v0.19.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect

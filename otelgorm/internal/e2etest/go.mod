@@ -9,11 +9,11 @@ replace github.com/uptrace/opentelemetry-go-extra/otelsql => ./../../../otelsql
 require (
 	github.com/stretchr/testify v1.8.1
 	github.com/uptrace/opentelemetry-go-extra/otelgorm v0.1.20
-	go.opentelemetry.io/otel v1.12.0
-	go.opentelemetry.io/otel/sdk v1.0.1
-	go.opentelemetry.io/otel/trace v1.12.0
+	go.opentelemetry.io/otel v1.13.0
+	go.opentelemetry.io/otel/sdk v1.13.0
+	go.opentelemetry.io/otel/trace v1.13.0
 	gorm.io/driver/sqlite v1.4.4
-	gorm.io/gorm v1.24.3
+	gorm.io/gorm v1.24.5
 )
 
 require (
@@ -25,7 +25,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.15 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.20 // indirect
-	go.opentelemetry.io/otel/metric v0.35.0 // indirect
-	golang.org/x/sys v0.0.0-20210423185535-09eb48e85fd7 // indirect
+	go.opentelemetry.io/otel/metric v0.36.0 // indirect
+	golang.org/x/sys v0.0.0-20220919091848-fb04ddd9f9c8 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
