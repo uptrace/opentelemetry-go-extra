@@ -21,7 +21,7 @@ require (
 	github.com/uptrace/uptrace-go v1.13.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.39.0 // indirect
 	go.opentelemetry.io/otel v1.13.0 // indirect
-	go.opentelemetry.io/otel/exporters/jaeger v1.12.0 // indirect
+	go.opentelemetry.io/otel/exporters/jaeger v1.13.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/internal/retry v1.13.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric v0.36.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc v0.36.0 // indirect
