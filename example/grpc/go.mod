@@ -6,7 +6,7 @@ replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
 	github.com/golang/protobuf v1.5.2
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.20
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.1.21
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.26.0
 	go.opentelemetry.io/otel/trace v1.13.0
 	google.golang.org/grpc v1.53.0
@@ -21,7 +21,7 @@ require (
 	github.com/uptrace/uptrace-go v1.13.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.39.0 // indirect
 	go.opentelemetry.io/otel v1.13.0 // indirect
-	go.opentelemetry.io/otel/exporters/jaeger v1.12.0 // indirect
+	go.opentelemetry.io/otel/exporters/jaeger v1.13.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/internal/retry v1.13.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric v0.36.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc v0.36.0 // indirect
