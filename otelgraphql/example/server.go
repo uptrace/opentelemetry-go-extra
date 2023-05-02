@@ -75,7 +75,7 @@ func (*RootResolver) Users() ([]User, error) {
 	return users, nil
 }
 
-func (*RootResolver) UsersOfOrganization(args struct{ Organization string }) ([]User, error) {
+func (*RootResolver) UsersOfOrganization(_ struct{ Organization string }) ([]User, error) {
 	return []User{}, errors.New("intentional error")
 }
 

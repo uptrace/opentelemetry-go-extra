@@ -148,17 +148,9 @@ func initDB() error {
 		return err
 	}
 
-	if err := session.Query("CREATE INDEX IF NOT EXISTS ON book(author_last_name)").Exec(); err != nil {
-		return err
-	}
-
-	return nil
+	return session.Query("CREATE INDEX IF NOT EXISTS ON book(author_last_name)").Exec()
 }
 
 func truncateTable(ctx context.Context, session *gocql.Session) error {
-	if err := session.Query("TRUNCATE TABLE book").WithContext(ctx).Exec(); err != nil {
-		return err
-	}
-
-	return nil
+	return session.Query("TRUNCATE TABLE book").WithContext(ctx).Exec()
 }

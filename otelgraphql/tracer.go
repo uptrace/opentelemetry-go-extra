@@ -42,7 +42,7 @@ func (t Tracer) TraceQuery(
 	ctx context.Context,
 	queryString string, operationName string,
 	variables map[string]interface{},
-	varTypes map[string]*introspection.Type,
+	_ map[string]*introspection.Type,
 ) (context.Context, tracer.QueryFinishFunc) {
 	var spanName string
 	if operationName != "" {
