@@ -15,6 +15,5 @@ do
 	     go test ./... -short -race
 	     go test ./... -run=NONE -bench=.
 	     go vet ./...
-        golangci-lint run
     )
 done

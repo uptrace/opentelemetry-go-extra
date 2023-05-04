@@ -1,3 +1,17 @@
+# [0.2.0](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.21...v0.2.0) (2023-05-04)
+
+
+### chore
+
+* bump otelsql to use opentelemetry-go v1.15.1/v0.38.1 ([cd21a6a](https://github.com/uptrace/opentelemetry-go-extra/commit/cd21a6aef53766ba4413da42efaba2ede86b264b))
+
+
+### BREAKING CHANGES
+
+* https://github.com/open-telemetry/opentelemetry-go/pull/3971
+
+
+
 ## [0.1.21](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.1.20...v0.1.21) (2023-02-09)
 
 
