@@ -1,4 +1,4 @@
-PACKAGE_DIRS := $(shell find . -mindepth 2 -type f -name 'go.mod' -exec dirname {} \; | sort)
+PACKAGE_DIRS := $(shell find . -type f -name 'go.mod' -exec dirname {} \; | sort)
 
 test:
 	go test ./...
@@ -14,5 +14,5 @@ fmt:
 go_mod_tidy:
 	set -e; for dir in $(PACKAGE_DIRS); do \
 	  echo "go mod tidy in $${dir}"; \
-	  (cd "$${dir}" && go get -u && go mod tidy -go=1.18); \
+	  (cd "$${dir}" && go get -u && go mod tidy -go=1.19); \
 	done

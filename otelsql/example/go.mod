@@ -1,6 +1,6 @@
 module github.com/uptrace/opentelemetry-go-extra/otelsql/example
 
-go 1.18
+go 1.19
 
 replace github.com/uptrace/opentelemetry-go-extra/otelsql => ./..
 
