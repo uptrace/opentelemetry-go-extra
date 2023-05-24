@@ -1,12 +1,12 @@
 module github.com/uptrace/opentelemetry-go-extra/otelsqlx
 
-go 1.19
+go 1.18
 
 replace github.com/uptrace/opentelemetry-go-extra/otelsql => ../otelsql
 
 require (
 	github.com/jmoiron/sqlx v1.3.5
-	github.com/uptrace/opentelemetry-go-extra/otelsql v0.2.0
+	github.com/uptrace/opentelemetry-go-extra/otelsql v0.2.1
 )
 
 require (

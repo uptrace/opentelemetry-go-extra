@@ -34,7 +34,7 @@ type config struct {
 func newConfig(opts []Option) *config {
 	c := &config{
 		tracerProvider: otel.GetTracerProvider(),
-		meterProvider:  otel.MeterProvider(),
+		meterProvider:  otel.GetMeterProvider(),
 	}
 	for _, opt := range opts {
 		opt(c)
