@@ -12,7 +12,6 @@ import (
 	runtimemetrics "go.opentelemetry.io/contrib/instrumentation/runtime"
 	"go.opentelemetry.io/otel/exporters/prometheus"
 	"go.opentelemetry.io/otel/metric"
-	"go.opentelemetry.io/otel/metric/global"
 	sdkmetric "go.opentelemetry.io/otel/sdk/metric"
 )
 
@@ -20,7 +19,7 @@ func main() {
 	ctx := context.Background()
 	configureOpentelemetry()
 
-	meter := global.MeterProvider().Meter("example")
+	meter := otel.MeterProvider().Meter("example")
 	counter, err := meter.Int64Counter(
 		"test.my_counter",
 		metric.WithDescription("Just a test counter"),
@@ -58,7 +57,7 @@ func configureMetrics() *prometheus.Exporter {
 	}
 	provider := sdkmetric.NewMeterProvider(sdkmetric.WithReader(exporter))
 
-	global.SetMeterProvider(provider)
+	otel.SetMeterProvider(provider)
 
 	return exporter
 }
