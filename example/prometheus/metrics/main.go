@@ -10,6 +10,7 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	runtimemetrics "go.opentelemetry.io/contrib/instrumentation/runtime"
+	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/prometheus"
 	"go.opentelemetry.io/otel/metric"
 	sdkmetric "go.opentelemetry.io/otel/sdk/metric"
@@ -19,7 +20,7 @@ func main() {
 	ctx := context.Background()
 	configureOpentelemetry()
 
-	meter := otel.MeterProvider().Meter("example")
+	meter := otel.GetMeterProvider().Meter("example")
 	counter, err := meter.Int64Counter(
 		"test.my_counter",
 		metric.WithDescription("Just a test counter"),
