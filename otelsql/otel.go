@@ -11,7 +11,6 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/metric"
-	"go.opentelemetry.io/otel/metric/global"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -35,7 +34,7 @@ type config struct {
 func newConfig(opts []Option) *config {
 	c := &config{
 		tracerProvider: otel.GetTracerProvider(),
-		meterProvider:  global.MeterProvider(),
+		meterProvider:  otel.MeterProvider(),
 	}
 	for _, opt := range opts {
 		opt(c)
