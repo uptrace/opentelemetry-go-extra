@@ -30,6 +30,5 @@ UPTRACE_DSN="https://<token>@uptrace.dev/<project_id>" go run .
 
 ## Links
 
-- [OpenTelemetry Go instrumentations](https://uptrace.dev/opentelemetry/instrumentations/?lang=go)
 - [OpenTelemetry Tracing API](https://uptrace.dev/opentelemetry/go-tracing.html)
-- [Top distributed tracing tools](https://uptrace.dev/get/compare/distributed-tracing-tools.html)
+- [DataDog Competitors](https://uptrace.dev/blog/datadog-competitors.html)

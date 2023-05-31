@@ -14,7 +14,7 @@
 | [Zap](/otelzap/)                |                    | :heavy_check_mark: |
 | [graphql-go](/otelgraphql/)     |                    | :heavy_check_mark: |
 
-You can search for instrumentations [here](https://uptrace.dev/opentelemetry/instrumentations/) and
+You can search for instrumentations [here](https://uptrace.dev/get/instrument/) and
 [here](https://opentelemetry.io/registry/).
 
 ## Contributing

@@ -2,7 +2,7 @@
 
 # Zap OpenTelemetry instrumentation
 
-[Zap OpenTelemetry instrumentation](https://uptrace.dev/opentelemetry/instrumentations/go-zap.html)
+[Zap OpenTelemetry instrumentation](https://uptrace.dev/get/instrument/opentelemetry-zap.html)
 records Zap log messages as events on the existing span that must be passed in a `context.Context`
 as a first argument. It does not record anything if the context does not contain a span.
 
@@ -99,8 +99,8 @@ couple of [options](https://pkg.go.dev/github.com/uptrace/opentelemetry-go-extra
   span status is set to codes.Error.
 - `otelzap.WithCaller(true)` configures the logger to annotate each event with the filename, line
   number, and function name of the caller. Enabled by default.
-- `otelzap.WithCallerDepth(0)` sets the depth of the caller stack to skip when annotating each event.
-  Useful if you're wrapping this library with your own functions.
+- `otelzap.WithCallerDepth(0)` sets the depth of the caller stack to skip when annotating each
+  event. Useful if you're wrapping this library with your own functions.
 - `otelzap.WithStackTrace(true)` configures the logger to capture logs with a stack trace. Disabled
   by default.
 - `otelzap.WithExtraFields(true)` configures the logger to add the given fields to structured log
