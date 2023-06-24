@@ -1,12 +1,12 @@
 module github.com/uptrace/opentelemetry-go-extra/example/echo
 
-go 1.19
+go 1.18
 
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
 	github.com/labstack/echo/v4 v4.10.2
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.1
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.2
 	go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.42.0
 	go.opentelemetry.io/otel/trace v1.16.0
 )
@@ -42,7 +42,6 @@ require (
 	golang.org/x/sys v0.9.0 // indirect
 	golang.org/x/text v0.10.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
-	google.golang.org/genproto v0.0.0-20230530153820-e85fd2cbaebc // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20230530153820-e85fd2cbaebc // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230530153820-e85fd2cbaebc // indirect
 	google.golang.org/grpc v1.56.1 // indirect
