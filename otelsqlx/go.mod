@@ -1,6 +1,6 @@
 module github.com/uptrace/opentelemetry-go-extra/otelsqlx
 
-go 1.18
+go 1.19
 
 replace github.com/uptrace/opentelemetry-go-extra/otelsql => ../otelsql
 

@@ -1,6 +1,6 @@
 module github.com/uptrace/opentelemetry-go-extra/otelsql
 
-go 1.18
+go 1.19
 
 require (
 	go.opentelemetry.io/otel v1.16.0
