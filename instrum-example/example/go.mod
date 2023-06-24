@@ -1,3 +1,3 @@
 module github.com/uptrace/opentelemetry-go-extra/otelpackage/example
 
-go 1.19
+go 1.18
