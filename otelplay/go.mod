@@ -1,6 +1,6 @@
 module github.com/uptrace/opentelemetry-go-extra/otelplay
 
-go 1.19
+go 1.18
 
 require (
 	github.com/uptrace/uptrace-go v1.18.0

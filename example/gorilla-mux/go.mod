@@ -1,12 +1,12 @@
 module github.com/uptrace/opentelemetry-go-extra/example/gorilla-mux
 
-go 1.19
+go 1.18
 
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
 	github.com/gorilla/mux v1.8.0
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.2
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.3
 	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.44.0
 	go.opentelemetry.io/otel/trace v1.18.0
 )

@@ -1,13 +1,13 @@
 module github.com/uptrace/opentelemetry-go-extra/otelsql/example
 
-go 1.19
+go 1.18
 
 replace github.com/uptrace/opentelemetry-go-extra/otelsql => ./..
 
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelsql v0.2.2
+	github.com/uptrace/opentelemetry-go-extra/otelsql v0.2.3
 	go.opentelemetry.io/otel v1.18.0
 	modernc.org/sqlite v1.25.0
 )
@@ -54,7 +54,7 @@ require (
 
 require (
 	github.com/mattn/go-isatty v0.0.19 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.2
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.3
 	golang.org/x/tools v0.13.0 // indirect
 	lukechampine.com/uint128 v1.3.0 // indirect
 	modernc.org/ccgo/v3 v3.16.15 // indirect
