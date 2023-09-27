@@ -1,11 +1,11 @@
 module github.com/uptrace/opentelemetry-go-extra/example/net-http
 
-go 1.19
+go 1.18
 
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.2
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.3
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.44.0
 	go.opentelemetry.io/otel/trace v1.18.0
 )

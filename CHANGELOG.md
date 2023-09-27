@@ -1,3 +1,12 @@
+## [0.2.3](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.2.2...v0.2.3) (2023-09-27)
+
+
+### Bug Fixes
+
+* **otelsql:** the connection to db must be closed after receiving the driver ([39a2b46](https://github.com/uptrace/opentelemetry-go-extra/commit/39a2b46cfe0f20dc8585769dbaae9c91815964e4))
+
+
+
 ## [0.2.2](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.2.1...v0.2.2) (2023-06-24)
 
 
