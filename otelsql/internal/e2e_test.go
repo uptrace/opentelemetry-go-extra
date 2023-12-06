@@ -15,6 +15,7 @@ import (
 	_ "modernc.org/sqlite"
 
 	"github.com/uptrace/opentelemetry-go-extra/otelsql"
+	"go.opentelemetry.io/otel/codes"
 )
 
 var dbRowsAffected = attribute.Key("db.rows_affected")
@@ -159,6 +160,40 @@ func TestConn(t *testing.T) {
 				}
 			},
 		},
+		{
+			do: func(ctx context.Context, db *sql.DB) {
+				_, err := db.ExecContext(ctx, "SELECT 1 FROM ABC")
+				require.Error(t, err)
+			},
+			require: func(t *testing.T, spans []sdktrace.ReadOnlySpan) {
+				require.Equal(t, 2, len(spans))
+				require.Equal(t, "db.Connect", spans[0].Name())
+				require.Equal(t, "db.Exec", spans[1].Name())
+
+				span := spans[1]
+				require.Equal(t, "db.Exec", span.Name())
+
+				m := attrMap(span.Attributes())
+
+				stmt, ok := m[semconv.DBStatementKey]
+				require.True(t, ok)
+				require.Equal(t, "SELECT 1 FROM ABC", stmt.AsString())
+
+				status := span.Status()
+				require.Equal(t, codes.Error, status.Code)
+				require.Equal(t, "SQL logic error: no such table: ABC (1)", status.Description)
+
+				e := eventAttrsMap(span.Events())
+
+				key, ok := e[semconv.ExceptionTypeKey]
+				require.True(t, ok)
+				require.Equal(t, "*sqlite.Error", key.AsString())
+
+				message, ok := e[semconv.ExceptionMessageKey]
+				require.True(t, ok)
+				require.Equal(t, "SQL logic error: no such table: ABC (1)", message.AsString())
+			},
+		},
 	}
 
 	for i, test := range tests {
@@ -186,5 +221,16 @@ func attrMap(attrs []attribute.KeyValue) map[attribute.Key]attribute.Value {
 	for _, kv := range attrs {
 		m[kv.Key] = kv.Value
 	}
+	return m
+}
+
+func eventAttrsMap(events []sdktrace.Event) map[attribute.Key]attribute.Value {
+	m := make(map[attribute.Key]attribute.Value, len(events))
+	for _, event := range events {
+		for _, kv := range event.Attributes {
+			m[kv.Key] = kv.Value
+		}
+	}
+
 	return m
 }
