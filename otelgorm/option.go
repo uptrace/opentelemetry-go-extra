@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	DisabledTraceDatabaseKey = "otelgorm-trace-enabled"
+	EnabledTraceDatabaseKey = "otelgorm-trace-enabled"
 )
 
 type Option func(p *otelPlugin)

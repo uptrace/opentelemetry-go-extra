@@ -101,7 +101,7 @@ type parentCtxKey struct{}
 // checkTraceEnabled checks if the 'special' database key was set and if so returns it
 // This allows you to disable starting/registering a new trace for certain operations
 func checkTraceEnabled(db *gorm.DB) bool {
-	value, ok := db.Get(DisabledTraceDatabaseKey)
+	value, ok := db.Get(EnabledTraceDatabaseKey)
 
 	// If value is not specifically set, it should start a new trace
 	if !ok {

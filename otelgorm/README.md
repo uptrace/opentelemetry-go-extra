@@ -44,6 +44,14 @@ if err := db.WithContext(ctx).Raw("SELECT 42").Scan(&num).Error; err != nil {
 
 See [example](/example/) for details.
 
+## Usage: exceptions
+
+In case you want to omit certain database operations from any trace/span, you can also set:
+```go
+db.Set(EnabledTraceDatabaseKey, false)
+```
+This will omit the database queries following after from any trace.
+
 ## Options
 
 You can customize the plugin using configuration
