@@ -98,6 +98,27 @@ func (p otelPlugin) Initialize(db *gorm.DB) (err error) {
 
 type parentCtxKey struct{}
 
+// checkTraceEnabled checks if the 'special' database key was set and if so returns it
+// This allows you to disable starting/registering a new trace for certain operations
+func checkTraceEnabled(db *gorm.DB) bool {
+	value, ok := db.Get(DisabledTraceDatabaseKey)
+
+	// If value is not specifically set, it should start a new trace
+	if !ok {
+		return true
+	}
+
+	valueBool, ok := value.(bool)
+
+	// If value was not a boolean, it should start a new trace
+	if !ok {
+		return true
+	}
+
+	// If all fetching and casting worked, return the actual value present
+	return valueBool
+}
+
 func (p *otelPlugin) before(spanName string) gormHookFunc {
 	return func(tx *gorm.DB) {
 		if tx.DryRun && !p.includeDryRunSpans {
@@ -105,7 +126,11 @@ func (p *otelPlugin) before(spanName string) gormHookFunc {
 		}
 		ctx := tx.Statement.Context
 		ctx = context.WithValue(ctx, parentCtxKey{}, ctx)
-		ctx, _ = p.tracer.Start(ctx, spanName, trace.WithSpanKind(trace.SpanKindClient))
+
+		if checkTraceEnabled(tx) {
+			ctx, _ = p.tracer.Start(ctx, spanName, trace.WithSpanKind(trace.SpanKindClient))
+		}
+
 		tx.Statement.Context = ctx
 	}
 }
@@ -115,6 +140,7 @@ func (p *otelPlugin) after() gormHookFunc {
 		if tx.DryRun && !p.includeDryRunSpans {
 			return
 		}
+
 		span := trace.SpanFromContext(tx.Statement.Context)
 		if !span.IsRecording() {
 			return
