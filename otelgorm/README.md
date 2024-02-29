@@ -46,11 +46,12 @@ See [example](/example/) for details.
 
 ## Usage: exceptions
 
-In case you want to omit certain database operations from any trace/span, you can also set:
+In case you want to have certain database-related queries not initiate starting a new trace, you can set use this key to do so.
 ```go
-db.Set(EnabledTraceDatabaseKey, false)
+db.Set(otelgorm.EnabledTraceDatabaseKey, false)
 ```
-This will omit the database queries following after from any trace.
+This will make sure no new trace is started.
+Do note that if a trace was already started earlier within the context that was passed, the queries will still be visible inside.
 
 ## Options
 
