@@ -1,5 +1,7 @@
 module github.com/uptrace/opentelemetry-go-extra/otelutil
 
-go 1.18
+go 1.21
 
-require go.opentelemetry.io/otel v1.18.0
+toolchain go1.22.1
+
+require go.opentelemetry.io/otel v1.24.0
