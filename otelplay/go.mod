@@ -7,7 +7,6 @@ toolchain go1.22.1
 require (
 	github.com/uptrace/uptrace-go v1.23.1
 	go.opentelemetry.io/otel v1.24.0
-	go.opentelemetry.io/otel/exporters/jaeger v1.17.0
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.24.0
 	go.opentelemetry.io/otel/sdk v1.24.0
 	go.opentelemetry.io/otel/trace v1.24.0
