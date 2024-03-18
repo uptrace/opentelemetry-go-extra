@@ -48,7 +48,7 @@ PACKAGE_DIRS=$(find . -mindepth 2 -type f -name 'go.mod' -exec dirname {} \; \
 for dir in $PACKAGE_DIRS
 do
     printf "${dir}: go mod tidy\n"
-    (cd ./${dir} && go mod tidy -go=1.18)
+    (cd ./${dir} && go mod tidy -go=1.21)
 done
 
 for dir in $PACKAGE_DIRS
@@ -61,7 +61,7 @@ do
         sed --in-place "s/\(return \)\"[^\"]*\"/\1\"${TAG#v}\"/" ${dir}/version.go
     fi
 
-    (cd ./${dir} && go mod tidy -go=1.18)
+    (cd ./${dir} && go mod tidy -go=1.21)
 done
 
 sed --in-place "s/\(\"version\": \)\"[^\"]*\"/\1\"${TAG#v}\"/" ./package.json
