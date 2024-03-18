@@ -1,3 +1,12 @@
+## [0.2.4](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.2.3...v0.2.4) (2024-03-18)
+
+
+### Bug Fixes
+
+* **otelsql:** record error and status when SQL returns an error ([1716db5](https://github.com/uptrace/opentelemetry-go-extra/commit/1716db5b3554b0e6c87f8378c2c9a85f33bb6806)), closes [#115](https://github.com/uptrace/opentelemetry-go-extra/issues/115)
+
+
+
 ## [0.2.3](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.2.2...v0.2.3) (2023-09-27)
 
 

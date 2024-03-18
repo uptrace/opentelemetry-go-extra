@@ -7,7 +7,7 @@ toolchain go1.22.1
 replace github.com/uptrace/opentelemetry-go-extra/otelsql => ../otelsql
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelsql v0.2.3
+	github.com/uptrace/opentelemetry-go-extra/otelsql v0.2.4
 	go.opentelemetry.io/otel v1.24.0
 	go.opentelemetry.io/otel/trace v1.24.0
 	gorm.io/gorm v1.25.7

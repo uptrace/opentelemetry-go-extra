@@ -2,5 +2,5 @@ package otelpackage
 
 // Version is the current release version.
 func Version() string {
-	return "0.2.3"
+	return "0.2.4"
 }
