@@ -13,8 +13,8 @@ replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 require (
 	github.com/google/uuid v1.6.0
 	github.com/graph-gophers/graphql-go v1.5.0
-	github.com/uptrace/opentelemetry-go-extra/otelgraphql v0.2.3
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.3
+	github.com/uptrace/opentelemetry-go-extra/otelgraphql v0.2.4
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.4
 )
 
 require (
@@ -23,7 +23,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.1 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelutil v0.2.3 // indirect
+	github.com/uptrace/opentelemetry-go-extra/otelutil v0.2.4 // indirect
 	github.com/uptrace/uptrace-go v1.23.1 // indirect
 	go.opentelemetry.io/contrib v1.24.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.49.0 // indirect
