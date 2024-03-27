@@ -63,8 +63,9 @@ func WithExtraFields(fields ...zapcore.Field) Option {
 //
 // This option is only useful with backends that don't support OTLP and instead parse log
 // messages to extract structured information.
-func WithTraceIDField(on bool) Option {
+func WithTraceIDField(on bool, key string) Option {
 	return func(l *Logger) {
 		l.withTraceID = on
+		l.traceIDKey = key
 	}
 }
