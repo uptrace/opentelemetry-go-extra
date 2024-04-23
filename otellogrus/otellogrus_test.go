@@ -15,8 +15,9 @@ import (
 )
 
 type Test struct {
-	log     func(context.Context)
-	require func(sdktrace.Event)
+	log       func(context.Context)
+	eventName string
+	require   func(sdktrace.Event)
 }
 
 func TestOtelLogrus(t *testing.T) {
@@ -25,6 +26,7 @@ func TestOtelLogrus(t *testing.T) {
 			log: func(ctx context.Context) {
 				logrus.WithContext(ctx).Info("hello")
 			},
+			eventName: "log",
 			require: func(event sdktrace.Event) {
 				m := attrMap(event.Attributes)
 
@@ -41,6 +43,7 @@ func TestOtelLogrus(t *testing.T) {
 			log: func(ctx context.Context) {
 				logrus.WithContext(ctx).WithField("foo", "bar").Warn("hello")
 			},
+			eventName: "log",
 			require: func(event sdktrace.Event) {
 				m := attrMap(event.Attributes)
 
@@ -62,6 +65,7 @@ func TestOtelLogrus(t *testing.T) {
 				err := errors.New("some error")
 				logrus.WithContext(ctx).WithError(err).Error("hello")
 			},
+			eventName: "exception",
 			require: func(event sdktrace.Event) {
 				m := attrMap(event.Attributes)
 
@@ -88,6 +92,7 @@ func TestOtelLogrus(t *testing.T) {
 				logrus.WithContext(ctx).Info("hello")
 				logrus.SetReportCaller(false)
 			},
+			eventName: "log",
 			require: func(event sdktrace.Event) {
 				m := attrMap(event.Attributes)
 
@@ -133,7 +138,7 @@ func TestOtelLogrus(t *testing.T) {
 			require.Equal(t, 1, len(events))
 
 			event := events[0]
-			require.Equal(t, "log", event.Name)
+			require.Equal(t, test.eventName, event.Name)
 			test.require(event)
 		})
 	}

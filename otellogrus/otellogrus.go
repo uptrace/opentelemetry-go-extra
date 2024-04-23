@@ -58,6 +58,8 @@ func (hook *Hook) Fire(entry *logrus.Entry) error {
 		return nil
 	}
 
+	eventName := "log"
+
 	attrs := make([]attribute.KeyValue, 0, len(entry.Data)+2+3)
 
 	attrs = append(attrs, logSeverityKey.String(levelString(entry.Level)))
@@ -79,6 +81,9 @@ func (hook *Hook) Fire(entry *logrus.Entry) error {
 				typ := reflect.TypeOf(err).String()
 				attrs = append(attrs, semconv.ExceptionTypeKey.String(typ))
 				attrs = append(attrs, semconv.ExceptionMessageKey.String(err.Error()))
+				// The spec requires that the event name be 'exception' in this case
+				// https://opentelemetry.io/docs/specs/otel/trace/exceptions/#attributes
+				eventName = "exception"
 				continue
 			}
 		}
@@ -86,7 +91,7 @@ func (hook *Hook) Fire(entry *logrus.Entry) error {
 		attrs = append(attrs, otelutil.Attribute(k, v))
 	}
 
-	span.AddEvent("log", trace.WithAttributes(attrs...))
+	span.AddEvent(eventName, trace.WithAttributes(attrs...))
 
 	if entry.Level <= hook.errorStatusLevel {
 		span.SetStatus(codes.Error, entry.Message)
