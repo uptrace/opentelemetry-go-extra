@@ -108,3 +108,8 @@ couple of [options](https://pkg.go.dev/github.com/uptrace/opentelemetry-go-extra
 - `otelzap.WithTraceIDField(true)` configures the logger to add `trace_id` field to structured log
   messages. This option is only useful with backends that don't support OTLP and instead parse log
   messages to extract structured information.
+- `otelzap.WithSpanIDField(true)` configures the logger to add `span_id` field to structured log
+  messages. This option is only useful with backends that don't support OTLP and instead parse log
+  messages to extract structured information.
+- `otelzap.WithTraceIDField('trace.id')` configures the trace id key to be set as an attribute of the logger.
+- `otelzap.WithSpanIDField('span.id')` configures the span id key to be set as an attribute of the logger.
