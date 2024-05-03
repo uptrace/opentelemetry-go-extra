@@ -450,7 +450,7 @@ func (s *SugaredLogger) FatalfContext(ctx context.Context, template string, args
 func (s *SugaredLogger) logArgs(
 	ctx context.Context, lvl zapcore.Level, template string, args []interface{},
 ) {
-	if lvl < s.l.minLevel {
+	if lvl <= s.l.minLevel {
 		return
 	}
 	span := trace.SpanFromContext(ctx)
