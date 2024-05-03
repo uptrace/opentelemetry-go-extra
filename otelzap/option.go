@@ -68,3 +68,33 @@ func WithTraceIDField(on bool) Option {
 		l.withTraceID = on
 	}
 }
+
+// WithSpanIDField configures the logger to add `span_id` field to structured log messages.
+//
+// This option is only useful with backends that don't support OTLP and instead parse log
+// messages to extract structured information.
+func WithSpanIDField(on bool) Option {
+	return func(l *Logger) {
+		l.withSpanID = on
+	}
+}
+
+// WithTraceIDKey configures the trace id key to be set as an attribute of the logger.
+//
+// This option is only useful with backends that don't support OTLP and instead parse log
+// messages to extract structured information.
+func WithTraceIDKey(key string) Option {
+	return func(l *Logger) {
+		l.traceIDKey = key
+	}
+}
+
+// WithSpanIDKey configures the span id key to be set as an attribute of the logger.
+//
+// This option is only useful with backends that don't support OTLP and instead parse log
+// messages to extract structured information.
+func WithSpanIDKey(key string) Option {
+	return func(l *Logger) {
+		l.spanIDKey = key
+	}
+}

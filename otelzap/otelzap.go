@@ -33,6 +33,10 @@ type Logger struct {
 	skipCaller *zap.Logger
 
 	withTraceID bool
+	withSpanID  bool
+
+	traceIDKey string
+	spanIDKey  string
 
 	minLevel         zapcore.Level
 	errorStatusLevel zapcore.Level
@@ -57,6 +61,12 @@ func New(logger *zap.Logger, opts ...Option) *Logger {
 	}
 	for _, opt := range opts {
 		opt(l)
+	}
+	if l.traceIDKey == "" {
+		l.traceIDKey = "trace_id"
+	}
+	if l.spanIDKey == "" {
+		l.spanIDKey = "span_id"
 	}
 	return l
 }
@@ -168,7 +178,12 @@ func (l *Logger) logFields(
 
 	if l.withTraceID {
 		traceID := span.SpanContext().TraceID().String()
-		fields = append(fields, zap.String("trace_id", traceID))
+		fields = append(fields, zap.String(l.traceIDKey, traceID))
+	}
+
+	if l.withSpanID {
+		spanID := span.SpanContext().SpanID().String()
+		fields = append(fields, zap.String(l.spanIDKey, spanID))
 	}
 
 	return fields
@@ -540,7 +555,12 @@ func (s *SugaredLogger) logKVs(
 
 	if s.l.withTraceID {
 		traceID := span.SpanContext().TraceID().String()
-		kvs = append(kvs, "trace_id", traceID)
+		kvs = append(kvs, s.l.traceIDKey, traceID)
+	}
+
+	if s.l.withSpanID {
+		spanID := span.SpanContext().SpanID().String()
+		kvs = append(kvs, s.l.spanIDKey, spanID)
 	}
 
 	return kvs
