@@ -56,17 +56,13 @@ func New(logger *zap.Logger, opts ...Option) *Logger {
 
 		minLevel:         zap.WarnLevel,
 		errorStatusLevel: zap.ErrorLevel,
+		traceIDKey:       "trace_id",
+		spanIDKey:        "span_id",
 		caller:           true,
 		callerDepth:      0,
 	}
 	for _, opt := range opts {
 		opt(l)
-	}
-	if l.traceIDKey == "" {
-		l.traceIDKey = "trace_id"
-	}
-	if l.spanIDKey == "" {
-		l.spanIDKey = "span_id"
 	}
 	return l
 }
