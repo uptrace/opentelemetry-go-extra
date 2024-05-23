@@ -13,7 +13,7 @@ require (
 	github.com/uptrace/opentelemetry-go-extra/otelsql v0.3.0
 	github.com/uptrace/opentelemetry-go-extra/otelsqlx v0.3.0
 	go.opentelemetry.io/otel v1.27.0
-	go.opentelemetry.io/otel/sdk v1.24.0
+	go.opentelemetry.io/otel/sdk v1.27.0
 	modernc.org/sqlite v1.20.3
 )
 
@@ -31,7 +31,7 @@ require (
 	go.opentelemetry.io/otel/metric v1.27.0 // indirect
 	go.opentelemetry.io/otel/trace v1.27.0 // indirect
 	golang.org/x/mod v0.3.0 // indirect
-	golang.org/x/sys v0.17.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
 	golang.org/x/tools v0.0.0-20201124115921-2c860bdd6e78 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
