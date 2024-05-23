@@ -1,9 +1,41 @@
 package otelzap
 
-import "go.uber.org/zap/zapcore"
+import (
+	"go.opentelemetry.io/otel/log"
+	"go.uber.org/zap/zapcore"
+)
 
 // Option applies a configuration to the given config.
 type Option func(l *Logger)
+
+// WithLoggerProvider returns an [Option] that configures [log.LoggerProvider]
+// used by a [Core] to create its [log.Logger].
+//
+// By default if this Option is not provided, the Handler will use the global
+// LoggerProvider.
+func WithLoggerProvider(provider log.LoggerProvider) Option {
+	return func(l *Logger) {
+		l.provider = provider
+	}
+}
+
+// WithVersion returns an [Option] that configures the version of the
+// [log.Logger] used by a [Core]. The version should be the version of the
+// package that is being logged.
+func WithVersion(version string) Option {
+	return func(l *Logger) {
+		l.version = version
+	}
+}
+
+// WithSchemaURL returns an [Option] that configures the semantic convention
+// schema URL of the [log.Logger] used by a [Core]. The schemaURL should be
+// the schema URL for the semantic conventions used in log records.
+func WithSchemaURL(schemaURL string) Option {
+	return func(l *Logger) {
+		l.schemaURL = schemaURL
+	}
+}
 
 // WithMinLevel sets the minimal zap logging level on which the log message
 // is recorded on the span.
@@ -56,15 +88,5 @@ func WithStackTrace(on bool) Option {
 func WithExtraFields(fields ...zapcore.Field) Option {
 	return func(l *Logger) {
 		l.extraFields = append(l.extraFields, fields...)
-	}
-}
-
-// WithTraceIDField configures the logger to add `trace_id` field to structured log messages.
-//
-// This option is only useful with backends that don't support OTLP and instead parse log
-// messages to extract structured information.
-func WithTraceIDField(on bool) Option {
-	return func(l *Logger) {
-		l.withTraceID = on
 	}
 }
