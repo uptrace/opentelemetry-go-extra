@@ -7,7 +7,7 @@ toolchain go1.22.3
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.4
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.3.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.52.0
 	go.opentelemetry.io/otel/trace v1.27.0
 )
