@@ -9,7 +9,7 @@ replace github.com/uptrace/opentelemetry-go-extra/otelsql => ./..
 replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
-	github.com/uptrace/opentelemetry-go-extra/otelsql v0.3.0
+	github.com/uptrace/opentelemetry-go-extra/otelsql v0.3.1
 	go.opentelemetry.io/otel v1.27.0
 	modernc.org/sqlite v1.30.1
 )
@@ -55,5 +55,5 @@ require (
 
 require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.3.0
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.3.1
 )

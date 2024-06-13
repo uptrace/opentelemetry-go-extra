@@ -8,7 +8,7 @@ replace github.com/uptrace/opentelemetry-go-extra/otelsql => ../otelsql
 
 require (
 	github.com/jmoiron/sqlx v1.4.0
-	github.com/uptrace/opentelemetry-go-extra/otelsql v0.3.0
+	github.com/uptrace/opentelemetry-go-extra/otelsql v0.3.1
 )
 
 require (
