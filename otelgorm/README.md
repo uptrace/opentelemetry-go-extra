@@ -44,6 +44,15 @@ if err := db.WithContext(ctx).Raw("SELECT 42").Scan(&num).Error; err != nil {
 
 See [example](/example/) for details.
 
+## Usage: exceptions
+
+In case you want to have certain database-related queries not initiate starting a new trace, you can set use this key to do so.
+```go
+db.Set(otelgorm.EnabledTraceDatabaseKey, false)
+```
+This will make sure no new trace is started.
+Do note that if a trace was already started earlier within the context that was passed, the queries will still be visible inside.
+
 ## Options
 
 You can customize the plugin using configuration
