@@ -6,6 +6,10 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
+const (
+	EnabledTraceDatabaseKey = "otelgorm-trace-enabled"
+)
+
 type Option func(p *otelPlugin)
 
 // WithTracerProvider configures a tracer provider that is used to create a tracer.
