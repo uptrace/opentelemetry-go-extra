@@ -30,8 +30,10 @@ type Logger struct {
 	minLevel         zapcore.Level
 	errorStatusLevel zapcore.Level
 
-	caller     bool
-	stackTrace bool
+	caller      bool
+	stackTrace  bool
+	withTraceID bool
+	withSpanID  bool
 
 	// extraFields contains a number of zap.Fields that are added to every log entry
 	extraFields []zap.Field
@@ -161,8 +163,9 @@ func (l *Logger) logFields(
 func (l *Logger) log(
 	ctx context.Context, lvl zapcore.Level, msg string, kvs []log.KeyValue,
 ) {
+	span := trace.SpanFromContext(ctx)
 	if lvl >= l.errorStatusLevel {
-		if span := trace.SpanFromContext(ctx); span.IsRecording() {
+		if span.IsRecording() {
 			span.SetStatus(codes.Error, msg)
 		}
 	}
@@ -187,6 +190,17 @@ func (l *Logger) log(
 		stackTrace := make([]byte, 2048)
 		n := runtime.Stack(stackTrace, false)
 		kvs = append(kvs, log.String("exception.stacktrace", string(stackTrace[:n])))
+	}
+
+	if l.withTraceID && span.IsRecording() {
+		spanCtx := span.SpanContext()
+		traceId := spanCtx.TraceID()
+		kvs = append(kvs, log.String("trace_id", traceId.String()))
+
+		if l.withSpanID {
+			spanId := spanCtx.SpanID()
+			kvs = append(kvs, log.String("span_id", spanId.String()))
+		}
 	}
 
 	if len(kvs) > 0 {
