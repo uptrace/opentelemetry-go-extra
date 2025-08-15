@@ -77,7 +77,7 @@ func (c *dsnConnector) Driver() driver.Driver {
 	return c.driver
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 type otelDriver struct {
 	driver    driver.Driver
@@ -113,7 +113,7 @@ func (d *otelDriver) OpenConnector(dsn string) (driver.Connector, error) {
 	return newConnector(d, connector, d.instrum), nil
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 type connector struct {
 	driver.Connector
@@ -148,7 +148,7 @@ func (c *connector) Driver() driver.Driver {
 	return c.driver
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 type otelConn struct {
 	driver.Conn
@@ -209,7 +209,7 @@ func (c *otelConn) createPingFunc(conn driver.Conn) pingFunc {
 	}
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 var _ driver.Execer = (*otelConn)(nil)
 
@@ -230,7 +230,7 @@ func (c *otelConn) createExecFunc(conn driver.Conn) execFunc {
 	}
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 var _ driver.ExecerContext = (*otelConn)(nil)
 
@@ -282,7 +282,7 @@ func (c *otelConn) createExecCtxFunc(conn driver.Conn) execCtxFunc {
 	}
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 var _ driver.Queryer = (*otelConn)(nil)
 
@@ -303,7 +303,7 @@ func (c *otelConn) createQueryFunc(conn driver.Conn) queryFunc {
 	}
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 var _ driver.QueryerContext = (*otelConn)(nil)
 
@@ -336,13 +336,17 @@ func (c *otelConn) createQueryCtxFunc(conn driver.Conn) queryCtxFunc {
 			func(ctx context.Context, span trace.Span) error {
 				var err error
 				rows, err = fn(ctx, query, args)
+				if err == nil {
+					_, closeRowsSpan := c.instrum.createSpan(ctx, "rows", query)
+					rows = newCountableRows(rows, closeRowsSpan)
+				}
 				return err
 			})
 		return rows, err
 	}
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 var _ driver.ConnPrepareContext = (*otelConn)(nil)
 
@@ -410,7 +414,7 @@ func (c *otelConn) createBeginTxFunc(conn driver.Conn) beginTxFunc {
 	}
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 var _ driver.SessionResetter = (*otelConn)(nil)
 
@@ -431,7 +435,7 @@ func (c *otelConn) createResetSessionFunc(conn driver.Conn) resetSessionFunc {
 	}
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 var _ driver.NamedValueChecker = (*otelConn)(nil)
 
@@ -452,7 +456,7 @@ func (c *otelConn) createCheckNamedValueFunc(conn driver.Conn) checkNamedValueFu
 	}
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 func namedValueToValue(named []driver.NamedValue) ([]driver.Value, error) {
 	args := make([]driver.Value, len(named))

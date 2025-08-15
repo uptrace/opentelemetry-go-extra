@@ -30,7 +30,7 @@ func newStmt(stmt driver.Stmt, query string, instrum *dbInstrum) *otelStmt {
 	return s
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 var _ driver.StmtExecContext = (*otelStmt)(nil)
 
@@ -80,7 +80,7 @@ func (s *otelStmt) createExecCtxFunc(stmt driver.Stmt) stmtExecCtxFunc {
 	}
 }
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 var _ driver.StmtQueryContext = (*otelStmt)(nil)
 
@@ -113,6 +113,10 @@ func (s *otelStmt) createQueryCtxFunc(stmt driver.Stmt) stmtQueryCtxFunc {
 			func(ctx context.Context, span trace.Span) error {
 				var err error
 				rows, err = fn(ctx, args)
+				if err == nil {
+					_, closeRowsSpan := s.instrum.createSpan(ctx, "rows", s.query)
+					rows = newCountableRows(rows, closeRowsSpan)
+				}
 				return err
 			})
 		return rows, err

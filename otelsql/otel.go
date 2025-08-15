@@ -17,7 +17,10 @@ import (
 
 const instrumName = "github.com/uptrace/opentelemetry-go-extra/otelsql"
 
-var dbRowsAffected = attribute.Key("db.rows_affected")
+var (
+	dbRowsAffected = attribute.Key("db.rows_affected")
+	dbRowsScanned  = attribute.Key("db.rows_scanned")
+)
 
 type config struct {
 	tracerProvider trace.TracerProvider
@@ -80,6 +83,24 @@ func newDBInstrum(opts []Option) *dbInstrum {
 	return t
 }
 
+func (t *dbInstrum) createSpan(
+	ctx context.Context,
+	spanName string,
+	query string,
+) (context.Context, trace.Span) {
+	attrs := make([]attribute.KeyValue, 0, len(t.attrs)+1)
+	attrs = append(attrs, t.attrs...)
+	if query != "" {
+		attrs = append(attrs, semconv.DBStatementKey.String(t.formatQuery(query)))
+	}
+
+	ctx, span := t.tracer.Start(ctx, spanName,
+		trace.WithSpanKind(trace.SpanKindClient),
+		trace.WithAttributes(attrs...))
+
+	return ctx, span
+}
+
 func (t *dbInstrum) withSpan(
 	ctx context.Context,
 	spanName string,
@@ -91,15 +112,7 @@ func (t *dbInstrum) withSpan(
 		startTime = time.Now()
 	}
 
-	attrs := make([]attribute.KeyValue, 0, len(t.attrs)+1)
-	attrs = append(attrs, t.attrs...)
-	if query != "" {
-		attrs = append(attrs, semconv.DBStatementKey.String(t.formatQuery(query)))
-	}
-
-	ctx, span := t.tracer.Start(ctx, spanName,
-		trace.WithSpanKind(trace.SpanKindClient),
-		trace.WithAttributes(attrs...))
+	ctx, span := t.createSpan(ctx, spanName, query)
 	err := fn(ctx, span)
 	defer span.End()
 
@@ -134,7 +147,7 @@ func WithTracerProvider(tracerProvider trace.TracerProvider) Option {
 	}
 }
 
-// WithAttributes configures attributes that are used to create a span.
+// WithAttributes configures attributes that are used to create a closeSpan.
 func WithAttributes(attrs ...attribute.KeyValue) Option {
 	return func(c *config) {
 		c.attrs = append(c.attrs, attrs...)
