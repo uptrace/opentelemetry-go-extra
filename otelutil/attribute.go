@@ -36,17 +36,19 @@ func Attribute(key string, value interface{}) attribute.KeyValue {
 		rv = rv.Slice(0, rv.Len())
 		fallthrough
 	case reflect.Slice:
-		switch reflect.TypeOf(value).Elem().Kind() {
+		switch rv.Type().Elem().Kind() {
 		case reflect.Bool:
-			return attribute.BoolSlice(key, rv.Interface().([]bool))
+			return attribute.BoolSlice(key, boolSlice(rv))
 		case reflect.Int:
-			return attribute.IntSlice(key, rv.Interface().([]int))
-		case reflect.Int64:
-			return attribute.Int64Slice(key, rv.Interface().([]int64))
-		case reflect.Float64:
-			return attribute.Float64Slice(key, rv.Interface().([]float64))
+			return attribute.IntSlice(key, intSlice(rv))
+		case reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			return attribute.Int64Slice(key, int64Slice(rv))
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
+			return attribute.Int64Slice(key, uint64ToInt64Slice(rv))
+		case reflect.Float32, reflect.Float64:
+			return attribute.Float64Slice(key, float64Slice(rv))
 		case reflect.String:
-			return attribute.StringSlice(key, rv.Interface().([]string))
+			return attribute.StringSlice(key, stringSlice(rv))
 		default:
 			return attribute.KeyValue{Key: attribute.Key(key)}
 		}
@@ -63,6 +65,54 @@ func Attribute(key string, value interface{}) attribute.KeyValue {
 		return attribute.String(key, string(b))
 	}
 	return attribute.String(key, fmt.Sprint(value))
+}
+
+func boolSlice(rv reflect.Value) []bool {
+	res := make([]bool, rv.Len())
+	for i := range res {
+		res[i] = rv.Index(i).Bool()
+	}
+	return res
+}
+
+func intSlice(rv reflect.Value) []int {
+	res := make([]int, rv.Len())
+	for i := range res {
+		res[i] = int(rv.Index(i).Int())
+	}
+	return res
+}
+
+func int64Slice(rv reflect.Value) []int64 {
+	res := make([]int64, rv.Len())
+	for i := range res {
+		res[i] = rv.Index(i).Int()
+	}
+	return res
+}
+
+func uint64ToInt64Slice(rv reflect.Value) []int64 {
+	res := make([]int64, rv.Len())
+	for i := range res {
+		res[i] = int64(rv.Index(i).Uint())
+	}
+	return res
+}
+
+func float64Slice(rv reflect.Value) []float64 {
+	res := make([]float64, rv.Len())
+	for i := range res {
+		res[i] = rv.Index(i).Float()
+	}
+	return res
+}
+
+func stringSlice(rv reflect.Value) []string {
+	res := make([]string, rv.Len())
+	for i := range res {
+		res[i] = rv.Index(i).String()
+	}
+	return res
 }
 
 func LogValue(value interface{}) log.Value {
