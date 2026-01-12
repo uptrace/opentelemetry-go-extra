@@ -110,6 +110,16 @@ func (l *Logger) Ctx(ctx context.Context) LoggerWithCtx {
 	}
 }
 
+func (l *Logger) With(fields ...zapcore.Field) *Logger {
+    if len(fields) == 0 {
+        return l
+    }
+
+    clone := l.Clone()
+    clone.Logger = l.Logger.With(fields...)
+    return clone
+}
+
 func (l *Logger) DebugContext(ctx context.Context, msg string, fields ...zapcore.Field) {
 	fields = l.logFields(ctx, zap.DebugLevel, msg, fields)
 	l.skipCaller.Debug(msg, fields...)
