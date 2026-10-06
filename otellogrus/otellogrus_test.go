@@ -11,7 +11,7 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/sdk/trace/tracetest"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.43.0"
 )
 
 type Test struct {
@@ -91,11 +91,11 @@ func TestOtelLogrus(t *testing.T) {
 			require: func(event sdktrace.Event) {
 				m := attrMap(event.Attributes)
 
-				fn, ok := m[semconv.CodeFunctionKey]
+				fn, ok := m[semconv.CodeFunctionNameKey]
 				require.True(t, ok)
 				require.Contains(t, fn.AsString(), "github.com/uptrace/opentelemetry-go-extra/otellogrus.TestOtelLogrus")
 
-				file, ok := m[semconv.CodeFilepathKey]
+				file, ok := m[semconv.CodeFilePathKey]
 				require.True(t, ok)
 				require.Contains(t, file.AsString(), "otellogrus/otellogrus_test.go")
 

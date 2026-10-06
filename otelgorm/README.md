@@ -52,7 +52,7 @@ You can customize the plugin using configuration
 - [WithAttributes](https://pkg.go.dev/github.com/uptrace/opentelemetry-go-extra/otelgorm#WithAttributes)
   configures attributes that are used to create a span.
 - [WithDBName](https://pkg.go.dev/github.com/uptrace/opentelemetry-go-extra/otelgorm#WithDBName)
-  configures a `db.name` attribute.
+  configures a `db.namespace` attribute.
 
 For example:
 

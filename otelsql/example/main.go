@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"go.opentelemetry.io/otel"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.43.0"
 	_ "modernc.org/sqlite"
 
 	"github.com/uptrace/opentelemetry-go-extra/otelplay"
@@ -18,7 +18,7 @@ func main() {
 	defer shutdown()
 
 	db, err := otelsql.Open("sqlite", "file::memory:?cache=shared",
-		otelsql.WithAttributes(semconv.DBSystemSqlite),
+		otelsql.WithAttributes(semconv.DBSystemNameSQLite),
 		otelsql.WithDBName("mydb"))
 	if err != nil {
 		panic(err)

@@ -25,12 +25,12 @@ To instrument sqlx, you need to connect to a database using the API provided by 
 ```go
 import (
     "github.com/uptrace/opentelemetry-go-extra/otelsqlx"
-    semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+    semconv "go.opentelemetry.io/otel/semconv/v1.43.0"
     _ "modernc.org/sqlite"
 )
 
 db, err := otelsqlx.Open("sqlite", "file::memory:?cache=shared",
-	otelsql.WithAttributes(semconv.DBSystemSqlite))
+	otelsql.WithAttributes(semconv.DBSystemNameSQLite))
 if err != nil {
 	panic(err)
 }
@@ -58,11 +58,11 @@ otelsqlx accepts all the options from
 ```go
 import (
     "github.com/uptrace/opentelemetry-go-extra/otelsqlx"
-    semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+    semconv "go.opentelemetry.io/otel/semconv/v1.43.0"
     _ "modernc.org/sqlite"
 )
 
 db, err := otelsqlx.Open("sqlite", "file::memory:?cache=shared",
-	otelsql.WithAttributes(semconv.DBSystemSqlite),
+	otelsql.WithAttributes(semconv.DBSystemNameSQLite),
 	otelsql.WithDBName("mydb"))
 ```
