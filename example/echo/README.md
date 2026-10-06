@@ -1,6 +1,6 @@
 # Echo example for OpenTelemetry
 
-[![PkgGoDev](https://pkg.go.dev/badge/go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho)](https://pkg.go.dev/go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/labstack/echo-otel/v4)](https://pkg.go.dev/github.com/labstack/echo-otel/v4)
 
 You can run this example with different exporters by providing environment variables.
 
