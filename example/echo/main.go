@@ -20,8 +20,9 @@ func main() {
 	defer shutdown()
 
 	e := echo.New()
-	e.Use(echootel.NewMiddleware("service-name"))
+	// Recover must come first: echo-otel records a panic and re-panics.
 	e.Use(middleware.Recover())
+	e.Use(echootel.NewMiddleware("service-name"))
 	e.HTTPErrorHandler = func(err error, c echo.Context) {
 		ctx := c.Request().Context()
 		trace.SpanFromContext(ctx).RecordError(err)
