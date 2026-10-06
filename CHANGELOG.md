@@ -1,3 +1,20 @@
+# [0.4.0](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.3.2...v0.4.0) (2026-10-06)
+
+
+* feat!: adopt semconv v1.43.0 attribute names ([fda75ea](https://github.com/uptrace/opentelemetry-go-extra/commit/fda75ea70814df7834f2e022d17070f61b4d6a81))
+* feat!: update dependencies to latest, require Go 1.26 ([c178b47](https://github.com/uptrace/opentelemetry-go-extra/commit/c178b47948760689c3c0bb446b747fb970211cfe))
+
+
+### BREAKING CHANGES
+
+* emitted attribute keys follow semconv v1.43.0:
+db.statement -> db.query.text, db.name -> db.namespace,
+db.system -> db.system.name, db.sql.table -> db.collection.name,
+code.function -> code.function.name, code.filepath -> code.file.path,
+code.lineno -> code.line.number. otelgorm now reports mssql and
+sqlserver as db.system.name=microsoft.sql_server.
+* the minimum Go version is now 1.26.
+otelutil.LogValue now returns attribute.Value instead of log.Value.
 ## [0.3.2](https://github.com/uptrace/opentelemetry-go-extra/compare/v0.3.1...v0.3.2) (2024-09-22)
 
 

@@ -10,8 +10,8 @@ replace github.com/uptrace/opentelemetry-go-extra/otelplay => ../../otelplay
 
 require (
 	github.com/sirupsen/logrus v1.10.2
-	github.com/uptrace/opentelemetry-go-extra/otellogrus v0.3.2
-	github.com/uptrace/opentelemetry-go-extra/otelplay v0.3.2
+	github.com/uptrace/opentelemetry-go-extra/otellogrus v0.4.0
+	github.com/uptrace/opentelemetry-go-extra/otelplay v0.4.0
 	go.opentelemetry.io/otel v1.47.0
 )
 
@@ -22,7 +22,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.31.0 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelutil v0.3.2 // indirect
+	github.com/uptrace/opentelemetry-go-extra/otelutil v0.4.0 // indirect
 	github.com/uptrace/uptrace-go v1.43.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.72.0 // indirect
