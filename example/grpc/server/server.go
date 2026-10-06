@@ -43,8 +43,7 @@ func main() {
 	}
 
 	server := grpc.NewServer(
-		grpc.UnaryInterceptor(otelgrpc.UnaryServerInterceptor()),
-		grpc.StreamInterceptor(otelgrpc.StreamServerInterceptor()),
+		grpc.StatsHandler(otelgrpc.NewServerHandler()),
 	)
 
 	api.RegisterHelloServiceServer(server, &helloServer{})

@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 
-	"github.com/astaxie/beego"
-	"go.opentelemetry.io/contrib/instrumentation/github.com/astaxie/beego/otelbeego"
+	"github.com/beego/beego/v2/server/web"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel/trace"
 
 	"github.com/uptrace/opentelemetry-go-extra/otelplay"
@@ -16,19 +16,14 @@ func main() {
 	shutdown := otelplay.ConfigureOpentelemetry(ctx)
 	defer shutdown()
 
-	// To enable tracing on template rendering, disable autorender and
-	// call otelbeego.Render manually.
-	beego.BConfig.WebConfig.AutoRender = false
+	web.Router("/", &IndexController{})
+	web.Router("/hello/:username", &HelloController{})
 
-	beego.Router("/", &IndexController{})
-	beego.Router("/hello/:username", &HelloController{})
-
-	mware := otelbeego.NewOTelBeegoMiddleWare("service-name")
-	beego.RunWithMiddleWares("localhost:9999", mware)
+	web.RunWithMiddleWares("localhost:9999", otelhttp.NewMiddleware("service-name"))
 }
 
 type IndexController struct {
-	beego.Controller
+	web.Controller
 }
 
 func (c *IndexController) Get() {
@@ -36,14 +31,10 @@ func (c *IndexController) Get() {
 
 	c.Data["traceURL"] = otelplay.TraceURL(trace.SpanFromContext(ctx))
 	c.TplName = "index.tpl"
-
-	if err := otelbeego.Render(&c.Controller); err != nil {
-		c.Abort("500")
-	}
 }
 
 type HelloController struct {
-	beego.Controller
+	web.Controller
 }
 
 func (c *HelloController) Get() {
@@ -52,8 +43,4 @@ func (c *HelloController) Get() {
 	c.Data["username"] = c.Ctx.Input.Param(":username")
 	c.Data["traceURL"] = otelplay.TraceURL(trace.SpanFromContext(ctx))
 	c.TplName = "hello.tpl"
-
-	if err := otelbeego.Render(&c.Controller); err != nil {
-		c.Abort("500")
-	}
 }

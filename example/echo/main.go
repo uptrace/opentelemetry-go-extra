@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
+	echootel "github.com/labstack/echo-otel/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
 	"go.opentelemetry.io/otel/trace"
 
 	"github.com/uptrace/opentelemetry-go-extra/otelplay"
@@ -20,7 +20,7 @@ func main() {
 	defer shutdown()
 
 	e := echo.New()
-	e.Use(otelecho.Middleware("service-name"))
+	e.Use(echootel.NewMiddleware("service-name"))
 	e.Use(middleware.Recover())
 	e.HTTPErrorHandler = func(err error, c echo.Context) {
 		ctx := c.Request().Context()

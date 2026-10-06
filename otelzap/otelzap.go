@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"runtime"
 
+	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/log"
 	"go.opentelemetry.io/otel/log/global"
@@ -159,7 +160,7 @@ func (l *Logger) logFields(
 }
 
 func (l *Logger) log(
-	ctx context.Context, lvl zapcore.Level, msg string, kvs []log.KeyValue,
+	ctx context.Context, lvl zapcore.Level, msg string, kvs []attribute.KeyValue,
 ) {
 	if lvl >= l.errorStatusLevel {
 		if span := trace.SpanFromContext(ctx); span.IsRecording() {
@@ -168,17 +169,17 @@ func (l *Logger) log(
 	}
 
 	record := log.Record{}
-	record.SetBody(log.StringValue(msg))
+	record.SetBody(attribute.StringValue(msg))
 	record.SetSeverity(convertLevel(lvl))
 
 	if l.caller {
 		if fn, file, line, ok := runtimeCaller(4 + l.callerDepth); ok {
 			if fn != "" {
-				kvs = append(kvs, log.String("code.function", fn))
+				kvs = append(kvs, attribute.String("code.function", fn))
 			}
 			if file != "" {
-				kvs = append(kvs, log.String("code.filepath", file))
-				kvs = append(kvs, log.Int("code.lineno", line))
+				kvs = append(kvs, attribute.String("code.filepath", file))
+				kvs = append(kvs, attribute.Int("code.lineno", line))
 			}
 		}
 	}
@@ -186,7 +187,7 @@ func (l *Logger) log(
 	if l.stackTrace {
 		stackTrace := make([]byte, 2048)
 		n := runtime.Stack(stackTrace, false)
-		kvs = append(kvs, log.String("exception.stacktrace", string(stackTrace[:n])))
+		kvs = append(kvs, attribute.String("exception.stacktrace", string(stackTrace[:n])))
 	}
 
 	if len(kvs) > 0 {
@@ -434,8 +435,8 @@ func (s *SugaredLogger) logArgs(
 		return
 	}
 
-	kvs := make([]log.KeyValue, 0, 1+numExtraAttr)
-	kvs = append(kvs, log.String("log.template", template))
+	kvs := make([]attribute.KeyValue, 0, 1+numExtraAttr)
+	kvs = append(kvs, attribute.String("log.template", template))
 	s.l.log(ctx, lvl, fmt.Sprintf(template, args...), kvs)
 }
 
@@ -510,12 +511,12 @@ func (s *SugaredLogger) logKVs(
 		return
 	}
 
-	kvs := make([]log.KeyValue, 0, len(args)/2)
+	kvs := make([]attribute.KeyValue, 0, len(args)/2)
 
 	for i := 0; i < len(args)-1; i += 2 {
 		if key, ok := args[i].(string); ok {
-			kvs = append(kvs, log.KeyValue{
-				Key:   key,
+			kvs = append(kvs, attribute.KeyValue{
+				Key:   attribute.Key(key),
 				Value: otelutil.LogValue(args[i+1]),
 			})
 		}
