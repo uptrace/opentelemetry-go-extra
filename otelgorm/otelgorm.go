@@ -10,7 +10,7 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.43.0"
 	"go.opentelemetry.io/otel/trace"
 	"gorm.io/gorm"
 
@@ -140,9 +140,9 @@ func (p *otelPlugin) after() gormHookFunc {
 
 		query := tx.Dialector.Explain(tx.Statement.SQL.String(), vars...)
 
-		attrs = append(attrs, semconv.DBStatementKey.String(p.formatQuery(query)))
+		attrs = append(attrs, semconv.DBQueryTextKey.String(p.formatQuery(query)))
 		if tx.Statement.Table != "" {
-			attrs = append(attrs, semconv.DBSQLTableKey.String(tx.Statement.Table))
+			attrs = append(attrs, semconv.DBCollectionNameKey.String(tx.Statement.Table))
 		}
 		if tx.Statement.RowsAffected != -1 {
 			attrs = append(attrs, dbRowsAffected.Int64(tx.Statement.RowsAffected))
@@ -178,17 +178,15 @@ func (p *otelPlugin) formatQuery(query string) string {
 func dbSystem(tx *gorm.DB) attribute.KeyValue {
 	switch tx.Dialector.Name() {
 	case "mysql":
-		return semconv.DBSystemMySQL
-	case "mssql":
-		return semconv.DBSystemMSSQL
+		return semconv.DBSystemNameMySQL
+	case "mssql", "sqlserver":
+		return semconv.DBSystemNameMicrosoftSQLServer
 	case "postgres", "postgresql":
-		return semconv.DBSystemPostgreSQL
+		return semconv.DBSystemNamePostgreSQL
 	case "sqlite":
-		return semconv.DBSystemSqlite
-	case "sqlserver":
-		return semconv.DBSystemKey.String("sqlserver")
+		return semconv.DBSystemNameSQLite
 	case "clickhouse":
-		return semconv.DBSystemKey.String("clickhouse")
+		return semconv.DBSystemNameClickHouse
 	default:
 		return attribute.KeyValue{}
 	}

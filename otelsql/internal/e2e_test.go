@@ -10,7 +10,7 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/sdk/trace/tracetest"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.43.0"
 	"go.opentelemetry.io/otel/trace"
 	_ "modernc.org/sqlite"
 
@@ -53,7 +53,7 @@ func TestConn(t *testing.T) {
 
 				m := attrMap(span.Attributes())
 
-				stmt, ok := m[semconv.DBStatementKey]
+				stmt, ok := m[semconv.DBQueryTextKey]
 				require.True(t, ok)
 				require.Equal(t, "SELECT 1", stmt.AsString())
 
@@ -79,7 +79,7 @@ func TestConn(t *testing.T) {
 
 				m := attrMap(span.Attributes())
 
-				stmt, ok := m[semconv.DBStatementKey]
+				stmt, ok := m[semconv.DBQueryTextKey]
 				require.True(t, ok)
 				require.Equal(t, "SELECT 1", stmt.AsString())
 			},
@@ -113,7 +113,7 @@ func TestConn(t *testing.T) {
 
 					m := attrMap(span.Attributes())
 
-					stmt, ok := m[semconv.DBStatementKey]
+					stmt, ok := m[semconv.DBQueryTextKey]
 					require.Equal(t, wanted.stmt != "", ok)
 					require.Equal(t, wanted.stmt, stmt.AsString())
 				}
@@ -154,7 +154,7 @@ func TestConn(t *testing.T) {
 
 					m := attrMap(span.Attributes())
 
-					stmt, ok := m[semconv.DBStatementKey]
+					stmt, ok := m[semconv.DBQueryTextKey]
 					require.Equal(t, wanted.stmt != "", ok)
 					require.Equal(t, wanted.stmt, stmt.AsString())
 				}
@@ -175,7 +175,7 @@ func TestConn(t *testing.T) {
 
 				m := attrMap(span.Attributes())
 
-				stmt, ok := m[semconv.DBStatementKey]
+				stmt, ok := m[semconv.DBQueryTextKey]
 				require.True(t, ok)
 				require.Equal(t, "SELECT 1 FROM ABC", stmt.AsString())
 

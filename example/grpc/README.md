@@ -2,7 +2,7 @@
 
 [![PkgGoDev](https://pkg.go.dev/badge/go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc)](https://pkg.go.dev/go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc)
 
-[![PkgGoDev](https://pkg.go.dev/badge/go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho)](https://pkg.go.dev/go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho)
+[![PkgGoDev](https://pkg.go.dev/badge/go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc)](https://pkg.go.dev/go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc)
 
 You can run this example with different exporters by providing environment variables.
 

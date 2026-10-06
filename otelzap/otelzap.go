@@ -9,6 +9,7 @@ import (
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/log"
 	"go.opentelemetry.io/otel/log/global"
+	semconv "go.opentelemetry.io/otel/semconv/v1.43.0"
 	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -175,11 +176,11 @@ func (l *Logger) log(
 	if l.caller {
 		if fn, file, line, ok := runtimeCaller(4 + l.callerDepth); ok {
 			if fn != "" {
-				kvs = append(kvs, attribute.String("code.function", fn))
+				kvs = append(kvs, semconv.CodeFunctionNameKey.String(fn))
 			}
 			if file != "" {
-				kvs = append(kvs, attribute.String("code.filepath", file))
-				kvs = append(kvs, attribute.Int("code.lineno", line))
+				kvs = append(kvs, semconv.CodeFilePathKey.String(file))
+				kvs = append(kvs, semconv.CodeLineNumberKey.Int(line))
 			}
 		}
 	}

@@ -10,7 +10,7 @@ import (
 	"go.opentelemetry.io/otel/codes"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/sdk/trace/tracetest"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.43.0"
 	"go.opentelemetry.io/otel/trace"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -40,11 +40,11 @@ func TestEndToEnd(t *testing.T) {
 
 				m := attrMap(spans[0].Attributes())
 
-				sys, ok := m[semconv.DBSystemKey]
+				sys, ok := m[semconv.DBSystemNameKey]
 				require.True(t, ok)
 				require.Equal(t, "sqlite", sys.AsString())
 
-				stmt, ok := m[semconv.DBStatementKey]
+				stmt, ok := m[semconv.DBQueryTextKey]
 				require.True(t, ok)
 				require.Equal(t, "SELECT 42", stmt.AsString())
 			},
@@ -66,11 +66,11 @@ func TestEndToEnd(t *testing.T) {
 
 				m := attrMap(span.Attributes())
 
-				sys, ok := m[semconv.DBSystemKey]
+				sys, ok := m[semconv.DBSystemNameKey]
 				require.True(t, ok)
 				require.Equal(t, "sqlite", sys.AsString())
 
-				stmt, ok := m[semconv.DBStatementKey]
+				stmt, ok := m[semconv.DBQueryTextKey]
 				require.True(t, ok)
 				require.Equal(t, "SELECT foo_bar", stmt.AsString())
 			},

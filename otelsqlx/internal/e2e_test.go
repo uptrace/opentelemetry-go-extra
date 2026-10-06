@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/sdk/trace/tracetest"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.43.0"
 	_ "modernc.org/sqlite"
 
 	"github.com/uptrace/opentelemetry-go-extra/otelsql"
@@ -23,7 +23,7 @@ func TestE2E(t *testing.T) {
 	provider := sdktrace.NewTracerProvider(sdktrace.WithSpanProcessor(sr))
 
 	db, err := otelsqlx.Open("sqlite", "file::memory:?cache=shared",
-		otelsql.WithAttributes(semconv.DBSystemSqlite),
+		otelsql.WithAttributes(semconv.DBSystemNameSQLite),
 		otelsql.WithDBName("mydb"),
 		otelsql.WithTracerProvider(provider))
 	require.NoError(t, err)

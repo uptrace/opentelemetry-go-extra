@@ -11,7 +11,7 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/metric"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.43.0"
 	"go.opentelemetry.io/otel/trace"
 )
 
@@ -94,7 +94,7 @@ func (t *dbInstrum) withSpan(
 	attrs := make([]attribute.KeyValue, 0, len(t.attrs)+1)
 	attrs = append(attrs, t.attrs...)
 	if query != "" {
-		attrs = append(attrs, semconv.DBStatementKey.String(t.formatQuery(query)))
+		attrs = append(attrs, semconv.DBQueryTextKey.String(t.formatQuery(query)))
 	}
 
 	ctx, span := t.tracer.Start(ctx, spanName,
@@ -141,18 +141,18 @@ func WithAttributes(attrs ...attribute.KeyValue) Option {
 	}
 }
 
-// WithDBSystem configures a db.system attribute. You should prefer using
-// WithAttributes and semconv, for example, `otelsql.WithAttributes(semconv.DBSystemSqlite)`.
+// WithDBSystem configures a db.system.name attribute. You should prefer using
+// WithAttributes and semconv, for example, `otelsql.WithAttributes(semconv.DBSystemNameSQLite)`.
 func WithDBSystem(system string) Option {
 	return func(c *config) {
-		c.attrs = append(c.attrs, semconv.DBSystemKey.String(system))
+		c.attrs = append(c.attrs, semconv.DBSystemNameKey.String(system))
 	}
 }
 
-// WithDBName configures a db.name attribute.
+// WithDBName configures a db.namespace attribute.
 func WithDBName(name string) Option {
 	return func(c *config) {
-		c.attrs = append(c.attrs, semconv.DBNameKey.String(name))
+		c.attrs = append(c.attrs, semconv.DBNamespaceKey.String(name))
 	}
 }
 

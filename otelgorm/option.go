@@ -2,7 +2,7 @@ package otelgorm
 
 import (
 	"go.opentelemetry.io/otel/attribute"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.43.0"
 	"go.opentelemetry.io/otel/trace"
 )
 
@@ -22,14 +22,14 @@ func WithAttributes(attrs ...attribute.KeyValue) Option {
 	}
 }
 
-// WithDBName configures a db.name attribute.
+// WithDBName configures a db.namespace attribute.
 func WithDBName(name string) Option {
 	return func(p *otelPlugin) {
-		p.attrs = append(p.attrs, semconv.DBNameKey.String(name))
+		p.attrs = append(p.attrs, semconv.DBNamespaceKey.String(name))
 	}
 }
 
-// WithoutQueryVariables configures the db.statement attribute to exclude query variables
+// WithoutQueryVariables configures the db.query.text attribute to exclude query variables
 func WithoutQueryVariables() Option {
 	return func(p *otelPlugin) {
 		p.excludeQueryVars = true
