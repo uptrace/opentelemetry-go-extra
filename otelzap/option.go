@@ -61,14 +61,13 @@ func WithErrorStatusLevel(lvl zapcore.Level) Option {
 // line number, and function name of the caller.
 //
 // It is enabled by default.
-
 func WithCaller(on bool) Option {
 	return func(l *Logger) {
 		l.caller = on
 	}
 }
 
-// WithCallerDepth allows you to you to adjust the depth of the caller by setting a number greater than 0. It can
+// WithCallerDepth allows you to adjust the depth of the caller by setting a number greater than 0. It can
 // be useful if you're wrapping this library with your own helper functions.
 func WithCallerDepth(depth int) Option {
 	return func(l *Logger) {
@@ -88,5 +87,30 @@ func WithStackTrace(on bool) Option {
 func WithExtraFields(fields ...zapcore.Field) Option {
 	return func(l *Logger) {
 		l.extraFields = append(l.extraFields, fields...)
+	}
+}
+
+// WithTraceIDField configures the logger to add `trace_id` field to structured log messages.
+//
+// This option is only useful with backends that don't support OTLP and instead parse log
+// messages to extract structured information.
+func WithTraceIDField(on bool) Option {
+	return func(l *Logger) {
+		l.withTraceID = on
+	}
+}
+
+// WithSpanIDField configures the logger to add `span_id` field to structured log messages.
+//
+// This option is only useful with backends that don't support OTLP and instead parse log
+// messages to extract structured information.
+// Using this option without previously enabling `WithTraceIDField` will enable both WithTraceIDField and WithSpanIDField.
+func WithSpanIDField(on bool) Option {
+	return func(l *Logger) {
+		if on && l.withTraceID != true {
+			l.withTraceID = true
+		}
+
+		l.withSpanID = on
 	}
 }
