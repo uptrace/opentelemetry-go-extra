@@ -46,9 +46,16 @@ func appendField(kvs []attribute.KeyValue, f zapcore.Field) []attribute.KeyValue
 	case zapcore.BoolType:
 		return append(kvs, attribute.Bool(f.Key, f.Integer == 1))
 
-	case zapcore.Int8Type, zapcore.Int16Type, zapcore.Int32Type, zapcore.Int64Type,
-		zapcore.Uint32Type, zapcore.Uint8Type, zapcore.Uint16Type, zapcore.Uint64Type,
+	case zapcore.Int8Type, zapcore.Int16Type, zapcore.Int32Type, zapcore.Int64Type:
+		return append(kvs, attribute.Int64(f.Key, f.Integer))
+
+	case zapcore.Uint8Type, zapcore.Uint16Type, zapcore.Uint32Type, zapcore.Uint64Type,
 		zapcore.UintptrType:
+		// zap keeps unsigned values in an int64, so anything above math.MaxInt64
+		// reads back negative and does not fit an int64 attribute.
+		if f.Integer < 0 {
+			return append(kvs, attribute.String(f.Key, strconv.FormatUint(uint64(f.Integer), 10)))
+		}
 		return append(kvs, attribute.Int64(f.Key, f.Integer))
 
 	case zapcore.Float64Type:
