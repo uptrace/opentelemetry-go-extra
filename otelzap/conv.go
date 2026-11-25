@@ -92,12 +92,25 @@ func appendField(kvs []attribute.KeyValue, f zapcore.Field) []attribute.KeyValue
 		return kvs
 
 	case zapcore.ArrayMarshalerType:
-		kv := attribute.String(f.Key+"_error", "otelzap: zapcore.ArrayMarshalerType is not implemented")
-		return append(kvs, kv)
+		m, ok := f.Interface.(zapcore.ArrayMarshaler)
+		if !ok {
+			return append(kvs, attribute.String(f.Key, fmt.Sprint(f.Interface)))
+		}
+		enc := new(arrayEncoder)
+		if err := m.MarshalLogArray(enc); err != nil {
+			return append(kvs, attribute.String(f.Key+"_error", fmt.Sprintf("otelzap: unable to marshal array: %v", err)))
+		}
+		return append(kvs, enc.keyValue(f.Key))
 	case zapcore.ObjectMarshalerType:
-		kv := attribute.String(f.Key+"_error", "otelzap: zapcore.ObjectMarshalerType is not implemented")
-		return append(kvs, kv)
-
+		m, ok := f.Interface.(zapcore.ObjectMarshaler)
+		if !ok {
+			return append(kvs, attribute.String(f.Key, fmt.Sprint(f.Interface)))
+		}
+		enc := zapcore.NewMapObjectEncoder()
+		if err := m.MarshalLogObject(enc); err != nil {
+			return append(kvs, attribute.String(f.Key+"_error", fmt.Sprintf("otelzap: unable to marshal object: %v", err)))
+		}
+		return append(kvs, objectKeyValue(f.Key, enc.Fields))
 	default:
 		kv := attribute.String(f.Key+"_error", fmt.Sprintf("otelzap: unknown field type: %v", f))
 		return append(kvs, kv)
